@@ -3,15 +3,17 @@
 
 This prototype demonstrates a digital service for the UK Land Carbon Registry, built using the GOV.UK Prototype Kit with Scottish Government Design System components.
 
-## About the Service
+## About the Prototype
 
-The UK Land Carbon Registry is a service that allows users to:
+The prototype will need to demonstrate our approach to the following areas:
 
--   View a registry of carbon projects
--   Access detailed information about individual projects
--   (Future functionality) Dashboard for project management
--   (Future functionality) Application process for landowners
--   (Future functionality) Administrative functions
+-   Approach to Know Your Customer checks 🚧
+-   Project validation 🚧
+-   Management of units issuing/transferring/retirement 🚧
+-   Portfolio Management (specifically milestones, tasks, notifications, reporting) 🚧
+-   Public view 🚧
+-   Managing finances/invoicing 🚧
+-   approach to support for users 🚧
 
 ## Technical Stack
 
