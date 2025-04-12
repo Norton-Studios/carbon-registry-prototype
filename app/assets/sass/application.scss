@@ -4,3 +4,22 @@
 // 
 
 // Add extra styles here
+.ds_wrapper {
+  max-width: 100vw;
+}
+.table-overflow {
+  table {
+    overflow-x: auto;
+    font-size: 1rem;
+    table-layout: auto;
+    width: auto;
+
+    th {
+      white-space: nowrap;
+    }
+  }
+  overflow: auto;
+}
+a:visited {
+  color: #000;
+}

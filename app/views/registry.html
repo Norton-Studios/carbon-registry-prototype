@@ -1,0 +1,97 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Carbon Registry{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    <div class="ds_layout">
+      
+      {% block mainHeader %}
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <!-- <span class="ds_page-header__label  ds_content-label">UK Woodland Carbon Code</span> -->
+          <h1 class="ds_page-header__title">Registry</h1>
+        </header>
+      </div>
+      {% endblock %}
+    </div>
+
+    {% block mainContent %}
+    <div class="table-overflow">
+      <table class="ds_table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Standard Name</th>
+            <th scope="col">Project Type</th>
+            <th scope="col">Status</th>
+            <th scope="col">PIUs Listed</th>
+            <th scope="col">Validator</th>
+            <th scope="col">Developer</th>
+            <th scope="col">Country</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+          <tr
+            onclick="window.location.href='{{ project.detailsUrl }}'"
+            style="cursor: pointer"
+          >
+            <td>{{ project.name }}</td>
+            <td>{{ project.category }}</td>
+            <td>{{ project.standardName }}</td>
+            <td>{{ project.projectType }}</td>
+            <td>{{ project.status }}</td>
+            <td>{{ project.piusListed }}</td>
+            <td>{{ project.validator }}</td>
+            <td>{{ project.developer }}</td>
+            <td>{{ project.country }}</td>
+            <td class="ds_summary-list__actions">
+              <button
+                type="button"
+                class="ds_link"
+                aria-describedby="q2"
+                onclick="window.location.href='{{ project.detailsUrl }}'"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endblock %} 
+    
+    {% block sequentialNavigation %}
+    <nav class="ds_sequential-nav" aria-label="Article navigation">
+      <div class="ds_sequential-nav__item ds_sequential-nav__item--prev">
+        <a
+          title="Previous section"
+          href="#"
+          class="ds_sequential-nav__button ds_sequential-nav__button--left"
+        >
+          <span class="ds_sequential-nav__text" data-label="previous">
+            Page 1
+          </span>
+        </a>
+      </div>
+      <div class="ds_sequential-nav__item ds_sequential-nav__item--next">
+        <a
+          title="Next section"
+          href="#"
+          class="ds_sequential-nav__button ds_sequential-nav__button--right"
+        >
+          <span class="ds_sequential-nav__text" data-label="next">
+            Page 3
+          </span>
+        </a>
+      </div>
+    </nav>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}
