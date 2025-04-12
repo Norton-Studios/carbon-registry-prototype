@@ -88,7 +88,3 @@ Update the navigation menu in `/app/views/layouts/main.html` by editing the `nav
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-For questions or support regarding this prototype, please contact [Your Contact Information].
