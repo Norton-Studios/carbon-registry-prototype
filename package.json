@@ -5,8 +5,8 @@
     "start": "govuk-prototype-kit start"
   },
   "dependencies": {
-    "@govuk-prototype-kit/common-templates": "2.0.1",
-    "govuk-frontend": "5.9.0",
+    "@scottish-government-design-system/prototype-templates": "^0.3.0",
+    "@scottish-government/design-system": "^3.0.0",
     "govuk-prototype-kit": "13.16.2"
   }
 }
