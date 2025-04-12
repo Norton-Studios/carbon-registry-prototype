@@ -2,7 +2,8 @@
 
 {% block pageTitle %}{{ project.name }}{% endblock %} 
 
-{# Back link - in place of breadcrumbs #} {% block breadcrumbs %}
+{# Back link - in place of breadcrumbs #} 
+{% block breadcrumbs %}
 <div class="ds_wrapper">
   <a class="ds_back-link" href="/registry">Back to registry</a>
 </div>
@@ -25,47 +26,45 @@
     <ol class="ds_summary-list">
       <li class="ds_summary-list__item">
         <span class="ds_summary-list__key" id="q1">Standard Name</span>
-        <span class="ds_summary-list__value"
-          ><q class="ds_summary-list__answer"
-            >{{ project.standardName }}</q
-          ></span
-        >
+        <span class="ds_summary-list__value">
+          <q class="ds_summary-list__answer">{{ project.standardName }}</q>
+        </span>
       </li>
       <li class="ds_summary-list__item">
         <span class="ds_summary-list__key" id="q2">Status</span>
-        <span class="ds_summary-list__value"
-          ><q class="ds_summary-list__answer">{{ project.status }}</q></span
-        >
+        <span class="ds_summary-list__value">
+          <q class="ds_summary-list__answer">{{ project.status }}</q>
+        </span>
       </li>
       <li class="ds_summary-list__item">
         <span class="ds_summary-list__key" id="q3">PIUs Listed</span>
-        <span class="ds_summary-list__value"
-          ><q class="ds_summary-list__answer">{{ project.piusListed }}</q></span
-        >
+        <span class="ds_summary-list__value">
+          <q class="ds_summary-list__answer">{{ project.piusListed }}</q>
+        </span>
       </li>
       <li class="ds_summary-list__item">
         <span class="ds_summary-list__key" id="q4">Validator</span>
-        <span class="ds_summary-list__value"
-          ><q class="ds_summary-list__answer">{{ project.validator }}</q></span
-        >
+        <span class="ds_summary-list__value">
+          <q class="ds_summary-list__answer">{{ project.validator }}</q>
+        </span>
       </li>
       <li class="ds_summary-list__item">
         <span class="ds_summary-list__key" id="q5">Developer</span>
-        <span class="ds_summary-list__value"
-          ><q class="ds_summary-list__answer">{{ project.developer }}</q></span
-        >
+        <span class="ds_summary-list__value">
+          <q class="ds_summary-list__answer">{{ project.developer }}</q>
+        </span>
       </li>
       <li class="ds_summary-list__item">
         <span class="ds_summary-list__key" id="q6">Country</span>
-        <span class="ds_summary-list__value"
-          ><q class="ds_summary-list__answer">{{ project.country }}</q></span
-        >
+        <span class="ds_summary-list__value">
+          <q class="ds_summary-list__answer">{{ project.country }}</q>
+        </span>
       </li>
       <li class="ds_summary-list__item">
         <span class="ds_summary-list__key" id="q7">Address</span>
-        <span class="ds_summary-list__value"
-          ><q class="ds_summary-list__answer">{{ project.address }}</q></span
-        >
+        <span class="ds_summary-list__value">
+          <q class="ds_summary-list__answer">{{ project.address }}</q>
+        </span>
       </li>
     </ol>
   </main>
