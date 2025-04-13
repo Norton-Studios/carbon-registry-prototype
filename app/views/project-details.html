@@ -1,13 +1,13 @@
-{% extends "/layouts/main.html" %} 
+{% extends "/layouts/main.html" %}
 
-{% block pageTitle %}{{ project.name }}{% endblock %} 
+{% block pageTitle %}{{ project.name }}{% endblock %}
 
-{# Back link - in place of breadcrumbs #} 
+{# Back link - in place of breadcrumbs #}
 {% block breadcrumbs %}
 <div class="ds_wrapper">
-  <a class="ds_back-link" href="/{{ referer }}">Back</a>
+  <a class="ds_back-link" href="javascript:window.history.back()">Back</a>
 </div>
-{% endblock %} 
+{% endblock %}
 
 {% block main %}
 <div class="ds_wrapper">

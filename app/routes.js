@@ -39,7 +39,6 @@ router.get('/dashboard', (_, res) => {
 router.get('/dashboard/:name', getProjectMiddleware, (_, res) => {
   res.render('project-details', {
     project: res.locals.project,
-    referer: 'dashboard',
     authenticated: true
   });
 });
@@ -54,7 +53,6 @@ router.get('/registry', applyProjectFilters, (_, res) => {
 router.get('/projects/:name', getProjectMiddleware, (_, res) => {
   res.render('project-details', {
     project: res.locals.project,
-    referer: 'registry'
   });
 });
 
