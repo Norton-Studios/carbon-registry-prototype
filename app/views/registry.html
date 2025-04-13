@@ -66,29 +66,45 @@
     {% endblock %} 
     
     {% block sequentialNavigation %}
-    <nav class="ds_sequential-nav" aria-label="Article navigation">
-      <div class="ds_sequential-nav__item ds_sequential-nav__item--prev">
-        <a
-          title="Previous section"
-          href="#"
-          class="ds_sequential-nav__button ds_sequential-nav__button--left"
-        >
-          <span class="ds_sequential-nav__text" data-label="previous">
-            Page 1
-          </span>
-        </a>
-      </div>
-      <div class="ds_sequential-nav__item ds_sequential-nav__item--next">
-        <a
-          title="Next section"
-          href="#"
-          class="ds_sequential-nav__button ds_sequential-nav__button--right"
-        >
-          <span class="ds_sequential-nav__text" data-label="next">
-            Page 3
-          </span>
-        </a>
-      </div>
+    <nav class="ds_pagination" aria-label="Search result pages">
+      <ul class="ds_pagination__list">
+        <li class="ds_pagination__item">
+          <a aria-label="Page 1" aria-current="page" class="ds_pagination__link  ds_current" href="#">
+            <span class="ds_pagination__link-label">1</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Page 2" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">2</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Page 3" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">3</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Page 4" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">4</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item" aria-hidden="true">
+          <span class="ds_pagination__link  ds_pagination__link--ellipsis">&hellip;</span>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Last page, page 27" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">27</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Next page" class="ds_pagination__link  ds_pagination__link--text  ds_pagination__link--icon" href="#">
+            <span class="ds_pagination__link-label">Next</span>
+            <svg class="ds_icon" aria-hidden="true" role="img">
+              <use href="/assets/images/icons/icons.stack.svg#chevron_right"></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
     </nav>
     {% endblock %}
   </main>

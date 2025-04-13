@@ -20,6 +20,11 @@
   }
   overflow: auto;
 }
-a:visited {
-  color: #000;
+
+a.ds_pagination__link:visited {
+  @extend .ds_link
+}
+
+a.ds_site-navigation__link:visited {
+  @extend .ds_site-navigation__link
 }

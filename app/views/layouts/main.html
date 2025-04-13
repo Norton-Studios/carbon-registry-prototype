@@ -6,34 +6,34 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
 {% extends "sg-prototype-templates/layouts/_base-layout--navigation.njk" %}
 
-{# Specify the menu items object to show navigation #} 
+{# Specify the menu items object to show navigation #}
 {% set navigationMenu = {
-        "menu": [
-            {
+    "menu": [
+        {
             "label": "Carbon Registry",
             "link": "/registry"
-            },
-            {
-              "label": "Projects Dashboard",
-              "link": "#"
-            },
-            {
-              "label": "Landowners - Apply",
-              "link": "#"
-            },
-            {
+        },
+        {
+            "label": "Projects Dashboard",
+            "link": "#"
+        },
+        {
+            "label": "Landowners - Apply",
+            "link": "#"
+        },
+        {
             "label": "Admin",
             "link": "#"
-            }
-        ]
-    }
+        }
+    ]
+}
 %}
 
 
 {# Use an empty siteBrandingTitle block to only show the logo for site branding #}
 {% block siteBrandingTitle %}
 <div class="ds_site-branding__title">
-    {{ serviceName }}
+  {{ serviceName }}
 </div>
 {% endblock %}
 
