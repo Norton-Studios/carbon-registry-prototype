@@ -10,7 +10,7 @@
     "developer": "GreenRoots CIC",
     "country": "Scotland",
     "address": "Aldourie, Inverness, IV2 6EL",
-    "detailsUrl": "/projects/highland-rewilding"
+    "detailsUrl": "highland-rewilding"
   },
   {
     "name": "River Clyde Carbon Credits",
@@ -23,7 +23,7 @@
     "developer": "Blue Earth Ltd.",
     "country": "Scotland",
     "address": "Clyde Walkway, Glasgow, G1 4PL",
-    "detailsUrl": "/projects/river-clyde-carbon-credits"
+    "detailsUrl": "river-clyde-carbon-credits"
   },
   {
     "name": "Borders Peatland Recovery",
@@ -36,7 +36,7 @@
     "developer": "EcoPeat Co.",
     "country": "Scotland",
     "address": "Newcastleton Forest, Scottish Borders, TD9 0TL",
-    "detailsUrl": "/projects/borders-peatland-recovery"
+    "detailsUrl": "borders-peatland-recovery"
   },
   {
     "name": "Urban Canopy Glasgow",
@@ -49,6 +49,84 @@
     "developer": "UrbanGreen Scotland",
     "country": "Scotland",
     "address": "Pollok Country Park, Glasgow, G43 1AT",
-    "detailsUrl": "/projects/urban-canopy-glasgow"
+    "detailsUrl": "urban-canopy-glasgow"
+  },
+  {
+    "name": "Loch Lomond Wetland Restoration",
+    "category": "Wetlands",
+    "standardName": "Scotland Wetlands Standard",
+    "projectType": "Wetland Restoration",
+    "status": "Active",
+    "piusListed": 6000,
+    "validator": "Wetland Trust",
+    "developer": "EcoLoch Ltd.",
+    "country": "Scotland",
+    "address": "Loch Lomond, Dunbartonshire, G83 8BL",
+    "detailsUrl": "loch-lomond-wetland-restoration"
+  },
+  {
+    "name": "Isle of Skye Forest Expansion",
+    "category": "Forest Restoration",
+    "standardName": "Scotland Forestry Code",
+    "projectType": "Reforestation",
+    "status": "Validated",
+    "piusListed": 17500,
+    "validator": "Forestry Scotland",
+    "developer": "GreenScape Ltd.",
+    "country": "Scotland",
+    "address": "Isle of Skye, Highland, IV51 9BP",
+    "detailsUrl": "isle-of-skye-forest-expansion"
+  },
+  {
+    "name": "Cairngorms Woodland Regeneration",
+    "category": "Woodland Restoration",
+    "standardName": "Scotland Woodland Code",
+    "projectType": "Woodland Regeneration",
+    "status": "Under Review",
+    "piusListed": 12500,
+    "validator": "EcoScape Ltd.",
+    "developer": "Cairngorm Forestry",
+    "country": "Scotland",
+    "address": "Cairngorms National Park, Aberdeenshire, AB35 5UL",
+    "detailsUrl": "cairngorms-woodland-regeneration"
+  },
+  {
+    "name": "Forth Valley River Restoration",
+    "category": "River Restoration",
+    "standardName": "Scotland River Code",
+    "projectType": "River Restoration",
+    "status": "Active",
+    "piusListed": 4000,
+    "validator": "RiverTrust",
+    "developer": "Forth River Ltd.",
+    "country": "Scotland",
+    "address": "Forth Valley, Stirling, FK8 1QX",
+    "detailsUrl": "forth-valley-river-restoration"
+  },
+  {
+    "name": "Tayside Peatland Revival",
+    "category": "Peatland",
+    "standardName": "Peatland Code",
+    "projectType": "Peatland Restoration",
+    "status": "Pending Validation",
+    "piusListed": 9500,
+    "validator": "PeatRevive",
+    "developer": "EcoTay Ltd.",
+    "country": "Scotland",
+    "address": "Tayside Region, Dundee, DD1 4AP",
+    "detailsUrl": "tayside-peatland-revival"
+  },
+  {
+    "name": "Moffat Hills Rewilding Project",
+    "category": "Rewilding",
+    "standardName": "Scottish Rewilding Code",
+    "projectType": "Rewilding",
+    "status": "Under Review",
+    "piusListed": 9800,
+    "validator": "WildScape",
+    "developer": "Hillside Rewilding Ltd.",
+    "country": "Scotland",
+    "address": "Moffat Hills, Dumfries and Galloway, DG10 9AL",
+    "detailsUrl": "moffat-hills-rewilding-project"
   }
 ]

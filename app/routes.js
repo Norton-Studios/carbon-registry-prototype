@@ -5,32 +5,57 @@
 
 const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
-const path = require('path');
-const fs = require('fs');
+const projects = require('./assets/data/projects.json');
+const { generateFilters, filterProjects } = require('./helpers.js');
 
-function loadProjectsData() {
-  const dataPath = path.join(__dirname, '/assets/data/projects.json');
-  return JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-}
-
-router.get('/registry', (_, res) => {
-  const projects = loadProjectsData();
-  res.render('registry', { projects });
-});
-
-router.get('/projects/:name', (req, res) => {
-  const projects = loadProjectsData();
+function getProjectMiddleware(req, res, next) {
   const projectName = req.params.name;
-
   const project = projects.find(
     p => p.name.toLowerCase().replace(/\s+/g, '-') === projectName.toLowerCase()
   );
 
-  if (project) {
-    res.render('projects/project-details', { project });
-  } else {
-    res.status(404).redirect('/error-page-not-found');
+  if (!project) {
+    return res.status(404).redirect('/error-page-not-found');
   }
+
+  res.locals.project = project;
+  next();
+}
+
+function applyProjectFilters(req, res, next) {
+  const { data } = req.session;
+  res.locals.filteredProjects = filterProjects(projects, data);
+  res.locals.projectFilters = generateFilters(projects);
+  next();
+}
+
+router.get('/dashboard', (_, res) => {
+  res.render('dashboard', {
+    projects,
+    authenticated: true
+  });
+});
+
+router.get('/dashboard/:name', getProjectMiddleware, (_, res) => {
+  res.render('project-details', {
+    project: res.locals.project,
+    referer: 'dashboard',
+    authenticated: true
+  });
+});
+
+router.get('/registry', applyProjectFilters, (_, res) => {
+  res.render('registry', {
+    projects: res.locals.filteredProjects,
+    filters: res.locals.projectFilters
+  });
+});
+
+router.get('/projects/:name', getProjectMiddleware, (_, res) => {
+  res.render('project-details', {
+    project: res.locals.project,
+    referer: 'registry'
+  });
 });
 
 router.get('/', (_, res) => {

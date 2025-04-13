@@ -7,28 +7,51 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 {% extends "sg-prototype-templates/layouts/_base-layout--navigation.njk" %}
 
 {# Specify the menu items object to show navigation #}
-{% set navigationMenu = {
-    "menu": [
+{% if authenticated %}
+  {% set navigationMenu = {
+      "menu": [
         {
-            "label": "Carbon Registry",
-            "link": "/registry"
+          "label": "Overview",
+          "link": "/dashboard"
         },
         {
-            "label": "Projects Dashboard",
-            "link": "#"
+          "label": "Bridge",
+          "link": "/dashboard/bridge"
         },
         {
-            "label": "Landowners - Apply",
-            "link": "#"
+          "label": "Transfers",
+          "link": "/dashboard/transfer"
         },
         {
-            "label": "Admin",
-            "link": "#"
+          "label": "Retirements",
+          "link": "/dashboard/retire"
         }
-    ]
-}
-%}
-
+      ]
+    }
+  %}
+{% else %}
+  {% set navigationMenu = {
+      "menu": [
+        {
+          "label": "Registry - Public view",
+          "link": "/registry"
+        },
+        {
+          "label": "Landowners - Apply",
+          "link": "/apply"
+        },
+        {
+          "label": "Login",
+          "link": "/dashboard"
+        },
+        {
+          "label": "Admin",
+          "link": "/admin"
+        }
+      ]
+    }
+  %}
+{% endif %}
 
 {# Use an empty siteBrandingTitle block to only show the logo for site branding #}
 {% block siteBrandingTitle %}
@@ -37,30 +60,38 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 </div>
 {% endblock %}
 
+{%  block siteSearch %}
+{%  endblock %}
+
 {# Cookie banner to show placement location of this and notification banners #}
 {% block pageTopStart %}
-<div id="cookie-notice" class="ds_notification  ds_notification--large  ds_notification--cookie  js-initial-cookie-content" data-module="ds-cookie-notification">
-    <div class="ds_wrapper">
-        <div class="ds_notification__content">
-            <h2 class="visually-hidden">Information</h2>
+<div id="cookie-notice"
+  class="ds_notification  ds_notification--large  ds_notification--cookie  js-initial-cookie-content"
+  data-module="ds-cookie-notification">
+  <div class="ds_wrapper">
+    <div class="ds_notification__content">
+      <h2 class="visually-hidden">Information</h2>
 
-            <div class="ds_notification__text">
-                <p>We use <a href="#">cookies</a> to collect anonymous data to help us improve your site browsing
-                    experience.</p>
-                <p>Click 'Accept all cookies' to agree to all cookies that collect anonymous data.
-                    To only allow the cookies that make the site work, click 'Use essential cookies only.' Visit 'Set cookie preferences' to control specific cookies.</p>
-            </div>
+      <div class="ds_notification__text">
+        <p>We use <a href="#">cookies</a> to collect anonymous data to help us improve your site browsing
+          experience.</p>
+        <p>Click 'Accept all cookies' to agree to all cookies that collect anonymous data.
+          To only allow the cookies that make the site work, click 'Use essential cookies only.' Visit 'Set cookie
+          preferences' to control specific cookies.</p>
+      </div>
 
-            <div class="ds_notification__actions">
-                <button class="ds_button  ds_button--small  js-accept-all-cookies">Accept all cookies</button>
-                <button class="ds_button  ds_button--small  ds_button--secondary  js-accept-essential-cookies">Use essential cookies only</button>
-                <a href="#">Set cookie preferences</a>
-            </div>
-        </div>
+      <div class="ds_notification__actions">
+        <button class="ds_button  ds_button--small  js-accept-all-cookies">Accept all cookies</button>
+        <button class="ds_button  ds_button--small  ds_button--secondary  js-accept-essential-cookies">Use essential
+          cookies only</button>
+        <a href="#">Set cookie preferences</a>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
 
-{% block pageBottom %}
-<script src="../../assets/javascripts/application.js"></script>
+{% block scripts %}
+  {{ super() }}
+  <script src="/public/javascripts/application.js"></script>
 {% endblock %}

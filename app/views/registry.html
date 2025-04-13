@@ -2,69 +2,123 @@
 
 {% block pageTitle %}Carbon Registry{% endblock %}
 
+{% set bodyClasses = "govuk-frontend-supported" %}
+
 {% block main %}
 <div class="ds_wrapper">
-  <main id="main-content">
-    <div class="ds_layout">
-      
-      {% block mainHeader %}
-      <div class="ds_layout__header">
-        <header class="ds_page-header">
-          <!-- <span class="ds_page-header__label  ds_content-label">UK Woodland Carbon Code</span> -->
-          <h1 class="ds_page-header__title">Registry</h1>
-        </header>
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
+    {% block mainHeader %}
+    <div class="ds_layout__header">
+      <header class="ds_page-header">
+        <h1 class="ds_page-header__title">Registry search</h1>
+      </header>
+    </div>
+    {% endblock %}
+
+    <div class="ds_layout__content">
+      <div class="ds_site-search">
+        <form role="search" class="ds_site-search__form" action="/registry" method="POST">
+          <label class="ds_label visually-hidden" for="site-search">Registry search</label>
+          <div class="ds_input__wrapper ds_input__wrapper--has-icon">
+            <input name="search-string" required id="registry-search" class="ds_input ds_site-search__input" type="search" placeholder="Search by project name" autocomplete="off" value="{{ value }}"/>
+            <button type="submit" class="ds_button js-site-search-button">
+              <span class="visually-hidden">Search by project name</span>
+              <svg class="ds_icon" aria-hidden="true" role="img">
+                <use href="/plugin-assets/%40scottish-government%2Fdesign-system/dist/images/icons/icons.stack.svg#search"></use>
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
-      {% endblock %}
     </div>
 
-    {% block mainContent %}
-    <div class="table-overflow">
-      <table class="ds_table">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Standard Name</th>
-            <th scope="col">Project Type</th>
-            <th scope="col">Status</th>
-            <th scope="col">PIUs Listed</th>
-            <th scope="col">Validator</th>
-            <th scope="col">Developer</th>
-            <th scope="col">Country</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for project in projects %}
-          <tr
-            onclick="window.location.href='{{ project.detailsUrl }}'"
-            style="cursor: pointer"
-          >
-            <td>{{ project.name }}</td>
-            <td>{{ project.category }}</td>
-            <td>{{ project.standardName }}</td>
-            <td>{{ project.projectType }}</td>
-            <td>{{ project.status }}</td>
-            <td>{{ project.piusListed }}</td>
-            <td>{{ project.validator }}</td>
-            <td>{{ project.developer }}</td>
-            <td>{{ project.country }}</td>
-            <td>
-              <button
-                type="button"
-                class="ds_link"
-                onclick="window.location.href='{{ project.detailsUrl }}'"
-              >
-                View
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    {% block mainSidebar %}
+    <div class="ds_layout__sidebar">
+      <div class="ds_search-filters">
+        <form id="filters" action="/registry" method="POST">
+          <h3 class="ds_search-filters__title ds_h4">Filter by</h3>
+          <div class="ds_accordion ds_accordion--small ds_!_margin-top--0" data-module="ds-accordion">
+            {% for key, values in filters %}
+              {% set panelId = "panel-" + loop.index %}
+              <div class="ds_accordion-item">
+                <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="{{ panelId }}" aria-labelledby="{{ panelId }}-heading" />
+                <div class="ds_accordion-item__header">
+                  <h3 id="{{ panelId }}-heading" class="ds_accordion-item__title">
+                    {{ key }}
+                    <div class="ds_search-filters__filter-count">({{ values | length }} available)</div>
+                  </h3>
+                  <span class="ds_accordion-item__indicator"></span>
+                  <label class="ds_accordion-item__label" for="{{ panelId }}"><span class="visually-hidden">Show this section</span></label>
+                </div>
+                <div class="ds_accordion-item__body">
+                  <fieldset>
+                    <legend class="visually-hidden">Select {{ key }}</legend>
+                    <div class="ds_search-filters__scrollable">
+                      <div class="ds_search-filters__checkboxes">
+                        {% for value in values %}
+                          {% set inputId = key | replace(" ", "-") | lower + "-" + loop.index %}
+                          <div class="ds_checkbox ds_checkbox--small">
+                            <input id="{{ inputId }}" name="{{ key | lower | replace(" ", "_") }}" class="ds_checkbox__input" type="checkbox" value="{{ value }}">
+                            <label for="{{ inputId }}" class="ds_checkbox__label">{{ value }}</label>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <button type="submit" class="ds_button ds_button--primary ds_button--small ds_button--max ds_no-margin">
+            Apply filter
+          </button>
+        </form>
+      </div>
     </div>
-    {% endblock %} 
-    
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__list">
+      <div class="ds_search-results">
+        <h2 aria-live="polite" class="ds_search-results__title">Showing {{ projects.length }} results</h2>
+        <div class="table-overflow">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Name</th>
+                <th scope="col" class="govuk-table__header">Category</th>
+                <th scope="col" class="govuk-table__header">Standard Name</th>
+                <th scope="col" class="govuk-table__header">Project Type</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th class="govuk-table__header"></th>
+              </tr>
+            </thead>
+            <tbody id="search-results">
+              {% for project in projects %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ project.category }}</td>
+                <td class="govuk-table__cell">{{ project.standardName }}</td>
+                <td class="govuk-table__cell">{{ project.projectType }}</td>
+                <td class="govuk-table__cell">{{ project.status }}</td>
+                <td class="govuk-table__cell">
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='projects/{{ project.detailsUrl }}'"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
     {% block sequentialNavigation %}
     <nav class="ds_pagination" aria-label="Search result pages">
       <ul class="ds_pagination__list">
