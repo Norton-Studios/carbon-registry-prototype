@@ -13,7 +13,7 @@ The prototype will need to demonstrate our approach to the following areas:
 -   Portfolio Management (specifically milestones, tasks, notifications, reporting) 🚧
 -   Public view 🚧
 -   Managing finances/invoicing 🚧
--   approach to support for users 🚧
+-   Approach to support for users 🚧
 
 ## Technical Stack
 
