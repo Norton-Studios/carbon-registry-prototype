@@ -29,6 +29,14 @@ function applyProjectFilters(req, res, next) {
   next();
 }
 
+function applyUserType(req, res, next) {
+  const userType = req.session.userType;
+  res.locals.userType = userType || 'guest';
+  next();
+}
+
+router.use(applyUserType);
+
 router.get('/dashboard', (_, res) => {
   res.render('dashboard', {
     projects,
@@ -58,6 +66,31 @@ router.get('/projects/:name', getProjectMiddleware, (_, res) => {
 
 router.get('/', (_, res) => {
   res.redirect('/registry');
+});
+
+router.get('/login', (_, res) => {
+  res.render('login', { });
+});
+
+router.post('/login', (req, res) => {
+  const { username } = req.body;
+  if (username.startsWith('admin')) {
+    req.session.userType = 'admin';
+    res.redirect('/dashboard');
+  } else if (username.startsWith('trader')) {
+    req.session.userType = 'trader';
+    res.redirect('/dashboard');
+  } else if (username.startsWith('developer')) {
+    req.session.userType = 'developer';
+    res.redirect('/dashboard');
+  } else {
+    res.render('login', { error: 'Invalid username' });
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.userType = "guest ";
+  res.redirect('/');
 });
 
 module.exports = router;

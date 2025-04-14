@@ -3,11 +3,9 @@
 // https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
 //
 const protectedRoutes = [
-  '/dashboard/bridge',
-  '/dashboard/transfer',
-  '/dashboard/retire',
-  '/dashboard',
-  '/admin'
+  '/register',
+  '/login',
+  '/logout',
 ];
 
 window.GOVUKPrototypeKit.documentReady(() => {

@@ -7,18 +7,25 @@ function generateFilters(projects) {
 }
 
 function filterProjects(projects, sessionData) {
+  const data = {
+    'search-string': sessionData['search-string'] || '',
+    status: sessionData.status || [],
+    projectType: sessionData.projectType || [],
+    category: sessionData.category || []
+  }
+
   return projects.filter(project => {
     let matchesSearch = true;
     let matchesFilters = true;
     const normalize = (str) => str.toLowerCase().replace(/\s+/g, '');
 
-    Object.entries(sessionData).forEach(([key, val]) => {
+    Object.entries(data).forEach(([key, val]) => {
 
       const projectName = normalize(project.name)
 
       if (key === 'search-string') {
         matchesSearch = projectName.includes(normalize(val));
-      } else {
+      } else if (Array.isArray(val) && val.length > 0) {
         matchesFilters = val.includes(project[key])
       }
     });

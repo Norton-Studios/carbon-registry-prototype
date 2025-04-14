@@ -1,0 +1,38 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Dashboard{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Log in</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content ">
+      <form class="ds_form" action="/login" method="post">
+        <div class="ds_question">
+          <label class="ds_label" for="email-address">Email address</label>
+          <input class="ds_input ds_input--fixed-20" type="text" id="email-address" name="username">
+          <label class="ds_label" for="password">Password</label>
+          <input class="ds_input ds_input--fixed-20" type="text" id="password" name="password">
+        </div>
+        <div class="ds_button-group">
+          <button type="submit" class="ds_button ds_button--primary">Log in</button>
+          <a href="/register" class="ds_link">Register</a>
+        </div>
+      </form>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

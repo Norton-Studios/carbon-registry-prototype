@@ -7,7 +7,7 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 {% extends "sg-prototype-templates/layouts/_base-layout--navigation.njk" %}
 
 {# Specify the menu items object to show navigation #}
-{% if authenticated %}
+{% if userType == "admin" %}
   {% set navigationMenu = {
       "menu": [
         {
@@ -25,6 +25,10 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
         {
           "label": "Retirements",
           "link": "/dashboard/retire"
+        },
+        {
+          "label": "Log out",
+          "link": "/logout"
         }
       ]
     }
@@ -33,20 +37,16 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
   {% set navigationMenu = {
       "menu": [
         {
-          "label": "Registry - Public view",
+          "label": "Home",
           "link": "/registry"
         },
         {
-          "label": "Landowners - Apply",
-          "link": "/apply"
-        },
-        {
           "label": "Login",
-          "link": "/dashboard"
+          "link": "/login"
         },
         {
-          "label": "Admin",
-          "link": "/admin"
+          "label": "Register",
+          "link": "/register"
         }
       ]
     }
@@ -65,30 +65,30 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
 {# Cookie banner to show placement location of this and notification banners #}
 {% block pageTopStart %}
-<div id="cookie-notice"
-  class="ds_notification  ds_notification--large  ds_notification--cookie  js-initial-cookie-content"
-  data-module="ds-cookie-notification">
-  <div class="ds_wrapper">
-    <div class="ds_notification__content">
-      <h2 class="visually-hidden">Information</h2>
+<!--<div id="cookie-notice"-->
+<!--  class="ds_notification  ds_notification&#45;&#45;large  ds_notification&#45;&#45;cookie  js-initial-cookie-content"-->
+<!--  data-module="ds-cookie-notification">-->
+<!--  <div class="ds_wrapper">-->
+<!--    <div class="ds_notification__content">-->
+<!--      <h2 class="visually-hidden">Information</h2>-->
 
-      <div class="ds_notification__text">
-        <p>We use <a href="#">cookies</a> to collect anonymous data to help us improve your site browsing
-          experience.</p>
-        <p>Click 'Accept all cookies' to agree to all cookies that collect anonymous data.
-          To only allow the cookies that make the site work, click 'Use essential cookies only.' Visit 'Set cookie
-          preferences' to control specific cookies.</p>
-      </div>
+<!--      <div class="ds_notification__text">-->
+<!--        <p>We use <a href="#">cookies</a> to collect anonymous data to help us improve your site browsing-->
+<!--          experience.</p>-->
+<!--        <p>Click 'Accept all cookies' to agree to all cookies that collect anonymous data.-->
+<!--          To only allow the cookies that make the site work, click 'Use essential cookies only.' Visit 'Set cookie-->
+<!--          preferences' to control specific cookies.</p>-->
+<!--      </div>-->
 
-      <div class="ds_notification__actions">
-        <button class="ds_button  ds_button--small  js-accept-all-cookies">Accept all cookies</button>
-        <button class="ds_button  ds_button--small  ds_button--secondary  js-accept-essential-cookies">Use essential
-          cookies only</button>
-        <a href="#">Set cookie preferences</a>
-      </div>
-    </div>
-  </div>
-</div>
+<!--      <div class="ds_notification__actions">-->
+<!--        <button class="ds_button  ds_button&#45;&#45;small  js-accept-all-cookies">Accept all cookies</button>-->
+<!--        <button class="ds_button  ds_button&#45;&#45;small  ds_button&#45;&#45;secondary  js-accept-essential-cookies">Use essential-->
+<!--          cookies only</button>-->
+<!--        <a href="#">Set cookie preferences</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 {% endblock %}
 
 {% block scripts %}
