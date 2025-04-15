@@ -12,19 +12,45 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
       "menu": [
         {
           "label": "Overview",
-          "link": "/dashboard"
+          "link": "/"
         },
         {
-          "label": "Bridge",
-          "link": "/dashboard/bridge"
+          "label": "Notifications",
+          "link": "/notifications"
         },
         {
-          "label": "Transfers",
-          "link": "/dashboard/transfer"
+          "label": "Tasks",
+          "link": "/tasks"
         },
         {
-          "label": "Retirements",
-          "link": "/dashboard/retire"
+          "label": "Users",
+          "link": "/users"
+        },
+        {
+          "label": "Organisations",
+          "link": "/organisations"
+        },
+        {
+          "label": "Log out",
+          "link": "/logout"
+        }
+      ]
+    }
+  %}
+{% elseif userType == "developer" %}
+  {% set navigationMenu = {
+      "menu": [
+        {
+          "label": "Overview",
+          "link": "/"
+        },
+        {
+          "label": "My Projects",
+          "link": "/my-projects"
+        },
+        {
+          "label": "Create Projects",
+          "link": "/create-project"
         },
         {
           "label": "Log out",
@@ -38,7 +64,7 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
       "menu": [
         {
           "label": "Home",
-          "link": "/registry"
+          "link": "/"
         },
         {
           "label": "Login",

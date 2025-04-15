@@ -1,0 +1,61 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Dashboard{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Projects overview</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content table-overflow">
+      <table class="ds_table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Standard Name</th>
+            <th scope="col">Project Type</th>
+            <th scope="col">Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+          <tr
+            onclick="window.location.href='projects/{{ project.details_url }}'"
+            style="cursor: pointer"
+          >
+            <td>{{ project.name }}</td>
+            <td>{{ project.category }}</td>
+            <td>{{ project.standard_name }}</td>
+            <td>{{ project.type }}</td>
+            <td>{{ data['statusEnum'][project.status] }}</td>
+            <td>
+              <button
+                type="button"
+                class="ds_link"
+                onclick="window.location.href='projects/{{ project.details_url }}'"
+              >
+                Manage
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

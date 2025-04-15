@@ -59,6 +59,12 @@ router.get('/', (req, res) => {
       });
       break;
 
+    case 'developer':
+      res.render('milestones', {
+        projects
+      });
+      break;
+
     default:
       applyProjectFilters(req, res, () => {
         res.render('registry', {
