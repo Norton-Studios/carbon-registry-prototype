@@ -20,6 +20,18 @@ function getProjectMiddleware(req, res, next) {
   next();
 }
 
+function getMyProjects(req, res, next) {
+  if (req.session.userType !== 'developer') {
+    return res.redirect('/');
+  }
+
+  res.locals.projects = filterProjects(projects, {
+    filterKeys: req.session.data.filterKeys,
+    account_name: ['GreenRoots CIC']
+  });
+  next();
+}
+
 function applyProjectFilters(req, res, next) {
   res.locals.filteredProjects = filterProjects(projects, req.session.data);
   res.locals.projectFilters = generateFilters(projects);
@@ -36,10 +48,11 @@ router.use(applyUserType);
 
 router.get('/projects/:name', getProjectMiddleware, (req, res) => {
   const isAdmin = req.session.userType === 'admin';
+  const isDev = req.session.userType === 'developer';
 
   res.render('project-details', {
     project: res.locals.project,
-    ...(isAdmin && { authenticated: true })
+    ...(isAdmin || isDev ? { authenticated: true } : {})
   });
 });
 
@@ -48,6 +61,13 @@ router.post('/registry', (req, res) => {
     (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
   }
   res.redirect('/#projects');
+});
+
+router.get('/my-projects', getMyProjects, (_, res) => {
+  res.render('dashboard', {
+    projects: res.locals.projects,
+    authenticated: true
+  });
 });
 
 router.get('/', (req, res) => {
@@ -60,8 +80,10 @@ router.get('/', (req, res) => {
       break;
 
     case 'developer':
-      res.render('milestones', {
-        projects
+      getMyProjects(req, res, () => {
+        res.render('milestones', {
+          projects: res.locals.projects
+        });
       });
       break;
 

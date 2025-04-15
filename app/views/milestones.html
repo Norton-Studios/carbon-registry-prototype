@@ -1,6 +1,6 @@
 {% extends "/layouts/main.html" %}
 
-{% block pageTitle %}Dashboard{% endblock %}
+{% block pageTitle %}Developer Dashboard{% endblock %}
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
@@ -11,49 +11,48 @@
     <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Projects overview</h1>
+          <h1 class="ds_page-header__title">Summary</h1>
         </header>
       </div>
     </div>
     {% endblock %}
 
     {% block mainContent %}
-    <div class="ds_layout__content table-overflow">
-      <table class="ds_table">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Standard Name</th>
-            <th scope="col">Project Type</th>
-            <th scope="col">Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for project in projects %}
-          <tr
-            onclick="window.location.href='projects/{{ project.details_url }}'"
-            style="cursor: pointer"
-          >
-            <td>{{ project.name }}</td>
-            <td>{{ project.category }}</td>
-            <td>{{ project.standard_name }}</td>
-            <td>{{ project.type }}</td>
-            <td>{{ data['statusEnum'][project.status] }}</td>
-            <td>
-              <button
-                type="button"
-                class="ds_link"
-                onclick="window.location.href='projects/{{ project.details_url }}'"
-              >
-                Manage
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="ds_layout__content">
+      <nav aria-labelledby="task-list-status" class="ds_task-list-status">
+        <p>Actions required for 1 of 3 projects.</p>
+        <p><a href="#task2" class="js-task-list-skip-link">Skip to first incomplete section</a></p>
+      </nav>
+
+      <ul class="ds_task-list">
+        {% for project in projects %}
+          {% set status = project.status %}
+          {% if [3, 4].includes(status) %}
+            {% set tagColor = "green" %}
+            {% set summary = "This project has been submitted or approved. No further action is currently required." %}
+          {% elif [1, 2].includes(status) %}
+            {% set tagColor = "grey" %}
+            {% set summary = "This project is in progress or ready for submission. Continue or review before submitting." %}
+          {% else %}
+            {% set tagColor = "red" %}
+            {% set summary = "This project has not been started yet. Begin your submission when ready." %}
+          {% endif %}
+
+          <li class="ds_task-list__task" id="task{{ loop.index }}">
+            <div class="ds_task-list__task-details">
+              <h3 class="ds_task-list__task-heading">
+                <a class="ds_task-list__task-link" href="/projects/{{ project.details_url }}">
+                  {{ project.name }} <span class="visually-hidden">({{ data['statusEnum'][status] }})</span>
+                </a>
+              </h3>
+              <p class="ds_hint-text ds_task-list__task-summary">
+                {{ summary }}
+              </p>
+            </div>
+            <strong class="ds_tag ds_tag--{{ tagColor }}" aria-hidden="true">{{ data['statusEnum'][status] }}</strong>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
     {% endblock %}
   </main>

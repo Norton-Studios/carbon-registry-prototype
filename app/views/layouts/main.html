@@ -59,6 +59,20 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
       ]
     }
   %}
+{% elseif userType == "trader" %}
+  {% set navigationMenu = {
+      "menu": [
+        {
+          "label": "Overview",
+          "link": "/"
+        },
+        {
+          "label": "Log out",
+          "link": "/logout"
+        }
+      ]
+    }
+  %}
 {% else %}
   {% set navigationMenu = {
       "menu": [

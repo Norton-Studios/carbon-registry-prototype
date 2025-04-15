@@ -1,0 +1,93 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}FAQ{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+    <main id="main-content" class="ds_layout  ds_layout--guide">
+        {% block mainHeader %}
+        <div class="ds_layout__header">
+            <header class="ds_page-header">
+                <span class="ds_page-header__label  ds_content-label">Troubleshooting</span>
+                <h1 class="ds_page-header__title">Frequently Asked Questions</h1>
+                <dl class="ds_page-header__metadata  ds_metadata">
+                    <div class="ds_metadata__item">
+                        <dt class="ds_metadata__key">Last updated</dt>
+                        <dd class="ds_metadata__value">8 November 2016</dd>
+                    </div>
+                </dl>
+            </header>
+        </div>
+        {% endblock %}
+
+        {% block mainNavigation %}
+        <div class="ds_layout__navigation">
+          <nav role="navigation" class="ds_contents-nav" aria-label="Sections">
+            <h2 class="gamma">Contents</h2>
+            <ul class="ds_contents-nav__list">
+              {% for tag in faqTags %}
+                <li class="ds_contents-nav__item">
+                  {% if tag == currentTag %}
+                    <span class="ds_contents-nav__link ds_current">{{ tag }}</span>
+                  {% else %}
+                    <a href="/faq#{{ tag | lower | replace(' ', '-')}}" class="ds_contents-nav__link">{{ tag }}</a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>
+        {% endblock %}
+
+        {% block mainSidebar %}
+        <nav aria-label="Sections" class="ds_side-navigation" data-module="ds-side-navigation">
+          <input type="checkbox" class="fully-hidden  js-toggle-side-navigation" id="show-side-navigation"
+            aria-controls="side-navigation-root">
+          <label class="ds_side-navigation__expand  ds_link" for="show-side-navigation"><span class="visually-hidden">Show
+              all</span> Pages in this section <span class="ds_side-navigation__expand-indicator"></span></label>
+
+          <ul class="ds_side-navigation__list" id="side-navigation-root">
+            <li
+              class="ds_side-navigation__item  ds_side-navigation__item--has-children  ds_side-navigation__item--has-children--expanded">
+              <a href="#" class="ds_side-navigation__link">Apples</a>
+              <ul class="ds_side-navigation__list">
+                <li class="ds_side-navigation__item  ds_side-navigation__item--has-children">
+                  <a href="#" class="ds_side-navigation__link">Green apples</a>
+                  <ul class="ds_side-navigation__list">
+                    <li class="ds_side-navigation__item">
+                      <a href="#" class="ds_side-navigation__link  ds_current" aria-current="page">Bramley</a>
+                    </li>
+                    <li class="ds_side-navigation__item">
+                      <a href="#" class="ds_side-navigation__link">Granny Smith</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="ds_side-navigation__item  ds_side-navigation__item--has-children">
+                  <a href="#" class="ds_side-navigation__link">Red apples</a>
+                </li>
+              </ul>
+            </li>
+            <li class="ds_side-navigation__item">
+              <a href="#" class="ds_side-navigation__link">Bananas</a>
+            </li>
+            <li class="ds_side-navigation__item">
+              <a href="#" class="ds_side-navigation__link">Cherries</a>
+            </li>
+            <li class="ds_side-navigation__item">
+              <a href="#" class="ds_side-navigation__link">Dates</a>
+            </li>
+          </ul>
+        </nav>
+        {% endblock %}
+
+        {% block mainContent %}
+        <div class="ds_layout__content">
+            <div class="ds_leader">
+                This is example leader text
+            </div>
+            <p>This is an example paragraph.</p>
+        </div>
+        {% endblock %}
+    </main>
+</div>
+{% endblock %}

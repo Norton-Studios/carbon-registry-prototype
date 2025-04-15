@@ -1,0 +1,27 @@
+[
+  {
+    "tag": "Getting Started",
+    "question": "What is this service for?",
+    "answer": "This online service allows you to apply for, manage, or check the status of your application..."
+  },
+  {
+    "tag": "Getting Started",
+    "question": "Who can use this service?",
+    "answer": "You must be a resident of Scotland or the UK..."
+  },
+  {
+    "tag": "Account and Identity",
+    "question": "Do I need an account to use this service?",
+    "answer": "Yes, most services require you to sign in..."
+  },
+  {
+    "tag": "Account and Identity",
+    "question": "How do I prove my identity?",
+    "answer": "You can prove your identity using an accepted form of ID..."
+  },
+  {
+    "tag": "Technical Help",
+    "question": "Who do I contact if I need help?",
+    "answer": "You can contact support using the Help page or call the helpline..."
+  }
+]
