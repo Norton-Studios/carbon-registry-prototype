@@ -1,0 +1,159 @@
+
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Create Project{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Document upload</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      {# Set the action attribute to the next page in your form's journey #}
+      <form action="/register/success" method="post">
+        <div class="ds_question">
+          <fieldset>
+            {# Example of a form input - in this case a date input with datepicker #}
+            <div class="ds_form-group">
+              <label class="ds_label" for="file-upload-1">
+                Upload a file
+              </label>
+              <div
+                class="govuk-drop-zone"
+                data-module="govuk-file-upload">
+                <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="button-group">
+          <a href="/create-project" class="ds_button  ds_button--cancel  ds_button--has-icon  ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img">
+              <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use>
+            </svg>
+            Back
+          </a>
+          <button class="ds_button  ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img">
+              <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+    {% endblock %}
+
+    {% block answerSummary %}
+    <div class="ds_layout__footer">
+      <div class="ds_!_margin-top--4">
+        <div class="ds_file-download">
+          <div class="ds_file-download__thumbnail">
+            <a class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1" href="#">
+              <span class="visually-hidden">Document cover image</span>
+              <img class="ds_file-download__thumbnail-image" src="/public/svg/geodata.svg"
+                alt="" />
+            </a>
+          </div>
+
+          <div class="ds_file-download__content">
+            <a href="#" class="ds_file-download__title" aria-describedby="file-download-1">PlotPoint: Company Site Mapping and Management</a>
+
+            <div id="file-download-1" class="ds_file-download__details">
+              <dl class="ds_metadata  ds_metadata--inline">
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key  visually-hidden">File type</dt>
+                  <dd class="ds_metadata__value">44 page PDF<span class="visually-hidden">,</span></dd>
+                </div>
+
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key  visually-hidden">File size</dt>
+                  <dd class="ds_metadata__value">7.2 MB</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="ds_file-download">
+          <div class="ds_file-download__thumbnail">
+            <a class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1" href="#">
+              <span class="visually-hidden">Document cover image</span>
+              <img class="ds_file-download__thumbnail-image" src="/public/svg/pdf.svg"
+                alt="" />
+            </a>
+          </div>
+
+          <div class="ds_file-download__content">
+            <a href="#" class="ds_file-download__title" aria-describedby="file-download-1">Scotland's Artificial Intelligence
+              Strategy - Trustworthy, Ethical and Inclusive</a>
+
+            <div id="file-download-1" class="ds_file-download__details">
+              <dl class="ds_metadata  ds_metadata--inline">
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key  visually-hidden">File type</dt>
+                  <dd class="ds_metadata__value">44 page PDF<span class="visually-hidden">,</span></dd>
+                </div>
+
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key  visually-hidden">File size</dt>
+                  <dd class="ds_metadata__value">7.2 MB</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="ds_file-download">
+          <div class="ds_file-download__thumbnail">
+            <a class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1" href="#">
+              <span class="visually-hidden">Document cover image</span>
+              <img class="ds_file-download__thumbnail-image" src="/public/svg/csv.svg"
+                alt="" />
+            </a>
+          </div>
+
+          <div class="ds_file-download__content">
+            <a href="#" class="ds_file-download__title" aria-describedby="file-download-1">Scotland's Artificial Intelligence
+              Strategy - Trustworthy, Ethical and Inclusive</a>
+
+            <div id="file-download-1" class="ds_file-download__details">
+              <dl class="ds_metadata  ds_metadata--inline">
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key  visually-hidden">File type</dt>
+                  <dd class="ds_metadata__value">44 page PDF<span class="visually-hidden">,</span></dd>
+                </div>
+
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key  visually-hidden">File size</dt>
+                  <dd class="ds_metadata__value">7.2 MB</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds_inset-text">
+          <div class="ds_inset-text__text">
+            <b>Regulatory Requirements:</b>
+            All carbon credit projects must comply with the applicable national and international standards for emissions reduction, including third-party validation and periodic monitoring. Additional documentation may be requested to verify ownership, methodology, and permanence.
+            <br>
+            <b>Eligibility Criteria:</b>
+            Projects must demonstrate measurable environmental benefits, adhere to ethical land use practices, and align with Scotland’s climate targets. Only projects listed under recognised standards (e.g., Gold Standard, VCS) are eligible for registration.
+          </div>
+      </div>
+      </div>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

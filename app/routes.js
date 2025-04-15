@@ -39,6 +39,7 @@ function applyProjectFilters(req, res, next) {
 }
 
 function applyUserType(req, res, next) {
+  console.log(req.session.data);
   const userType = req.session.userType;
   res.locals.userType = userType || 'guest';
   next();
@@ -63,7 +64,12 @@ router.post('/registry', (req, res) => {
   res.redirect('/#projects');
 });
 
-router.get('/my-projects', getMyProjects, (_, res) => {
+router.get('/create-project/:name/verification', (_, res) => {
+  res.render('payment');
+})
+
+router.get('/my-projects', getMyProjects, (req, res) => {
+  delete req.session.data['paymentSuccess'];
   res.render('dashboard', {
     projects: res.locals.projects,
     authenticated: true

@@ -6,24 +6,48 @@
 
 {% block main %}
 <div class="ds_wrapper">
-    <main id="main-content" class="ds_layout  ds_layout--article">
-        
+    <main id="main-content" class="ds_layout ds_layout--article">
+
+      {% if userType == 'developer' and data['paymentSuccess'] == 'on' %}
+        {% set title = "Payment successful" %}
+        {% set message = "Project is now submitted for validation" %}
+        {% set action = {
+          "link": "/my-projects",
+          "message": "You may view your project"
+          }
+      %}
+      {% elseif  userType == 'developer' %}
+        {% set title = "Form Submitted" %}
+        {% set message = "Project is registered" %}
+        {% set action = {
+          "link": "/create-project/" ~ data['project-details-url'] ~ "/verification",
+          "message": "You may view your invoice"
+          }
+        %}
+      {% else %}
+        {% set title = "Registration Complete" %}
+        {% set message = "Your registration was successful and your account has been created." %}
+        {% set action = {
+          "link": "/",
+          "message": "Please submit your organisational details for verification"
+          }
+        %}
+      {% endif %}
+
         {% block mainHeader %}
         <div class="ds_layout__header">
             <header class="ds_page-header">
                 <div class="ds_notification-panel ds_notification-panel--success">
-                <h1 class="ds_notification-panel__title">Registration Complete</h1>
-                <div class="ds_notification-panel__content"><p>Your registration was successful and your account has been created.</p></div>
-            </div>
+                    <h1 class="ds_notification-panel__title">{{ title }}</h1>
+                    <div class="ds_notification-panel__content">{{ message }}</div>
+                </div>
             </header>
         </div>
         {% endblock %}
 
         {% block mainContent %}
         <div class="ds_layout__content">
-            
-            <p>Please <a href="/">submit your organisational details for verification</a> or <a href="/">return to the home page</a>.</p>
-
+            <p>{{ action.message }} <a href="{{ action.link }}">here</a> or return to the <a href="/">home page</a>.</p>
         </div>
         {% endblock %}
     </main>

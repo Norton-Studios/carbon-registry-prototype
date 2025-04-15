@@ -1,0 +1,76 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Invoice/Payment{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Invoice</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <ol class="ds_summary-list">
+        {% set billItems = [
+        { key: "Registration Fee", value: "£500", id: "invoice-registration" },
+        { key: "Project Validation Review", value: "£750", id: "invoice-validation" },
+        { key: "Standard Compliance Check", value: "£300", id: "invoice-compliance" },
+        { key: "Geospatial Analysis Fee", value: "£250", id: "invoice-geo" },
+        { key: "Public Registry Listing", value: "£100", id: "invoice-listing" },
+        { key: "Document Processing & Archiving", value: "£150", id: "invoice-docs" },
+        { key: "Digital Certificate Issuance", value: "£50", id: "invoice-certificate" },
+        { key: "Administrative Handling", value: "£75", id: "invoice-admin" },
+        { key: "Subtotal", value: "£2,175", id: "invoice-subtotal" },
+        { key: "VAT (20%)", value: "£435", id: "invoice-vat" },
+        { key: "Total Amount Due", value: "£2,610", id: "invoice-total" }
+        ]%}
+
+        {% for field in billItems %}
+        <li class="ds_summary-list__item">
+          <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+          <span class="ds_summary-list__value">
+            {% if loop.last and field.id == "invoice-total" %}
+              <h2>{{ field.value }}</h2>
+            {% else %}
+              <q class="ds_summary-list__answer">{{ field.value }}</q>
+            {% endif %}
+          </span>
+          {% if loop.last and field.id == "invoice-total" %}
+            <form action="/register/success" method="post">
+              <input name="paymentSuccess" type="radio" class="visually-hidden" checked />
+              <button class="ds_button" type="submit" style="margin-bottom: 1rem; width: max-content;">
+                Pay online
+              </button>
+            </form>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+
+      <div class="ds_inset-text">
+        <div class="ds_inset-text__text">
+          <b>Regulatory Requirements:</b>
+          All carbon credit projects must comply with the applicable national and international standards for emissions
+          reduction, including third-party validation and periodic monitoring. Additional documentation may be requested to
+          verify ownership, methodology, and permanence.
+          <br>
+          <b>Eligibility Criteria:</b>
+          Projects must demonstrate measurable environmental benefits, adhere to ethical land use practices, and align with
+          Scotland’s climate targets. Only projects listed under recognised standards (e.g., Gold Standard, VCS) are
+          eligible for registration.
+        </div>
+      </div>
+    </div>
+    {%  endblock %}
+  </main>
+</div>
+{% endblock %}

@@ -19,7 +19,7 @@
     {% block mainContent %}
     <div class="ds_layout__content">
       {# Set the action attribute to the next page in your form's journey #}
-      <form action="/create-project" method="post">
+      <form action="/document-upload" method="post">
         <div class="ds_question">
           <fieldset>
             {# Example of a form input - in this case a date input with datepicker #}
@@ -30,8 +30,9 @@
                 <input id="chosen-date" name="chosen-date" type="text" class="ds_input  ds_input--fixed-10">
               </div>
             </div>
-
           </fieldset>
+          <input name="project-name" type="text" class="visually-hidden" value="Caledonian Canopy Revival" />
+          <input name="project-details-url" type="text" class="visually-hidden" value="caledonian-canopy-revival" />
         </div>
         <div class="button-group">
           <a href="/create-project" class="ds_button  ds_button--cancel  ds_button--has-icon  ds_button--has-icon--left">
@@ -77,6 +78,16 @@
             </div>
           </li>
         </ol>
+
+        <div class="ds_inset-text">
+          <div class="ds_inset-text__text">
+            <b>Regulatory Requirements:</b>
+            All carbon credit projects must comply with the applicable national and international standards for emissions reduction, including third-party validation and periodic monitoring. Additional documentation may be requested to verify ownership, methodology, and permanence.
+            <br>
+            <b>Eligibility Criteria:</b>
+            Projects must demonstrate measurable environmental benefits, adhere to ethical land use practices, and align with Scotland’s climate targets. Only projects listed under recognised standards (e.g., Gold Standard, VCS) are eligible for registration.
+          </div>
+      </div>
       </div>
     </div>
     {% endblock %}
