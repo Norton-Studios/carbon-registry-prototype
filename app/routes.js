@@ -47,7 +47,7 @@ router.post('/registry', (req, res) => {
   if (req.body.clearFilters) {
     (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
   }
-  res.redirect('/');
+  res.redirect('/#projects');
 });
 
 router.get('/', (req, res) => {
