@@ -49,3 +49,11 @@ a.ds_site-navigation__link:visited {
 .ds_wrapper {
   width: 1300px;
 }
+
+.flex-container {
+  display: flex; 
+  flex-direction: column;
+  column-gap: 3rem; 
+  align-items: flex-start;
+  justify-content: space-between;
+}

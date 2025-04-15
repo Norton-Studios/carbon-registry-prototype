@@ -19,7 +19,7 @@
           <h1 class="ds_page-header__title">{{ project.name }}</h1>
           {% if not authenticated %}
           <p class="ds_page-header__description">
-            {{ project.category }} - {{ project.projectType }}
+            {{ project.category }} - {{ project.type }}
           </p>
           {% endif %}
         </header>
@@ -32,10 +32,10 @@
       <ol class="ds_summary-list">
         {% set projectFields = [
           { key: "Category", value: project.category, id: "field-category" },
-          { key: "Type", value: project.projectType, id: "field-type" },
-          { key: "Standard Name", value: project.standardName, id: "field-standard" },
-          { key: "Status", value: project.status, id: "field-status" },
-          { key: "PIUs Listed", value: project.piusListed, id: "field-pius" },
+          { key: "Type", value: project.type, id: "field-type" },
+          { key: "Standard Name", value: project.standard_name, id: "field-standard" },
+          { key: "Status", value: data['statusEnum'][project.status], id: "field-status" },
+          { key: "PIUs Listed", value: project.pius_listed, id: "field-pius" },
           { key: "Validator", value: project.validator, id: "field-validator" },
           { key: "Developer", value: project.developer, id: "field-developer" },
           { key: "Country", value: project.country, id: "field-country" },

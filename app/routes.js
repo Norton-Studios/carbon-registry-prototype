@@ -6,14 +6,11 @@
 const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
 const projects = require('./assets/data/projects.json');
-const { generateFilters, filterProjects } = require('./helpers.js');
+const { generateFilters, filterProjects, getProject } = require('./helpers.js');
 
 function getProjectMiddleware(req, res, next) {
   const projectName = req.params.name;
-  const project = projects.find(
-    p => p.name.toLowerCase().replace(/\s+/g, '-') === projectName.toLowerCase()
-  );
-
+  const project = getProject(projects, projectName);
   if (!project) {
     return res.status(404).redirect('/error-page-not-found');
   }
@@ -23,8 +20,7 @@ function getProjectMiddleware(req, res, next) {
 }
 
 function applyProjectFilters(req, res, next) {
-  const { data } = req.session;
-  res.locals.filteredProjects = filterProjects(projects, data);
+  res.locals.filteredProjects = filterProjects(projects, req.session.data);
   res.locals.projectFilters = generateFilters(projects);
   next();
 }
@@ -37,35 +33,40 @@ function applyUserType(req, res, next) {
 
 router.use(applyUserType);
 
-router.get('/dashboard', (_, res) => {
-  res.render('dashboard', {
-    projects,
-    authenticated: true
-  });
-});
+router.get('/projects/:name', getProjectMiddleware, (req, res) => {
+  const isAdmin = req.session.userType === 'admin';
 
-router.get('/dashboard/:name', getProjectMiddleware, (_, res) => {
   res.render('project-details', {
     project: res.locals.project,
-    authenticated: true
+    ...(isAdmin && { authenticated: true })
   });
 });
 
-router.get('/registry', applyProjectFilters, (_, res) => {
-  res.render('registry', {
-    projects: res.locals.filteredProjects,
-    filters: res.locals.projectFilters
-  });
+router.post('/registry', (req, res) => {
+  if (req.body.clearFilters) {
+    (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
+  }
+  res.redirect('/');
 });
 
-router.get('/projects/:name', getProjectMiddleware, (_, res) => {
-  res.render('project-details', {
-    project: res.locals.project,
-  });
-});
+router.get('/', (req, res) => {
+  switch (req.session.userType) {
+    case 'admin':
+      res.render('dashboard', {
+        projects,
+        authenticated: true
+      });
+      break;
 
-router.get('/', (_, res) => {
-  res.redirect('/registry');
+    default:
+      applyProjectFilters(req, res, () => {
+        res.render('registry', {
+          projects: res.locals.filteredProjects,
+          filters: res.locals.projectFilters
+        });
+      });
+      break;
+  }
 });
 
 router.get('/login', (_, res) => {
@@ -76,13 +77,13 @@ router.post('/login', (req, res) => {
   const { username } = req.body;
   if (username.startsWith('admin')) {
     req.session.userType = 'admin';
-    res.redirect('/dashboard');
+    res.redirect('/');
   } else if (username.startsWith('trader')) {
     req.session.userType = 'trader';
-    res.redirect('/dashboard');
+    res.redirect('/');
   } else if (username.startsWith('developer')) {
     req.session.userType = 'developer';
-    res.redirect('/dashboard');
+    res.redirect('/');
   } else {
     res.render('login', { error: 'Invalid username' });
   }

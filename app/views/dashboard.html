@@ -33,19 +33,19 @@
         <tbody>
           {% for project in projects %}
           <tr
-            onclick="window.location.href='dashboard/{{ project.detailsUrl }}'"
+            onclick="window.location.href='projects/{{ project.details_url }}'"
             style="cursor: pointer"
           >
             <td>{{ project.name }}</td>
             <td>{{ project.category }}</td>
-            <td>{{ project.standardName }}</td>
-            <td>{{ project.projectType }}</td>
-            <td>{{ project.status }}</td>
+            <td>{{ project.standard_name }}</td>
+            <td>{{ project.type }}</td>
+            <td>{{ data['statusEnum'][project.status] }}</td>
             <td>
               <button
                 type="button"
                 class="ds_link"
-                onclick="window.location.href='dashboard/{{ project.detailsUrl }}'"
+                onclick="window.location.href='projects/{{ project.details_url }}'"
               >
                 Manage
               </button>

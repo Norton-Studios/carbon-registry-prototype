@@ -1,18 +1,23 @@
 function generateFilters(projects) {
   return {
-    Status: [...new Set(projects.map(project => project.status))],
-    Type: [...new Set(projects.map(project => project.projectType))],
-    Category: [...new Set(projects.map(project => project.category))]
+    Country: [...new Set(projects.map(project => project.country).sort((a, b) => a.localeCompare(b)))],
+    Status: [...new Set(projects.map(project => String(project.status)).sort((a, b) => a - b))],
+    Type: [...new Set(projects.map(project => project.type).sort((a, b) => a.localeCompare(b)))],
+    Category: [...new Set(projects.map(project => project.category).sort((a, b) => a.localeCompare(b)))],
+    "Account Name": [...new Set(projects.map(project => project.account_name).sort((a, b) => a.localeCompare(b)))],
+    Credits: projects.some(project => project.credits) ? ["Available"] : []
   };
 }
 
+function getProject(projects, projectName) {
+  return projects.find(project => project.name.toLowerCase().replace(/\s+/g, '-') === projectName.toLowerCase());
+}
+
 function filterProjects(projects, sessionData) {
-  const data = {
-    'search-string': sessionData['search-string'] || '',
-    status: sessionData.status || [],
-    projectType: sessionData.projectType || [],
-    category: sessionData.category || []
-  }
+  const data = sessionData.filterKeys.reduce((acc, key) => ({
+    ...acc,
+    [key]: key === 'searchString' ? (sessionData[key] || '') : (sessionData[key] || [])
+  }), {});
 
   return projects.filter(project => {
     let matchesSearch = true;
@@ -20,13 +25,12 @@ function filterProjects(projects, sessionData) {
     const normalize = (str) => str.toLowerCase().replace(/\s+/g, '');
 
     Object.entries(data).forEach(([key, val]) => {
-
-      const projectName = normalize(project.name)
-
-      if (key === 'search-string') {
-        matchesSearch = projectName.includes(normalize(val));
+      if (key === 'searchString' && sessionData.searchBy) {
+        matchesSearch = normalize(String(project[sessionData.searchBy])).includes(normalize(val));
+      } else if (key === 'credits' && Array.isArray(val) && val.length > 0) {
+        matchesFilters = Boolean(project.credits);
       } else if (Array.isArray(val) && val.length > 0) {
-        matchesFilters = val.includes(project[key])
+        matchesFilters = val.includes(String(project[key] ?? ''))
       }
     });
 
@@ -36,5 +40,6 @@ function filterProjects(projects, sessionData) {
 
 module.exports = {
   generateFilters,
-  filterProjects
+  filterProjects,
+  getProject
 };

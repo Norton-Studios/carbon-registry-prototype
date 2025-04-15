@@ -18,11 +18,20 @@
     <div class="ds_layout__content">
       <div class="ds_site-search">
         <form role="search" class="ds_site-search__form" action="/registry" method="POST">
-          <label class="ds_label visually-hidden" for="site-search">Registry search</label>
+          <label class="ds_label" for="searchBy">Search by</label>
+          <div class="ds_select-wrapper  ds_input--fluid-one-third">
+              <select class="ds_select" id="searchBy" name="searchBy" onchange="this.form.submit()" value="{{ data['searchBy'] }}">
+                <option value="name" {% if data.searchBy == 'name' %}selected{% endif %}>Project Name</option>
+                <option value="id" {% if data.searchBy == 'id' %}selected{% endif %}>Project Id</option>
+              </select>
+              <span class="ds_select-arrow" aria-hidden="true"></span>
+          </div>
+
+          <label class="ds_label visually-hidden" for="registry-search">Registry search</label>
           <div class="ds_input__wrapper ds_input__wrapper--has-icon">
-            <input name="search-string" required id="registry-search" class="ds_input ds_site-search__input" type="search" placeholder="Search by project name" autocomplete="off" value="{{ value }}"/>
+            <input name="searchString" id="registry-search" class="ds_input ds_site-search__input" type="search" placeholder="Search by project {{ data['searchBy'] }}" autocomplete="off" value="{{ data['searchString'] }}"/>
             <button type="submit" class="ds_button js-site-search-button">
-              <span class="visually-hidden">Search by project name</span>
+              <span class="visually-hidden">Search by project {{ data['searchBy'] }}</span>
               <svg class="ds_icon" aria-hidden="true" role="img">
                 <use href="/plugin-assets/%40scottish-government%2Fdesign-system/dist/images/icons/icons.stack.svg#search"></use>
               </svg>
@@ -36,7 +45,15 @@
     <div class="ds_layout__sidebar">
       <div class="ds_search-filters">
         <form id="filters" action="/registry" method="POST">
+          <div class="flex-container">
           <h3 class="ds_search-filters__title ds_h4">Filter by</h3>
+            <button id="clear-filters" class="ds_facets__clear-button  ds_button  ds_button--secondary">
+              Clear all filters
+              <svg class="ds_facet__button-icon" aria-hidden="true" role="img" focusable="false">
+                  <use href="/plugin-assets/%40scottish-government%2Fdesign-system/dist/images/icons/icons.stack.svg#cancel"></use>
+              </svg>
+            </button>
+          </div>
           <div class="ds_accordion ds_accordion--small ds_!_margin-top--0" data-module="ds-accordion">
             {% for key, values in filters %}
               {% set panelId = "panel-" + loop.index %}
@@ -45,6 +62,9 @@
                 <div class="ds_accordion-item__header">
                   <h3 id="{{ panelId }}-heading" class="ds_accordion-item__title">
                     {{ key }}
+                    <span class="ds_search-filters__filter-count{% if not data[key | lower | replace(' ', '_')] %} visually-hidden{% endif %}">
+                      ({{ data[key | lower | replace(" ", "_")].length }} Selected)
+                    </span>
                   </h3>
                   <span class="ds_accordion-item__indicator"></span>
                   <label class="ds_accordion-item__label" for="{{ panelId }}"><span class="visually-hidden">Show this section</span></label>
@@ -57,8 +77,25 @@
                         {% for value in values %}
                           {% set inputId = key | replace(" ", "-") | lower + "-" + loop.index %}
                           <div class="ds_checkbox ds_checkbox--small">
-                            <input id="{{ inputId }}" name="{{ key | lower | replace(" ", "_") }}" class="ds_checkbox__input" type="checkbox" value="{{ value }}">
-                            <label for="{{ inputId }}" class="ds_checkbox__label">{{ value }}</label>
+                            <input
+                              id="{{ inputId }}"
+                              name="{{ key | lower | replace(" ", "_") }}"
+                              class="ds_checkbox__input"
+                              type="checkbox"
+                              value="{{ value }}"
+                              {% if data[key | lower | replace(" ", "_")] %}
+                                {% if value in data[key | lower | replace(" ", "_")] %}
+                                  checked
+                                {% endif %}
+                              {% endif %}
+                            />
+                            <label for="{{ inputId }}" class="ds_checkbox__label">
+                              {% if key == 'Status' %}
+                                {{ data['statusEnum'][value] }}
+                              {% else %}
+                                {{ value }}
+                              {% endif %}
+                            </label>
                           </div>
                         {% endfor %}
                       </div>
@@ -97,14 +134,14 @@
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">{{ project.name }}</td>
                 <td class="govuk-table__cell">{{ project.category }}</td>
-                <td class="govuk-table__cell">{{ project.standardName }}</td>
-                <td class="govuk-table__cell">{{ project.projectType }}</td>
-                <td class="govuk-table__cell">{{ project.status }}</td>
+                <td class="govuk-table__cell">{{ project.standard_name }}</td>
+                <td class="govuk-table__cell">{{ project.type }}</td>
+                <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
                 <td class="govuk-table__cell">
                   <button
                     type="button"
                     class="ds_link"
-                    onclick="window.location.href='projects/{{ project.detailsUrl }}'"
+                    onclick="window.location.href='projects/{{ project.details_url }}'"
                   >
                     View
                   </button>
@@ -153,7 +190,7 @@
           <a aria-label="Next page" class="ds_pagination__link  ds_pagination__link--text  ds_pagination__link--icon" href="#">
             <span class="ds_pagination__link-label">Next</span>
             <svg class="ds_icon" aria-hidden="true" role="img">
-              <use href="/assets/images/icons/icons.stack.svg#chevron_right"></use>
+              <use href="/plugin-assets/%40scottish-government%2Fdesign-system/dist/images/icons/icons.stack.svg#chevron_right"></use>
             </svg>
           </a>
         </li>
