@@ -29,16 +29,17 @@
 {% block mainSidebar %}
 <div class="ds_layout__sidebar">
   <div class="ds_search-filters">
-    <form id="filters" action="/registry" method="POST">
-      <div class="flex-container">
+    <form action="/registry" method="POST" class="flex-container">
+      <input name="clearFilters" type="radio" class="visually-hidden" checked />
+      <button id="clear-filters" class="ds_facets__clear-button  ds_button  ds_button--secondary">
+        Clear all filters
+        <svg class="ds_facet__button-icon" aria-hidden="true" role="img" focusable="false">
+          <use href="{{ assetPath }}/images/icons/icons.stack.svg#cancel"></use>
+        </svg>
+      </button>
       <h3 class="ds_search-filters__title ds_h4">Filter by</h3>
-        <button id="clear-filters" class="ds_facets__clear-button  ds_button  ds_button--secondary">
-          Clear all filters
-          <svg class="ds_facet__button-icon" aria-hidden="true" role="img" focusable="false">
-              <use href="{{ assetPath }}/images/icons/icons.stack.svg#cancel"></use>
-          </svg>
-        </button>
-      </div>
+    </form>
+    <form id="filters" action="/registry" method="POST">
       <div class="ds_accordion ds_accordion--small ds_!_margin-top--0" data-module="ds-accordion">
         {% for key, values in filters %}
           {% set panelId = "panel-" + loop.index %}

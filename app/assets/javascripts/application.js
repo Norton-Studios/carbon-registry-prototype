@@ -51,22 +51,4 @@ window.GOVUKPrototypeKit.documentReady(() => {
       nav.appendChild(protectedContainer);
     }
   });
-
-  const clearFiltersButton = document.getElementById('clear-filters');
-  const filtersForm = document.getElementById('filters');
-
-    if (clearFiltersButton && filtersForm) {
-      clearFiltersButton.addEventListener('click', () => {
-        let existingInput = filtersForm.querySelector('input[name="clearFilters"]');
-
-        if (!existingInput) {
-          const clearFilterInput = document.createElement('input');
-          clearFilterInput.type = 'hidden';
-          clearFilterInput.name = 'clearFilters';
-          clearFilterInput.value = true;
-          filtersForm.appendChild(clearFilterInput);
-        }
-      filtersForm.submit();
-    });
-  }
 });
