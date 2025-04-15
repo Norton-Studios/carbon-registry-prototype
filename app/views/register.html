@@ -1,0 +1,36 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--article">
+    {% block mainHeader %}
+    <div class="ds_layout__header">
+        <header class="ds_page-header">
+            <h1 class="ds_page-header__title">Account Registration</h1>
+        </header>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <form action="/register/classification" method="post">
+        <label class="ds_label" for="email">Email address:</label>
+        <input class="ds_input" type="text" id="email" name="email" placeholder="Enter your email" required>
+        <label class="ds_label" for="password">Password:</label>
+        <input class="ds_input" type="password" id="password" name="password" required>
+        <label class="ds_label" for="confirm">Confirm password:</label>
+        <input class="ds_input" type="password" id="confirm" name="confirm" required>
+        <input type="submit" class="ds_button ds_button--max" value="Next">
+      </form>
+    </div>
+    
+    {% endblock %}
+  </main>
+</div>
+
+{% endblock %}

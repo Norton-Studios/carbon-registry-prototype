@@ -1,0 +1,31 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+    <main id="main-content" class="ds_layout  ds_layout--article">
+        
+        {% block mainHeader %}
+        <div class="ds_layout__header">
+            <header class="ds_page-header">
+                <div class="ds_notification-panel ds_notification-panel--success">
+                <h1 class="ds_notification-panel__title">Registration Complete</h1>
+                <div class="ds_notification-panel__content"><p>Your registration was successful and your account has been created.</p></div>
+            </div>
+            </header>
+        </div>
+        {% endblock %}
+
+        {% block mainContent %}
+        <div class="ds_layout__content">
+            
+            <p>Please <a href="/">submit your organisational details for verification</a> or <a href="/">return to the home page</a>.</p>
+
+        </div>
+        {% endblock %}
+    </main>
+</div>
+{% endblock %}
