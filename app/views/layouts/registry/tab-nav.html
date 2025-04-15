@@ -1,0 +1,58 @@
+{% block registryTabs %}
+<div class="ds_tabs" data-module="ds-tabs">
+  <nav class="ds_tabs__navigation" aria-labelledby="ds_tabs__title">
+    <h2 id="ds_tabs__title" class="ds_tabs__title">Contents</h2>
+    <ul class="ds_tabs__list" id="tablist">
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#accounts">Account Holders</a>
+      </li>
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#projects">Projects</a>
+      </li>
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#issuances">Issuances/Listings</a>
+      </li>
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#holdings">Holdings</a>
+      </li>
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#retired">Retired Credits</a>
+      </li>
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#api">API Retired Credits</a>
+      </li>
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#assigned">Assigned Credits</a>
+      </li>
+      <li class="ds_tabs__tab">
+        <a class="ds_tabs__tab-link" href="#cancelled">Cancelled Units</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="accounts">
+    {% include "/layouts/registry/tabs/accounts.html" %}
+  </div>
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="projects">
+    {% include "/layouts/registry/tabs/projects.html" %}
+  </div>
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="issuances">
+    {% include "/layouts/registry/tabs/projects.html" %}
+  </div>
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="holdings">
+    {% include "/layouts/registry/tabs/projects.html" %}
+  </div>
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="retired">
+    {% include "/layouts/registry/tabs/projects.html" %}
+  </div>
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="api">
+    {% include "/layouts/registry/tabs/projects.html" %}
+  </div>
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="assigned">
+    {% include "/layouts/registry/tabs/projects.html" %}
+  </div>
+  <div class="ds_tabs__content ds_tabs__content--bordered" id="cancelled">
+    {% include "/layouts/registry/tabs/projects.html" %}
+  </div>
+</div>
+{% endblock %}

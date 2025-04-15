@@ -6,6 +6,7 @@
 const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
 const projects = require('./assets/data/projects.json');
+const accounts = require('./assets/data/accounts.json');
 const { generateFilters, filterProjects, getProject } = require('./helpers.js');
 
 function getProjectMiddleware(req, res, next) {
@@ -61,6 +62,7 @@ router.get('/', (req, res) => {
     default:
       applyProjectFilters(req, res, () => {
         res.render('registry', {
+          accounts,
           projects: res.locals.filteredProjects,
           filters: res.locals.projectFilters
         });

@@ -57,3 +57,15 @@ a.ds_site-navigation__link:visited {
   align-items: flex-start;
   justify-content: space-between;
 }
+
+@supports (display: grid) {
+  @media (min-width: 768px) {
+      .ds_layout--search-results--filters {
+          grid-template-areas:
+      "h h h h h h h h . . . ."
+      "c c c c c c c c . . . ."
+      "s s s l l l l l l l l l"
+      ". . . . f f f f f f f f";
+      }
+  }
+}

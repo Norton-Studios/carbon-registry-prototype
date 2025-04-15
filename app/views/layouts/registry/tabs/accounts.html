@@ -1,0 +1,29 @@
+{%  block tabContent %}
+<div class="table-overflow">
+  <table class="govuk_table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Account Name</th>
+        <th scope="col" class="govuk-table__header">Classification</th>
+        <th scope="col" class="govuk-table__header">Country</th>
+        <th scope="col" class="govuk-table__header">Website</th>
+      </tr>
+    </thead>
+    <tbody id="search-results">
+      {% for account in accounts %}
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">{{ account.account_name }}</td>
+        <td class="govuk-table__cell">{{ account.classification }}</td>
+        <td class="govuk-table__cell">{{ account.country }}</td>
+        <td class="govuk-table__cell">
+          <button type="button" class="ds_link"
+            onclick="window.location.href='{{ account.website }}'">
+            {{ account.website }}
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
