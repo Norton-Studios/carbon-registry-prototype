@@ -1,3 +1,5 @@
+{% from "components/file.html" import fileDownload %}
+
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}{{ project.name }}{% endblock %}
@@ -60,7 +62,7 @@
     </div>
     <div class="ds_layout__sidebar">
       <h2 class="ds_layout__sidebar-title">Site Map</h2>
-      <div id="map" style="width: 100%; height: 400px;"></div>
+      <div id="map" style="width: 100%; height: 280px;"></div>
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
             integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
             crossorigin=""/>
@@ -119,8 +121,23 @@
           marker.bindPopup("<b>{{ project.name }}</b><br>{{ project.address }}").openPopup();
         });
       </script>
+      <h2 class="ds_layout__sidebar-title">Documents</h2>
+      <div>
+        {% for document in project.documents %}
+          {{
+          fileDownload(
+            "/public/svg/" ~ document.type ~ ".svg",
+            "/public/document/" ~ document.url,
+            document.name,
+            document.description,
+            document.size
+          )
+          }}
+        {% endfor %}
+      </div>
     </div>
     {% endblock %}
   </main>
 </div>
 {% endblock %}
+

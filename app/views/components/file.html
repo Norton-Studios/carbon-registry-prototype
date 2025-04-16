@@ -1,0 +1,28 @@
+{% macro fileDownload(thumbnailSrc, linkHref, title, fileType, fileSize) %}
+<div class="ds_file-download">
+  <div class="ds_file-download__thumbnail">
+    <a class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1" href="{{ linkHref }}">
+      <span class="visually-hidden">Document cover image</span>
+      <img width="65" class="ds_file-download__thumbnail-image" src="{{ thumbnailSrc }}" alt="" />
+    </a>
+  </div>
+
+  <div class="ds_file-download__content">
+    <a href="{{ linkHref }}" class="ds_file-download__title" aria-describedby="file-download-details">{{ title }}</a>
+
+    <div id="file-download-details" class="ds_file-download__details">
+      <dl class="ds_metadata ds_metadata--inline">
+        <div class="ds_metadata__item">
+          <dt class="ds_metadata__key visually-hidden">File type</dt>
+          <dd class="ds_metadata__value">{{ fileType }}<span class="visually-hidden">,</span></dd>
+        </div>
+
+        <div class="ds_metadata__item">
+          <dt class="ds_metadata__key visually-hidden">File size</dt>
+          <dd class="ds_metadata__value">{{ fileSize }}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
+{% endmacro %}
