@@ -54,7 +54,7 @@ module.exports = {
     "predicted_contribution_to_buffer_over_project_lifetime_tco2e",
     "country",
     "state",
-    "zip_code",
+    "zip/postal_code",
     "latitude",
     "longitude",
     "address",
