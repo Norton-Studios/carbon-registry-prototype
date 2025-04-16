@@ -1,0 +1,60 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{# 'Part of' notification message - in place of breadcrumbs #}
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <nav class="ds_notification-message">
+    <h3 class="ds_notification-message__title">
+      Part of <a href="/register">Registration form</a>
+    </h3>
+  </nav>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--question-page">
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+        
+      {# Set the action attribute to the next page in your form's journey #}
+      <form action="/register/organisation-details/company-number" method="post">
+        <div class="ds_question">
+          <fieldset>
+            <legend class="ds_page-header">
+              <h1 class="ds_page-header__title">
+                What is your organisation's Company Registration Number?
+              </h1>
+            </legend>
+
+            {# Example of a form input - in this case a date input with datepicker #}
+            <div>
+              <label class="ds_label" for="companyNumber">Your eight-digit Company Registration Number (CRM):</label>
+              <input class="ds_input ds_input" type="text" id="companyNumber" name="companyNumber" placeholder="SC000000" required>
+            </div>
+              
+          </fieldset>
+        </div>
+        <div class="button-group">
+          <a href="/register" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+    {% endblock %}
+
+  </main>
+</div>
+{% endblock %}

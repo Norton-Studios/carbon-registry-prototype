@@ -1,0 +1,110 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{# 'Part of' notification message - in place of breadcrumbs #}
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <nav class="ds_notification-message">
+    <h3 class="ds_notification-message__title">
+      Part of <a href="/register">Registration form</a>
+    </h3>
+  </nav>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--question-page">
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+        
+      {# Set the action attribute to the next page in your form's journey #}
+      <form action="/register/organisation-details/trading-name" method="post">
+        <div class="ds_question">
+          <legend class="ds_page-header">
+            <h1 class="ds_page-header__title">
+              What is the registered address of your organisation?
+            </h1>
+          </legend>
+          <dl class="ds_prefilled-value-list" aria-label="Your current answers">
+            <dt class="ds_prefilled-value-list__key">Postcode</dt>
+            <dd class="ds_prefilled-value-list__value">
+                <div>EH6 6QQ</div>
+                <button type="button" class="ds_link  ds_prefilled-value-list__value-actions">Change <span class="visually-hidden">your answer for: <q>Postcode</q></span></button>
+            </dd>
+        </dl>
+        <div class="ds_question">
+            <label class="ds_label" for="address">
+                Select an address
+            </label>
+            <div class="ds_select-wrapper">
+                <select class="ds_select" name="address" id="address">
+                    <option value=""></option>
+                    <option value="address-1">1 Street, Edinburgh, EH6 6QQ</option>
+                    <option value="address-2">2 Street, Edinburgh, EH6 6QQ</option>
+                    <option value="address-3">3 Street, Edinburgh, EH6 6QQ</option>
+                    <option value="address-4">4 Street, Edinburgh, EH6 6QQ</option>
+                    <option value="address-5">5 Street, Edinburgh, EH6 6QQ</option>
+                    <option value="address-6">6 Street, Edinburgh, EH6 6QQ</option>
+                </select>
+                <span class="ds_select-arrow" aria-hidden="true"></span>
+            </div>
+        </div>
+        <p><button type="button" class="ds_link  ds_no-margin">Or type in your full address</button></p>
+
+        </div>
+        <div class="button-group">
+          <a href="/register/organisation-details/classification" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button  ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+    {% endblock %}
+
+    {# Optionally show submitted answers so far #}
+    {% block answerSummary %}
+    <div class="ds_layout__footer">
+      <div class="ds_!_margin-top--4">
+        <h2>Your answers</h2>
+        <p><button class="ds_link">Clear answers and start again</button></p>
+        <ol class="ds_summary-list">
+          <li class="ds_summary-list__item"><span class="ds_summary-list__key" id="item-1-key">Company Name</span> <span class="ds_summary-list__value"><q class="ds_summary-list__answer">My answer</q></span>
+            <div class="ds_summary-list__actions">
+              <ul class="ds_summary-list__actions-list">
+                <li class="ds_summary-list__actions-list-item"><button class="ds_link" aria-describedby="item-1-key">Change</button></li>
+              </ul>
+            </div>
+          </li>
+          <li class="ds_summary-list__item"><span class="ds_summary-list__key" id="item-2-key">Trading Name</span> <span class="ds_summary-list__value"><q class="ds_summary-list__answer">My answer</q></span>
+            <div class="ds_summary-list__actions">
+              <ul class="ds_summary-list__actions-list">
+                <li class="ds_summary-list__actions-list-item"><button class="ds_link" aria-describedby="item-2-key">Change</button></li>
+              </ul>
+            </div>
+          </li>
+          <li class="ds_summary-list__item"><span class="ds_summary-list__key" id="item-2-key">Classification</span> <span class="ds_summary-list__value"><q class="ds_summary-list__answer">My answer</q></span>
+            <div class="ds_summary-list__actions">
+              <ul class="ds_summary-list__actions-list">
+                <li class="ds_summary-list__actions-list-item"><button class="ds_link" aria-describedby="item-2-key">Change</button></li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    {% endblock %}
+
+  </main>
+</div>
+{% endblock %}
