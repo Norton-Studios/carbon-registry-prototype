@@ -8,6 +8,7 @@
     "@govuk-prototype-kit/common-templates": "2.0.1",
     "@scottish-government-design-system/prototype-templates": "^0.3.0",
     "@scottish-government/design-system": "^3.0.0",
+    "dotenv": "^16.5.0",
     "govuk-frontend": "5.9.0",
     "govuk-prototype-kit": "13.16.2",
     "notifications-node-client": "8.2.1"
