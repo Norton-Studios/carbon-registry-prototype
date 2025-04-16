@@ -72,42 +72,13 @@
       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
               integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
               crossorigin=""></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.15.0/proj4.js"></script>
 
       <script>
         const apiKey = "{{ osApiKey }}";
-        proj4.defs("EPSG:27700", "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs");
-        proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
-
-        async function getCoordinatesFromAddress(address) {
-          const endpoint = `https://api.os.uk/search/places/v1/find?key=${apiKey}&query=${encodeURIComponent(address)}`;
-
-          try {
-            const response = await fetch(endpoint);
-            if (!response.ok) {
-              throw new Error(`Error: ${response.status} - ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            if (data.results && data.results.length > 0) {
-              const { DPA } = data.results[0];
-              const [longitude, latitude] = proj4(
-                "EPSG:27700", // OSGB36
-                "EPSG:4326", // WGS84
-                [DPA.X_COORDINATE, DPA.Y_COORDINATE]
-              );
-              return { latitude, longitude };
-            } else {
-              throw new Error("No results found for the given address.");
-            }
-          } catch (error) {
-            console.error("Failed to fetch coordinates:", error);
-            return null;
-          }
-        }
 
         document.addEventListener("DOMContentLoaded", async function () {
-          const { latitude, longitude } = await getCoordinatesFromAddress("{{ project.address }}");
+          const latitude = {{ project.location.latitude }};
+          const longitude = {{ project.location.longitude }};
           const map = L.map("map", {
             attributionControl: false,
             center: [latitude, longitude],

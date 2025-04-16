@@ -18,7 +18,11 @@
       "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
       "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
     ],
-    "description": "A 1500-hectare afforestation project near Inverness in the Scottish Highlands, calculated over 100 years."
+    "description": "A 1500-hectare afforestation project near Inverness in the Scottish Highlands, calculated over 100 years.",
+    "location": {
+      "latitude": 57.407232176595656,
+      "longitude": -4.327189617094174
+    }
   },
   {
     "id": 15423,
@@ -42,7 +46,11 @@
       "WCC00077_-_Bridge_End_Farm_Validation_Statement_and_Annex.pdf",
       "WCC_Bridge_End_Farm_ProjectProgressReport_17.5.23_VW2_Updated_(1).pdf"
     ],
-    "description": "A wetland restoration project along the River Clyde in Glasgow, supporting blue carbon initiatives over 50 years."
+    "description": "A wetland restoration project along the River Clyde in Glasgow, supporting blue carbon initiatives over 50 years.",
+    "location": {
+      "latitude": 55.85591790098205,
+      "longitude": -4.2548672381110295
+    }
   },
   {
     "id": 98731,
@@ -63,7 +71,11 @@
       "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
       "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
     ],
-    "description": "A 1200-hectare peatland recovery project in the Scottish Borders, calculated over 80 years."
+    "description": "A 1200-hectare peatland recovery project in the Scottish Borders, calculated over 80 years.",
+    "location": {
+      "latitude": 55.18094113725159,
+      "longitude": -2.8141162854775423
+    }
   },
   {
     "id": 39128,
@@ -86,7 +98,11 @@
       "WCC_Project_VFN_statement_V2.2_-_ISO17029_Bridge_End_Updated.pdf",
       "WCC_ProjectDesignDocument_Bridge_End_FarmV3.pdf"
     ],
-    "description": "An urban forestry project in Pollok Country Park, Glasgow, enhancing green spaces over 30 years."
+    "description": "An urban forestry project in Pollok Country Park, Glasgow, enhancing green spaces over 30 years.",
+    "location": {
+      "latitude": 55.826196209582555,
+      "longitude": -4.300260671964526
+    }
   },
   {
     "id": 49237,
@@ -110,7 +126,11 @@
       "WCC_Project_VFN_statement_V2.2_-_ISO17029_Bridge_End_Updated.pdf",
       "WCC_ProjectDesignDocument_Bridge_End_FarmV3.pdf"
     ],
-    "description": "An 800-hectare wetland restoration project near Loch Lomond, calculated over 70 years."
+    "description": "An 800-hectare wetland restoration project near Loch Lomond, calculated over 70 years.",
+    "location": {
+      "latitude": 56.100624554448636,
+      "longitude": -4.641167727673459
+    }
   },
   {
     "id": 68215,
@@ -138,7 +158,11 @@
       "WCC_Project_VFN_statement_V2.2_-_ISO17029_Bridge_End_Updated.pdf",
       "WCC_ProjectDesignDocument_Bridge_End_FarmV3.pdf"
     ],
-    "description": "A reforestation project on the Isle of Skye, Highland, calculated over 90 years."
+    "description": "A reforestation project on the Isle of Skye, Highland, calculated over 90 years.",
+    "location": {
+      "latitude": 57.4124228773884,
+      "longitude": -6.192125681491862
+    }
   },
   {
     "id": 90325,
@@ -166,7 +190,11 @@
       "WCC_Project_VFN_statement_V2.2_-_ISO17029_Bridge_End_Updated.pdf",
       "WCC_ProjectDesignDocument_Bridge_End_FarmV3.pdf"
     ],
-    "description": "A woodland regeneration project in the Cairngorms National Park, Aberdeenshire, calculated over 60 years."
+    "description": "A woodland regeneration project in the Cairngorms National Park, Aberdeenshire, calculated over 60 years.",
+    "location": {
+      "latitude": 57.04998252113967,
+      "longitude": -3.039815250815215
+    }
   },
   {
     "id": 27416,
@@ -194,7 +222,11 @@
       "WCC_Project_VFN_statement_V2.2_-_ISO17029_Bridge_End_Updated.pdf",
       "WCC_ProjectDesignDocument_Bridge_End_FarmV3.pdf"
     ],
-    "description": "A river restoration project in Forth Valley, Stirling, calculated over 50 years."
+    "description": "A river restoration project in Forth Valley, Stirling, calculated over 50 years.",
+    "location": {
+      "latitude": 56.12159725111949,
+      "longitude": -3.9356917742097424
+    }
   },
   {
     "id": 51064,
@@ -218,7 +250,11 @@
       "WCC_Project_VFN_statement_V2.2_-_ISO17029_Bridge_End_Updated.pdf",
       "WCC_ProjectDesignDocument_Bridge_End_FarmV3.pdf"
     ],
-    "description": "A peatland restoration project in Tayside Region, Dundee, calculated over 70 years."
+    "description": "A peatland restoration project in Tayside Region, Dundee, calculated over 70 years.",
+    "location": {
+      "latitude": 56.45278478277172,
+      "longitude": -3.0672409799546445
+    }
   },
   {
     "id": 83249,
@@ -239,6 +275,10 @@
       "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
       "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
     ],
-    "description": "A rewilding project in Moffat Hills, Dumfries and Galloway, calculated over 80 years."
+    "description": "A rewilding project in Moffat Hills, Dumfries and Galloway, calculated over 80 years.",
+    "location": {
+      "latitude": 55.32321598563034,
+      "longitude": -3.4311795197778654
+    }
   }
 ]
