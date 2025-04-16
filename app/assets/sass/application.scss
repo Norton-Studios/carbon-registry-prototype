@@ -80,3 +80,16 @@ a.ds_site-navigation__link:visited {
 .button-group {
   margin-block-start: 3rem;
 }
+
+.ds_category-item {
+  padding-top: 1rem;
+  background-color: #f8f8f8;
+}
+
+.ds_category-item:has(.ds_details[open]) {
+  background-color: #d9effc;
+}
+
+.ds_details {
+  margin-top: 0px;
+}
