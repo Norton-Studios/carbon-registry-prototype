@@ -104,7 +104,7 @@ router.post('/register/organisation-details/summary', (req, res) => {
 })
 
 router.post('/registry', (req, res) => {
-  if (req.body.clearFilters) {
+  if (req.body.submitAction === 'reset') {
     (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
   }
   res.redirect('/#projects');
