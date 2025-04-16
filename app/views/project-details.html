@@ -25,12 +25,13 @@
           </p>
           {% endif %}
         </header>
+        <p>{{ project.description }}</p>
       </div>
     </div>
     {% endblock %}
 
     {% block mainContent %}
-    <div class="ds_layout__content">
+    <div class="ds_layout__content project-details">
       <h2 class="ds_section__title">Project details</h2>
       <ol class="ds_summary-list">
         {% set projectFields = [
