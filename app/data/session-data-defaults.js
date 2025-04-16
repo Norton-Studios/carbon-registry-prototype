@@ -18,5 +18,11 @@ module.exports = {
     'credits',
     'clearFilters'
   ],
+  registration: {
+    organisationDetails: 'Not started',
+    identification: 'Not started',
+    payment: 'Not started',
+    declaration: 'Not started'
+  },
   searchBy: 'name'
 }
