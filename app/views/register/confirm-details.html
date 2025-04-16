@@ -1,0 +1,41 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--article">
+
+    {% block mainHeader %}
+    <div class="ds_layout__header">
+      <header class="ds_page-header">
+        <h1 class="ds_page-header__title">Please confirm your organisation details</h1>
+      </header>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <h2>Your details:</h2>
+      {% set items = data.registration.responses %}
+      {% include "partials/summary-list.html" %}
+
+      <div class="button-group">
+        <a href="/register/privacy" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+          <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+          Back
+        </a>
+        <a href="/register/main-contact" class="ds_button  ds_button--has-icon">
+          Next
+          <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+        </a>
+      </div>
+
+    </div>
+    {% endblock %}
+
+  </main>
+</div>
+{% endblock %}

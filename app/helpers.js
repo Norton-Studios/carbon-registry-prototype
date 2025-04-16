@@ -38,8 +38,65 @@ function filterProjects(projects, sessionData) {
   });
 }
 
+async function lookupCompany(companyNumber, apiKey) {
+  const url = `https://api.company-information.service.gov.uk/search/companies?q=${companyNumber}`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: 'Basic ' + Buffer.from(`${apiKey}:`).toString('base64'),
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`API error ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.items?.[0] || null;
+}
+
+function updateRegistrationResponses(req, responses) {
+  const responsesArray = Array.isArray(responses) ? responses : [responses];
+  
+  if (!req.session.data) {
+    req.session.data = {};
+  }
+  
+  if (!req.session.data.registration) {
+    req.session.data.registration = {};
+  }
+  
+  if (!req.session.data.registration.responses) {
+    req.session.data.registration.responses = [];
+  }
+  
+  // Process each response
+  responsesArray.forEach(response => {
+    const { label, value, changeUrl } = response;
+    
+    const existingIndex = req.session.data.registration.responses.findIndex(
+      item => item.label === label
+    );
+    
+    if (existingIndex >= 0) {
+      // Update existing entry
+      req.session.data.registration.responses[existingIndex].value = value;
+    } else {
+      // Add new entry
+      req.session.data.registration.responses.push({
+        label,
+        value,
+        changeUrl
+      });
+    }
+  });
+}
+
 module.exports = {
   generateFilters,
   filterProjects,
-  getProject
+  getProject,
+  lookupCompany,
+  updateRegistrationResponses
 };

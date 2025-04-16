@@ -11,67 +11,22 @@
     {% block mainHeader %}
     <div class="ds_layout__header">
         <header class="ds_page-header">
-            <h1 class="ds_page-header__title">Account Registration</h1>
+            <h1 class="ds_page-header__title">Register</h1>
         </header>
     </div>
     {% endblock %}
 
     {% block mainContent %}
     <div class="ds_layout__content ">
-      <h2 id="task-list-status" class="ds_task-list-status-heading">Application incomplete</h2>
-      <nav aria-labelledby="task-list-status" class="ds_task-list-status">
-        <p>You have Not Started 4 of 4 sections.</p>
-        <p><a href="#task1" class="js-task-list-skip-link">Skip to first incomplete section</a></p>
-      </nav>
-      <ol class="ds_task-list-group">
-        <li class="ds_task-list-group__section">
-          <h2 class="ds_task-list-heading">Request a New Account</h2>
-          <ul class="ds_task-list">
-            <li class="ds_task-list__task" id="task1">
-              <div class="ds_task-list__task-details">
-                <h3 class="ds_task-list__task-heading">
-                  <a class="ds_task-list__task-link" href="/register/organisation-details/company-number">Organisation Details <span class="visually-hidden">({{ data['organisationDetails']}})</span></a>
-                </h3>
-                <p class="ds_hint-text  ds_task-list__task-summary">Submit details about your organisation.</p>
-              </div>
-
-              {% if data['organisationDetails'] == 'Complete' %}
-              <div class="ds_task-list__task-status ds_task-list__task-status--complete" aria-hidden="true">{{ data['organisationDetails']}}</div>
-              {% else %}
-              <div class="ds_task-list__task-status" aria-hidden="true">{{ data['organisationDetails']}}</div>
-              {% endif %}
-            </li>
-            <li class="ds_task-list__task" id="task2">
-              <div class="ds_task-list__task-details">
-                <h3 class="ds_task-list__task-heading">
-                  <a class="ds_task-list__task-link" href="#">Identification <span class="visually-hidden">(Not Started)</span></a>
-                </h3>
-                <p class="ds_hint-text  ds_task-list__task-summary">Add users and submit documents for identity assurance.</p>
-              </div>
-              <div class="ds_task-list__task-status" aria-hidden="true">Not Started</div>
-            </li>
-            <li class="ds_task-list__task" id="task3">
-              <div class="ds_task-list__task-details">
-                  <h3 class="ds_task-list__task-heading">
-                      <a class="ds_task-list__task-link" href="#">Submit Payments <span class="visually-hidden">(Not Started)</span></a>
-                  </h3>
-                  <p class="ds_hint-text  ds_task-list__task-summary">Securely transfer funds to pay registration fees.</p>
-              </div>
-              <div class="ds_task-list__task-status" aria-hidden="true">Not Started</div>
-          </li>
-            <li class="ds_task-list__task" id="task4">
-              <div class="ds_task-list__task-details">
-                <h3 class="ds_task-list__task-heading">
-                  <a class="ds_task-list__task-link" href="#">Declaration <span class="visually-hidden">(Not Started)</span></a>
-                </h3>
-                <p class="ds_hint-text  ds_task-list__task-summary">Agree to the Terms & Conditions and Privacy Policy.</p>
-              </div>
-              <div class="ds_task-list__task-status" aria-hidden="true">Not Started</div>
-            </li>
-          </ul>
-        </li>
-      </ol>
-    </div>
+      <h2 id="task-list-status" class="ds_task-list-status-heading">What you will need to register an account:</h2>
+      <ul>
+        <li>Your organisation's Company Registration Number.</li>
+        <li>Contact details for your account manager.</li>
+      </ul>
+      <a href="/register/company-number" class="ds_button ds_button--has-icon">
+        Begin
+        <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+      </a>
     {% endblock %}
   </main>
 </div>

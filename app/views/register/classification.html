@@ -1,0 +1,66 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout ds_layout--question-page">
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <form action="/register/classification" method="post">
+        <div class="ds_question">
+          <legend class="ds_page-header">
+            <h1 class="ds_page-header__title">
+              Which classification best describes your organisation?
+            </h1>
+          </legend>
+          <fieldset>
+            <p class="ds_hint-text">Select an option</p>
+            <div class="ds_field-group">
+              <div class="ds_radio">
+                <input class="ds_radio__input" id="class-developer" name="classification" type="radio" value="Project Developer">
+                <label class="ds_radio__label" for="class-developer">Project Developer</label>
+              </div>
+              <div class="ds_radio">
+                <input class="ds_radio__input" id="class-proponent" name="classification" type="radio" value="Project Proponent">
+                <label class="ds_radio__label" for="class-proponent">Project Proponent</label>
+              </div>
+              <div class="ds_radio">
+                <input class="ds_radio__input" id="class-corporate" name="classification" type="radio" value="Corporate End User">
+                <label class="ds_radio__label" for="class-corporate">Corporate End User</label>
+              </div>
+              <div class="ds_radio">
+                <input class="ds_radio__input" id="class-trading" name="classification" type="radio" value="Trader">
+                <label class="ds_radio__label" for="class-trading">Trader</label>
+              </div>
+              <div class="ds_radio">
+                <input class="ds_radio__input" id="class-retail" name="classification" type="radio" value="Retail Aggregator">
+                <label class="ds_radio__label" for="class-retail">Retail Aggregator</label>
+              </div>
+            </div>
+          </fieldset>
+        
+        </div>
+        <div class="button-group">
+          <a href="/register/company-number" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+    {% endblock %}
+
+    {% include "partials/registration-responses.html" %}
+
+  </main>
+</div>
+{% endblock %}

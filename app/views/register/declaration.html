@@ -1,0 +1,46 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--question-page">
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+        
+      {# Set the action attribute to the next page in your form's journey #}
+      <form action="/register/declaration" method="post">
+        <div class="ds_question">
+          <legend class="ds_page-header">
+            <h1 class="ds_page-header__title">
+              Do you accept the UK Land Carbon Registry's Terms & Conditions and Privacy Policy?
+            </h1>
+          </legend>
+          <div class="ds_field-group">
+            <div class="ds_checkbox  ds_checkbox--small">
+              <input class="ds_checkbox__input" id="declaration" name="declaration" type="checkbox" required>
+              <label class="ds_checkbox__label" for="declaration">I have read and accept the <a href="/">Terms & Condition</a> and <a href="/">Privacy Policy.</a></label>
+            </div>
+          </div>
+        </div>
+        <div class="button-group">
+          <a href="/register/main-contact" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button  ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+    {% endblock %}
+
+  </main>
+</div>
+{% endblock %}

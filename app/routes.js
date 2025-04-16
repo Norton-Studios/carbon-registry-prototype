@@ -8,7 +8,7 @@ const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
 const projects = require('./assets/data/projects.json');
 const accounts = require('./assets/data/accounts.json');
-const { generateFilters, filterProjects, getProject } = require('./helpers.js');
+const { generateFilters, filterProjects, getProject, lookupCompany, updateRegistrationResponses } = require('./helpers.js');
 
 dotenv.config();
 
@@ -59,48 +59,106 @@ router.get('/projects/:name', getProjectMiddleware, (req, res) => {
   });
 });
 
-router.post('/register/organisation-details/company-number', async (req, res) => {
-  const url = `https://api.company-information.service.gov.uk/search/companies?q=${req.body.companyNumber}`;
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: 'Basic ' + Buffer.from(`${process.env.COMPANY_INFO_API_KEY}:`).toString('base64'),
-      },
-    });
+router.get('/register/company-number', (req, res) => {
+  const formError = req.session.formError;
+  delete req.session.formError; 
 
-    if (!response.ok) {
-      throw new Error(`API error ${response.status}`);
+  res.render('register/company-number', {
+    formError,
+  });
+});
+
+router.post('/register/company-number', async (req, res) => {
+  const { companyNumber } = req.body;
+
+  try {
+    const company = await lookupCompany(companyNumber, process.env.COMPANY_INFO_API_KEY);
+
+    if (!company) {
+      req.session.formError = {
+        message: `No company found with registration ${companyNumber}. Please check the number and try again.`,
+      };
+      return res.redirect('/register/company-number');
     }
-    const company = await response.json()
-    req.session.data = {...req.session.data, ...company.items[0]};
-    req.session.data.organisationDetails = "In progress";
-    res.redirect('/register/organisation-details/confirm-company');
+
+    if (company.company_status !== 'active') {
+      req.session.formError = {
+        message: `${company.title} is ${company.company_status}. Only active companies can register.`,
+      };
+      return res.redirect('/register/company-number');
+    }
+
+    updateRegistrationResponses(req, [
+      {
+        label: 'Company Registration Number',
+        value: companyNumber,
+        changeUrl: '/register/company-number'
+      },
+      {
+        label: 'Organisation Name',
+        value: company.title,
+        changeUrl: '/register/company-number' // Possibly create /register/organisation-name.html in future
+      },
+      {
+        label: 'Address',
+        value: company.address_snippet,
+        changeUrl: '/register/company-number' // Possibly create /register/address.html in future
+      }
+    ]);
+
+    res.redirect('/register/classification');
   } catch (err) {
-    console.error('API call failed:', err);
-    throw err;
+    req.session.formError = {
+      message: 'There was a problem connecting to Companies House. Please try again later.',
+    };
+    res.redirect('/register/classification');
   }
 });
 
-router.post('/register/organisation-details/classification', (req, res) => {
+router.post('/register/classification', (req, res) => {
   if (req.body.classification) {
-    req.session.data = {...req.session.data, ...req.body.classification};
-    res.redirect('/register/organisation-details/main-contact');
+    updateRegistrationResponses(req, {
+      label: 'Classification', 
+      value: req.body.classification, 
+      changeUrl: '/register/classification'
+    });
+    res.redirect('/register/standard');
   }
 })
 
-router.post('/register/organisation-details/main-contact', (req, res) => {
+router.post('/register/standard', async (req, res) => {
+  const { standard } = req.body;
+
+  updateRegistrationResponses(req, {
+      label: 'Standard',
+      value: standard,
+      changeUrl: '/register/standard'
+    })
+
+    res.redirect('/register/privacy');
+});
+
+router.post('/register/privacy', async (req, res) => {
+    // save this post request later
+    res.redirect('/register/confirm-details');
+});
+
+router.post('/register/main-contact', (req, res) => {
   const {firstName, lastName, email, phone} = req.body;
   if (firstName && lastName && email && phone) {
-    req.session.data.contact = req.body;
-    res.redirect('/register/organisation-details/summary');
+    updateRegistrationResponses(req, {
+      label: 'contact',
+      value: {firstName, lastName, email, phone},
+      changeUrl: '/register/standard'
+    })
+    res.redirect('/register/declaration');
   }
-  // else {rerender page highlighting missing fields?}
 })
 
-router.post('/register/organisation-details/summary', (req, res) => {
-  req.session.data.organisationDetails = "Complete";
-  res.redirect('/register');
+router.post('/register/declaration', (req, res) => {
+  if (req.body.declaration) {
+    res.redirect('/register/success');
+  }
 })
 
 router.post('/registry', (req, res) => {

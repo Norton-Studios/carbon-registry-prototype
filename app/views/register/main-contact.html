@@ -1,0 +1,52 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--question-page">
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+        
+      {# Set the action attribute to the next page in your form's journey #}
+      <form action="/register/main-contact" method="post">
+        <div class="ds_question">
+          <legend class="ds_page-header">
+            <h1 class="ds_page-header__title">
+              Who is the main contact at your organisation?
+            </h1>
+          </legend>
+
+          <label class="ds_label" for="first-name">First name</label>
+          <input class="ds_input" required type="text" id="first-name" name="firstName" placeholder="">
+          <label class="ds_label" for="last-name">Last name</label>
+          <input class="ds_input" required type="text" id="last-name" name="lastName" placeholder="">
+          <label class="ds_label" for="email">Email address</label>
+          <input class="ds_input" required type="email" id="email" name="email" placeholder="your@email.com">
+          <label class="ds_label" for="phone">Phone number</label>
+          <input class="ds_input" required type="tel" id="phone" name="phone" placeholder="+441234567890">
+
+        </div>
+        <div class="button-group">
+          <a href="/register/organisation-details/confirm-details" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button  ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+    {% endblock %}
+
+    {% include "partials/registration-responses.html" %}
+
+  </main>
+</div>
+{% endblock %}

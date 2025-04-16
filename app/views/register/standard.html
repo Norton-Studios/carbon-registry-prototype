@@ -1,0 +1,71 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--question-page">
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+        
+      {# Set the action attribute to the next page in your form's journey #}
+      <form action="/register/standard" method="post">
+        <div class="ds_question">
+          <legend class="ds_page-header">
+            <h1 class="ds_page-header__title">
+              Which initial standard applies to your organisation?
+            </h1>
+          </legend>
+          <fieldset>
+            <label class="ds_label" for="standard">Select a standard</label>
+            <div class="ds_select-wrapper ds_input-">
+              <select class="ds_select" id="standard" name="standard" required>
+                <option value="Plan Vivo">Plan Vivo</option>
+                <option value="ACRE Carbon Standard">ACRE Carbon Standard</option>
+                <option value="Pacific Carbon Standard">Pacific Carbon Standard</option>
+                <option value="UK Woodland Carbon Code">UK Woodland Carbon Code</option>
+                <option value="Peru REDD+ Program">Peru REDD+ Program</option>
+                <option value="Global Carbon Council">Global Carbon Council</option>
+                <option value="UK Peatland Code">UK Peatland Code</option>
+                <option value="OxCarbon Principles">OxCarbon Principles</option>
+                <option value="COTE: Willamette: Water Quality (Temperature) Standard">COTE: Willamette: Water Quality (Temperature) Standard</option>
+                <option value="BEF Flow Restoration Standard">BEF Flow Restoration Standard</option>
+                <option value="COTE: Willamette: Wetland Habitat Standard">COTE: Willamette: Wetland Habitat Standard</option>
+                <option value="COTE: Willamette: Salmonid Standard">COTE: Willamette: Salmonid Standard</option>
+                <option value="COTE: Willamette: Upland Prairie Habitat Standard">COTE: Willamette: Upland Prairie Habitat Standard</option>
+                <option value="Oregon Wetlands Regulatory (Ratios) Standard">Oregon Wetlands Regulatory (Ratios) Standard</option>
+                <option value="USFWS Conservation Banking">USFWS Conservation Banking</option>
+                <option value="W+ Standard for Women's Empowerment">W+ Standard for Women's Empowerment</option>
+              </select>
+              <span class="ds_select-arrow" aria-hidden="true"></span>
+            </div>
+          </fieldset>
+          <div class="ds_inset-text">
+            <div class="ds_inset-text__text">
+              Note: additional standards can be applied after registration.
+            </div>
+          </div>        
+        </div>
+        <div class="button-group">
+          <a href="/register/classification" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+    {% endblock %}
+
+    {% include "partials/registration-responses.html" %}
+
+  </main>
+</div>
+{% endblock %}

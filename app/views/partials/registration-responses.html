@@ -1,0 +1,33 @@
+<div class="ds_layout__footer">
+  <div class="ds_!_margin-top--4">
+    <h2>Your answers</h2>
+    <p><button class="ds_link">Clear answers and start again</button></p>
+    <ol class="ds_summary-list">
+      {% if data.registration.responses %}
+        {% for response in data.registration.responses %}
+          <li class="ds_summary-list__item">
+            <span class="ds_summary-list__key" id="item-{{ loop.index }}-key">{{ response.label }}</span>
+            <span class="ds_summary-list__value">
+              <q class="ds_summary-list__answer">{{ response.value }}</q>
+            </span>
+            <div class="ds_summary-list__actions">
+              <ul class="ds_summary-list__actions-list">
+                <li class="ds_summary-list__actions-list-item">
+                  <a href="{{ response.changeUrl }}" class="ds_link" aria-describedby="item-{{ loop.index }}-key">
+                    Change
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        {% endfor %}
+      {% else %}
+        <!-- Fallback for when no responses are available -->
+        <li class="ds_summary-list__item">
+          <span class="ds_summary-list__key">No responses recorded yet</span>
+          <span class="ds_summary-list__value"></span>
+        </li>
+      {% endif %}
+    </ol>
+  </div>
+</div>

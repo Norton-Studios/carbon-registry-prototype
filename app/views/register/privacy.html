@@ -1,0 +1,64 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--question-page">
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+        
+      {# Set the action attribute to the next page in your form's journey #}
+      <form action="/register/privacy" method="post">
+        <div class="ds_question">
+          <fieldset aria-describedby="ds_hint">
+              <legend class="ds_page-header">
+                <h1 class="ds_page-header__title">
+                  What information would you like to display publicly?
+                </h1>
+              </legend>
+              <p class="ds_hint-text" id="ds_hint">Leave boxes unchecked to keep information private.</p>
+              <div class="ds_field-group">
+                  <div class="ds_checkbox  ds_checkbox--small">
+                      <input class="ds_checkbox__input" id="account" name="account" type="checkbox">
+                      <label class="ds_checkbox__label" for="account">Account Information</label>
+                  </div>
+                  <div class="ds_checkbox  ds_checkbox--small">
+                      <input class="ds_checkbox__input" id="holdings" name="holdings" type="checkbox">
+                      <label class="ds_checkbox__label" for="holdings">Holdings Information</label>
+                  </div>
+                  <div class="ds_checkbox  ds_checkbox--small">
+                      <input class="ds_checkbox__input" id="retirements" name="retirements" type="checkbox">
+                      <label class="ds_checkbox__label" for="retirements">Retirements Information</label>
+                  </div>
+              </div>
+              <div class="ds_inset-text">
+                <div class="ds_inset-text__text">
+                  Note: these settings can be changed later.
+                </div>
+              </div>  
+          </fieldset>
+        </div>
+        <div class="button-group">
+          <a href="/register/standard" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button  ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+    {% endblock %}
+
+    {% include "partials/registration-responses.html" %}
+
+  </main>
+</div>
+{% endblock %}
