@@ -76,7 +76,7 @@ router.get('/projects/:name', getProjectMiddleware, (req, res) => {
 
 router.get('/register/company-number', (req, res) => {
   const formError = req.session.formError;
-  delete req.session.formError; 
+  delete req.session.formError;
 
   res.render('register/company-number', {
     formError,
@@ -133,8 +133,8 @@ router.post('/register/company-number', async (req, res) => {
 router.post('/register/classification', (req, res) => {
   if (req.body.classification) {
     updateRegistrationResponses(req, {
-      label: 'Classification', 
-      value: req.body.classification, 
+      label: 'Classification',
+      value: req.body.classification,
       changeUrl: '/register/classification'
     });
     res.redirect('/register/standard');
@@ -216,6 +216,7 @@ router.get('/', (req, res) => {
       applyProjectFilters(req, res, () => {
         res.render('registry', {
           accounts,
+          osApiKey: process.env.OS_API_KEY,
           projects: res.locals.filteredProjects,
           filters: res.locals.projectFilters
         });

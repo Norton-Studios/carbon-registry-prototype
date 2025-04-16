@@ -1,4 +1,5 @@
 {% from "components/file.html" import fileDownload %}
+{% from "components/map.html" import renderMap %}
 
 {% extends "/layouts/main.html" %}
 
@@ -63,36 +64,7 @@
     </div>
     <div class="ds_layout__sidebar">
       <h2 class="ds_layout__sidebar-title">Site Map</h2>
-      <div id="map" style="width: 100%; height: 280px;"></div>
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-            crossorigin=""/>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
-      <script src="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"></script>
-      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-              integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-              crossorigin=""></script>
-
-      <script>
-        const apiKey = "{{ osApiKey }}";
-
-        document.addEventListener("DOMContentLoaded", async function () {
-          const latitude = {{ project.location.latitude }};
-          const longitude = {{ project.location.longitude }};
-          const map = L.map("map", {
-            attributionControl: false,
-            center: [latitude, longitude],
-            zoom: 14,
-          });
-
-          L.tileLayer(`https://api.os.uk/maps/raster/v1/zxy/Outdoor_3857/{z}/{x}/{y}.png?key=${apiKey}`, {
-            maxZoom: 17,
-          }).addTo(map);
-
-          var marker = L.marker([latitude,longitude]).addTo(map);
-          marker.bindPopup("<b>{{ project.name }}</b><br>{{ project.address }}").openPopup();
-        });
-      </script>
+      {{ renderMap(osApiKey, [project]) }}
       <h2 class="ds_layout__sidebar-title">Documents</h2>
       <div>
         {% for document in project.documents %}

@@ -1,0 +1,87 @@
+{% macro renderMap(osApiKey, projects) %}
+<style>
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .carbon-map {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: calc(2.5 / 4 * 100%);
+  }
+
+  .carbon-map__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .carbon-map__content {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
+<script src="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<div class="carbon-map">
+  <div class="carbon-map__container">
+    <div id="map" class="carbon-map__content"></div>
+  </div>
+</div>
+<script>
+  const apiKey = "{{ osApiKey }}";
+  const projects = {{ projects | dump | safe }};
+
+  // Calculate the average latitude and longitude
+  const averageCoordinates = projects.reduce(
+    (acc, project) => {
+      if (project.location) {
+        acc.lat += project.location.latitude;
+        acc.lng += project.location.longitude;
+        acc.count += 1;
+      }
+      return acc;
+    },
+    { lat: 0, lng: 0, count: 0 }
+  );
+
+  const centerLat = averageCoordinates.lat / averageCoordinates.count;
+  const centerLng = averageCoordinates.lng / averageCoordinates.count;
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    const map = L.map("map", {
+      attributionControl: false,
+      center: [centerLat, centerLng],
+      zoom: projects.length === 1 ? 14 : 7,
+    });
+
+    L.tileLayer(`https://api.os.uk/maps/raster/v1/zxy/Outdoor_3857/{z}/{x}/{y}.png?key=${apiKey}`, {
+      maxZoom: 17,
+    }).addTo(map);
+
+    for (const project of projects) {
+      const marker = L.marker([project.location.latitude, project.location.longitude])
+        .addTo(map)
+        .bindPopup(`<b>${project.name}</b><br>${project.address}`);
+
+      if (projects.length === 1) {
+        marker.openPopup();
+      }
+    }
+  });
+</script>
+
+{% endmacro %}
