@@ -55,6 +55,7 @@ router.get('/projects/:name', getProjectMiddleware, (req, res) => {
 
   res.render('project-details', {
     project: res.locals.project,
+    osApiKey: process.env.OS_API_KEY,
     ...(isAdmin || isDev ? { authenticated: true } : {})
   });
 });
