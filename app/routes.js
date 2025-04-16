@@ -3,11 +3,14 @@
 // https://prototype-kit.service.gov.uk/docs/create-routes
 //
 
+const dotenv = require('dotenv');
 const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
 const projects = require('./assets/data/projects.json');
 const accounts = require('./assets/data/accounts.json');
 const { generateFilters, filterProjects, getProject } = require('./helpers.js');
+
+dotenv.config();
 
 function getProjectMiddleware(req, res, next) {
   const projectName = req.params.name;
@@ -39,7 +42,6 @@ function applyProjectFilters(req, res, next) {
 }
 
 function applyUserType(req, res, next) {
-  console.log(req.session.data);
   const userType = req.session.userType;
   res.locals.userType = userType || 'guest';
   next();
@@ -56,6 +58,50 @@ router.get('/projects/:name', getProjectMiddleware, (req, res) => {
     ...(isAdmin || isDev ? { authenticated: true } : {})
   });
 });
+
+router.post('/register/organisation-details/company-number', async (req, res) => {
+  const url = `https://api.company-information.service.gov.uk/search/companies?q=${req.body.companyNumber}`;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: 'Basic ' + Buffer.from(`${process.env.COMPANY_INFO_API_KEY}:`).toString('base64'),
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error ${response.status}`);
+    }
+    const company = await response.json()
+    req.session.data = {...req.session.data, ...company.items[0]};
+    req.session.data.organisationDetails = "In progress";
+    res.redirect('/register/organisation-details/confirm-company');
+  } catch (err) {
+    console.error('API call failed:', err);
+    throw err;
+  }
+});
+
+router.post('/register/organisation-details/classification', (req, res) => {
+  if (req.body.classification) {
+    req.session.data = {...req.session.data, ...req.body.classification};
+    res.redirect('/register/organisation-details/main-contact');
+  }
+})
+
+router.post('/register/organisation-details/main-contact', (req, res) => {
+  const {firstName, lastName, email, phone} = req.body;
+  if (firstName && lastName && email && phone) {
+    req.session.data.contact = req.body;
+    res.redirect('/register/organisation-details/summary');
+  }
+  // else {rerender page highlighting missing fields?}
+})
+
+router.post('/register/organisation-details/summary', (req, res) => {
+  req.session.data.organisationDetails = "Complete";
+  res.redirect('/register');
+})
 
 router.post('/registry', (req, res) => {
   if (req.body.clearFilters) {
