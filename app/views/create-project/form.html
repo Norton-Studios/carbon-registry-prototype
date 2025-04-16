@@ -1,0 +1,250 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Create Project{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% set detailsFields = [
+  { id: 1, label: "Account name", fieldType: "text", readonly: true, formGroup: "What are the details of your project?" },
+  { id: 2, label: "Project name", fieldType: "text", readonly: false, formGroup: "What are the details of your project?" },
+  { id: 3, label: "Project description", fieldType: "textarea", readonly: false, formGroup: "What are the details of your project?" },
+  { id: 4, label: "Category", fieldType: "radio", options: [
+    { label: "Afforestation", value: "Afforestation" },
+    { label: "Rewetting", value: "Rewetting" },
+    { label: "Restoration", value: "Restoration" }
+  ], formGroup: "What are your project activities?" },
+  { id: 5, label: "Standard", fieldType: "radio", options: [
+    { label: "UK Woodland Carbon Code", value: "UK Woodland Carbon Code" },
+    { label: "UK Peatland Code", value: "UK Peatland Code" }
+  ], formGroup: "What are your project activities?" },
+  { id: 6, label: "Project Type", fieldType: "radio", options: [
+    { label: "Afforestation", value: "Afforestation" },
+    { label: "Rewetting", value: "Rewetting" },
+    { label: "Restoration", value: "Restoration" }
+  ], formGroup: "What are your project activities?" },
+  { id: 7, label: "Project implementation date", fieldType: "date", formGroup: "What are your project activities?" },
+  { id: 8, label: "Project start date", fieldType: "date", formGroup: "What are your project activities?" },
+  { id: 9, label: "Project end date", fieldType: "date", formGroup: "What are your project activities?" }
+] %}
+
+{% set selectedStandard = data['standard'] or 'UK Woodland Carbon Code' %}
+
+{% if selectedStandard == "UK Woodland Carbon Code" %}
+  {% set standardFields = [
+    { id: 10, label: "Total Area (ha)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 11, label: "Conifer (>80%)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 12, label: "Mixed Predominantly Conifer (50-80%)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 13, label: "Broadleaved (>80%)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 14, label: "Mixed Predominantly Broadleaved (50-80%)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 15, label: "Project duration (years)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 16, label: "Total predicted carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 17, label: "Predicted claimable carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 18, label: "Predicted contribution to buffer over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+    { id: 19, label: "Country", fieldType: "radio", options: [
+      { label: "England", value: "England" },
+      { label: "Scotland", value: "Scotland" },
+      { label: "Wales", value: "Wales" },
+      { label: "Northern Ireland", value: "Northern Ireland" }
+    ], formGroup: "Where is the site located?" },
+    { id: 20, label: "State/Province/County", fieldType: "dropdown", options: [
+      { label: "State 1", value: "State 1" },
+      { label: "State 2", value: "State 2" },
+      { label: "State 3", value: "State 3" }
+    ], formGroup: "Where is the site located?" },
+    { id: 21, label: "Zip/Postal Code", fieldType: "text", formGroup: "Where is the site located?" },
+    { id: 22, label: "Latitude", fieldType: "text", optional: true, formGroup: "Where is the site located?" },
+    { id: 23, label: "Longitude", fieldType: "text", optional: true, formGroup: "Where is the site located?" },
+    { id: 24, label: "Address", fieldType: "text", optional: true, formGroup: "Where is the site located?" },
+    { id: 25, label: "Nearest Town", fieldType: "text", formGroup: "Where is the site located?" },
+    { id: 26, label: "Grid Reference", fieldType: "text", formGroup: "Where is the site located?" }
+  ] %}
+{% elseif data['standard'] == "UK Peatland Code" %}
+{% set standardFields = [
+  { id: 10, label: "Total Area (ha)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 11, label: "Actively Eroding Blanket Bog (hagg/gully)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 12, label: "Actively Eroding Blanket Bog (flat/bare)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 13, label: "Drained Blanket Bog (artificial)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 14, label: "Drained Blanket Bog (hagg/gully)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 15, label: "Modified Blanket Bog", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 16, label: "Near Natural Blanket Bog", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 17, label: "Actively Eroding Raised Bog (hagg/gully)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 18, label: "Actively Eroding Raised Bog (flat/bare)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 19, label: "Drained Raised Bog (artificial)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 20, label: "Drained Raised Bog (hagg/gully)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 21, label: "Modified Raised Bog", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 22, label: "Near Natural Raised Bog", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 23, label: "Project duration (years)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 24, label: "Total predicted emission reductions over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 25, label: "Predicted claimable emission reductions over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 26, label: "Predicted contribution to buffer over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroup: "additional-information" },
+  { id: 27, label: "Country", fieldType: "radio", options: [
+    { label: "England", value: "England" },
+    { label: "Scotland", value: "Scotland" },
+    { label: "Wales", value: "Wales" },
+    { label: "Northern Ireland", value: "Northern Ireland" }
+  ], formGroup: "Where is the site located?" },
+  { id: 28, label: "State/Province/County", fieldType: "dropdown", options: [
+    { label: "State 1", value: "State 1" },
+    { label: "State 2", value: "State 2" },
+    { label: "State 3", value: "State 3" }
+  ], formGroup: "Where is the site located?" },
+  { id: 29, label: "Zip/Postal Code", fieldType: "text", formGroup: "Where is the site located?" },
+  { id: 30, label: "Latitude", fieldType: "text", optional: true, formGroup: "Where is the site located?" },
+  { id: 31, label: "Longitude", fieldType: "text", optional: true, formGroup: "Where is the site located?" },
+  { id: 32, label: "Address", fieldType: "text", optional: true, formGroup: "Where is the site located?" },
+  { id: 33, label: "Nearest Town", fieldType: "text", formGroup: "Where is the site located?" },
+  { id: 34, label: "Grid Reference", fieldType: "text", formGroup: "Where is the site located?" }
+] %}
+{% else %}
+  {% set standardFields = [] %}
+{% endif %}
+
+{% set detailsFields = detailsFields | merge(standardFields) %}
+
+{% set currentFieldId = data['fieldId'] | int %}
+{% set fields = detailsFields | customSelectAttr("id", currentFieldId) %}
+{% set nextField = detailsFields[currentFieldId] %}
+{% set prevField = detailsFields[currentFieldId - 2] %}
+{% set lastFieldId = detailsFields.length + 1 %}
+
+{% if nextField is none or nextField.formGroup != (fields | first).formGroup %}
+  {% if data[prevField.label | lower | replace(" ", "_")] %}
+    {% set formAction = "/create-project/answer-summary?lastFieldId=" ~ lastFieldId %}
+  {% else %}
+    {% set formAction = "/create-project" %}
+  {% endif %}
+{% else %}
+  {% set formAction = "/create-project/form" %}
+{% endif %}
+
+
+{% if prevField is none or prevField.formGroup != (fields | first).formGroup or currentFieldId == 1 %}
+  {% set backAction = "/create-project" %}
+{% else %}
+  {% set backAction = "/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
+{% endif %}
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="{{ backAction }}">Back</a>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <fieldset>
+        <form action="{{ formAction }}" method="post">
+          {% for field in fields %}
+            <div class="ds_page-header">
+              <h1 class="ds_page-header__title">
+                {{ field.formGroup | replace("-", " ") | capitalize }}
+              </h1>
+            </div>
+            <div class="form-group">
+              <label class="ds_label" for="{{ field.id }}">{{ field.label }}</label>
+
+              {% if field.fieldType == "textarea" %}
+                <textarea class="ds_input" rows="3" id="{{ field.id }}" name="{{ field.label | lower | replace(" ", "_") }}">{{ data[field.label | lower | replace(" ", "_")] or '' }}</textarea>
+
+              {% elseif field.fieldType == "dropdown" %}
+                <div class="ds_select-wrapper ds_input--fluid-two-third">
+                  <select class="ds_select" id="{{ field.label | lower | replace(" ", "_") }}" name="{{ field.label | lower | replace(" ", "_") }}">
+                    {% for item in field.options %}
+                      <option
+                        value="{{ item.value }}"
+                        {% if data[field.label | lower | replace(" ", "_")] == item.value %}
+                          selected
+                        {% endif %}
+                      >{{ item.label }}</option>
+                    {% endfor %}
+                  </select>
+                  <span class="ds_select-arrow" aria-hidden="true"></span>
+                </div>
+
+              {% elseif field.fieldType == "radio" %}
+                <div class="ds_field-group">
+                  {% for item in field.options %}
+                    <div class="ds_radio">
+                      <input class="ds_radio__input"
+                            id="{{ field.id }}-{{ item.value | lower | replace(" ", "-") }}"
+                            name="{{ field.label | lower | replace(" ", "_") }}"
+                            type="radio"
+                            value="{{ item.value }}"
+                            {% if data[field.label | lower | replace(" ", "_")] == item.value %}
+                              checked
+                            {% endif %}>
+                      <label class="ds_radio__label" for="{{ field.id }}-{{ item.value | lower | replace(" ", "-") }}">
+                        {{ item.label }}
+                      </label>
+                    </div>
+                  {% endfor %}
+                </div>
+
+              {% elseif field.fieldType == "date" %}
+                <div class="govuk-form-group">
+                  <div class="govuk-date-input" id="{{ field.id }}">
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="{{ field.id }}-day">
+                          Day
+                        </label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="{{ field.id }}-day"
+                          name="{{ field.label | lower | replace(" ", "_") }}-day" type="text" inputmode="numeric"
+                          value="{{ data[field.label | lower | replace(" ", "_") ~ '-day' ] or '' }}">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="{{ field.id }}-month">
+                          Month
+                        </label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="{{ field.id }}-month"
+                          name="{{ field.label | lower | replace(" ", "_") }}-month" type="text" inputmode="numeric"
+                          value="{{ data[field.label | lower | replace(" ", "_") ~ '-month' ] or '' }}">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="{{ field.id }}-year">
+                          Year
+                        </label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="{{ field.id }}-year"
+                          name="{{ field.label | lower | replace(" ", "_") }}-year" type="text" inputmode="numeric"
+                          value="{{ data[field.label | lower | replace(" ", "_") ~ '-year' ] or '' }}">
+                      </div>
+                    </div>
+                </div>
+
+              {% else %}
+                <input class="ds_input ds_input--fluid-one-third"
+                  {% if field.readonly %}readonly{% endif %}
+                  type="text"
+                  id="{{ field.id }}"
+                  name="{{ field.label | lower | replace(" ", "_") }}"
+                  value="{{ data[field.label | lower | replace(" ", "_")] or '' }}">
+              {% endif %}
+            </div>
+          {% endfor %}
+
+          <div class="button-group">
+            <button
+              type="submit"
+              name="fieldId"
+              value="{{ currentFieldId + 1 }}"
+              class="ds_button ds_button--has-icon">
+              Next
+              <svg class="ds_icon" aria-hidden="true" role="img">
+                <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

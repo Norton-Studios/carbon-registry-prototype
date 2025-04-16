@@ -11,7 +11,7 @@
     <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Summary</h1>
+          <h1 class="ds_page-header__title">Overview</h1>
         </header>
       </div>
     </div>
@@ -19,15 +19,28 @@
 
     {% block mainContent %}
     <div class="ds_layout__content">
+      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Validation successful – payment may be due
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-notification-banner__heading">
+            {{ (projects | first).name }} has been validated. Check the invoice for payments due.
+            <a class="govuk-notification-banner__link" href="/my-projects/{{ (projects | first).details_url }}/verification">View invoice</a>
+          </p>
+        </div>
+      </div>
       <nav aria-labelledby="task-list-status" class="ds_task-list-status">
-        <p>Actions required for 1 of 3 projects.</p>
+        <p>Actions required for 1 of {{ projects.length }} projects.</p>
         <p><a href="#task2" class="js-task-list-skip-link">Skip to first incomplete section</a></p>
       </nav>
 
       <ul class="ds_task-list">
         {% for project in projects %}
           {% set status = project.status %}
-          {% if [3, 4].includes(status) %}
+          {% if [4].includes(status) %}
             {% set tagColor = "green" %}
             {% set summary = "This project has been submitted or approved. No further action is currently required." %}
           {% elif [1, 2].includes(status) %}
@@ -49,7 +62,11 @@
                 {{ summary }}
               </p>
             </div>
+            {% if status == 3 %}
+            <strong>Pending payment</strong>
+            {% else %}
             <strong class="ds_tag ds_tag--{{ tagColor }}" aria-hidden="true">{{ data['statusEnum'][status] }}</strong>
+            {% endif %}
           </li>
         {% endfor %}
       </ul>

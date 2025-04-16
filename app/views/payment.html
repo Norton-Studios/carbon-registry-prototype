@@ -46,8 +46,7 @@
           </span>
           {% if loop.last and field.id == "invoice-total" %}
             <form action="/register/success" method="post">
-              <input name="paymentSuccess" type="radio" class="visually-hidden" checked />
-              <button class="ds_button" type="submit" style="margin-bottom: 1rem; width: max-content;">
+              <button class="ds_button" type="submit" name="paymentSuccess" value="true"  style="margin-bottom: 1rem; width: max-content;">
                 Pay online
               </button>
             </form>

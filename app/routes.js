@@ -44,7 +44,6 @@ function getMyProjects(req, res, next) {
 
   res.locals.projects = filterProjects(projects, {
     filterKeys: req.session.data.filterKeys,
-    account_name: ['GreenRoots CIC']
   });
   next();
 }
@@ -55,13 +54,30 @@ function applyProjectFilters(req, res, next) {
   next();
 }
 
+async function resetProjectFields(req, _, next) {
+  const fields = req.session.data.projectFields || [];
+  for (const key of fields) {
+    if (req.session.data[key]) {
+      delete req.session.data[key];
+    }
+  }
+
+  req.session.data.fieldId = '1';
+  next();
+}
+
 function applyUserType(req, res, next) {
+  console.log(req.session.data)
   const userType = req.session.userType;
   res.locals.userType = userType || 'guest';
   next();
 }
 
 router.use(applyUserType);
+
+router.get('/create-project', resetProjectFields, (_, res) => {
+  res.render('create-project');
+});
 
 router.get('/projects/:name', getProjectMiddleware, (req, res) => {
   const isAdmin = req.session.userType === 'admin';
@@ -183,7 +199,7 @@ router.post('/registry', (req, res) => {
   res.redirect('/#projects');
 });
 
-router.get('/create-project/:name/verification', (_, res) => {
+router.get('/my-projects/:name/verification', (_, res) => {
   res.render('payment');
 })
 

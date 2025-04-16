@@ -50,14 +50,6 @@ a.ds_site-navigation__link:visited {
   width: 1300px;
 }
 
-.flex-container {
-  display: flex; 
-  flex-direction: column;
-  column-gap: 3rem; 
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
 @supports (display: grid) {
   @media (min-width: 768px) {
     .ds_layout--search-results--filters {
@@ -78,4 +70,13 @@ a.ds_site-navigation__link:visited {
 
 .project-details {
   margin-right: 3rem;
+}
+
+.ds_input--fluid-two-third, 
+.ds_datepicker {
+  max-width: 80%;
+}
+
+.button-group {
+  margin-block-start: 3rem;
 }

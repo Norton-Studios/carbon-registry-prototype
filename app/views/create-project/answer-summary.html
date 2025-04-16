@@ -1,0 +1,70 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Answer Summary{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% set currentFieldId = data['fieldId'] | int %}
+{% set backAction = "/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
+
+{% if data['lastFieldId'] != data['fieldId'] %}
+  {% set nextAction = "/create-project" %}
+{% else %}
+  {% set nextAction = "/register/success" %}
+{% endif %}
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="{{ backAction }}">Back</a>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <form action="{{ nextAction }}" method="post" class="ds_!_margin-top--4">
+        <h2>Your answers</h2>
+        <p><button type="submit" name="reset" value="true" class="ds_link">Clear answers and start again</button></p>
+        <ul class="ds_summary-list">
+          {% for key in data['projectFields'] %}
+          {% if data[key] %}
+          <li class="ds_summary-list__item">
+            <span class="ds_summary-list__key">{{ key | replace('_', ' ') | capitalize }}</span>
+            <span class="ds_summary-list__value">{{ data[key] }}</span>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+
+        <div class="button-group">
+          <button
+            type="submit"
+            class="ds_button ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img">
+              <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+            </svg>
+          </button>
+        </div>
+
+        <div class="ds_inset-text">
+          <div class="ds_inset-text__text">
+            <b>Regulatory Requirements:</b>
+            All carbon credit projects must comply with the applicable national and international standards for emissions
+            reduction, including third-party validation and periodic monitoring. Additional documentation may be requested to
+            verify ownership, methodology, and permanence.
+            <br>
+            <b>Eligibility Criteria:</b>
+            Projects must demonstrate measurable environmental benefits, adhere to ethical land use practices, and align with
+            Scotland’s climate targets. Only projects listed under recognised standards (e.g., Gold Standard, VCS) are eligible
+            for registration.
+          </div>
+        </div>
+      </form>
+  </div>
+  {% endblock %}
+  </main>
+</div>
+{% endblock %}

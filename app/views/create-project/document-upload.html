@@ -1,29 +1,28 @@
-
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Create Project{% endblock %}
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/create-project">Back</a>
+</div>
+{% endblock %}
+
 {% block main %}
 <div class="ds_wrapper">
   <main id="main-content">
-    {% block mainHeader %}
-    <div class="ds_layout">
-      <div class="ds_layout__header">
-        <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Document upload</h1>
-        </header>
-      </div>
-    </div>
-    {% endblock %}
-
     {% block mainContent %}
     <div class="ds_layout__content">
-      {# Set the action attribute to the next page in your form's journey #}
-      <form action="/register/success" method="post">
+      <form action="/create-project" method="post">
         <div class="ds_question">
           <fieldset>
+            <div class="ds_page-header">
+              <h1 class="ds_page-header__title">
+                Document uploads
+              </h1>
+            </div>
             {# Example of a form input - in this case a date input with datepicker #}
             <div class="ds_form-group">
               <label class="ds_label" for="file-upload-1">
@@ -38,12 +37,6 @@
           </fieldset>
         </div>
         <div class="button-group">
-          <a href="/create-project" class="ds_button  ds_button--cancel  ds_button--has-icon  ds_button--has-icon--left">
-            <svg class="ds_icon" aria-hidden="true" role="img">
-              <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use>
-            </svg>
-            Back
-          </a>
           <button class="ds_button  ds_button--has-icon">
             Next
             <svg class="ds_icon" aria-hidden="true" role="img">
@@ -141,16 +134,6 @@
             </div>
           </div>
         </div>
-
-        <div class="ds_inset-text">
-          <div class="ds_inset-text__text">
-            <b>Regulatory Requirements:</b>
-            All carbon credit projects must comply with the applicable national and international standards for emissions reduction, including third-party validation and periodic monitoring. Additional documentation may be requested to verify ownership, methodology, and permanence.
-            <br>
-            <b>Eligibility Criteria:</b>
-            Projects must demonstrate measurable environmental benefits, adhere to ethical land use practices, and align with Scotland’s climate targets. Only projects listed under recognised standards (e.g., Gold Standard, VCS) are eligible for registration.
-          </div>
-      </div>
       </div>
     </div>
     {% endblock %}

@@ -8,7 +8,7 @@
 <div class="ds_wrapper">
     <main id="main-content" class="ds_layout ds_layout--article">
 
-      {% if userType == 'developer' and data['paymentSuccess'] == 'on' %}
+      {% if userType == 'developer' and data['paymentSuccess'] %}
         {% set title = "Payment successful" %}
         {% set message = "Project is now submitted for validation" %}
         {% set action = {
@@ -18,9 +18,9 @@
       %}
       {% elseif  userType == 'developer' %}
         {% set title = "Form Submitted" %}
-        {% set message = "Project is registered" %}
+        {% set message = "Project is sent for review by regulators" %}
         {% set action = {
-          "link": "/create-project/" ~ data['project-details-url'] ~ "/verification",
+          "link": "/my-projects/highland-rewilding/verification",
           "message": "You may view your invoice"
           }
         %}
