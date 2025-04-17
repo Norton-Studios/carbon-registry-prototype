@@ -29,12 +29,14 @@ a.ds_site-navigation__link {
   color: currentColor;
 }
 
-a.ds_pagination__link:visited {
-  @extend .ds_link
+a,
+a:visited {
+  color: inherit; /* Match the text color */
+  text-decoration: none; /* Remove underline */
 }
 
-a.ds_site-navigation__link:visited {
-  @extend .ds_site-navigation__link;
+a.ds_button:not(.ds_button--secondary):not(.ds_button--cancel):visited {
+  @extend .ds_button
 }
 
 .ds_layout--search-results--filters .ds_pagination {
