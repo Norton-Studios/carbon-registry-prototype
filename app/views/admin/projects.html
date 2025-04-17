@@ -1,63 +1,47 @@
 {% extends "/layouts/main.html" %}
 
-{% block pageTitle %}Accounts overview{% endblock %}
+{% block pageTitle %}Projects overview{% endblock %}
 
 {% set bodyClasses = "govuk-frontend-supported" %}
+{% from "components/map.html" import renderMap %}
 
 {% block main %}
 <div class="ds_wrapper">
-  <main id="main-content">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
     {% block mainHeader %}
     <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Accounts overview</h1>
+          <h1 class="ds_page-header__title">Projects</h1>
         </header>
       </div>
     </div>
     {% endblock %}
 
+    {% include "/layouts/registry/search-filter.html" %}
+
     {% block mainContent %}
-    <div class="ds_layout__content table-overflow">
-      {% if accounts %}
-      <table class="ds_table">
-        <thead>
-          <tr>
-            <th scope="col">Organisation</th>
-            <th scope="col">Classification</th>
-            <th scope="col">Account Manager</th>
-            <th scope="col">Country</th>
-            <th scope="col">Date</th>
-            <th scope="col">Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for account in accounts %}
-          <tr
-            onclick="window.location.href='/accounts/{{ account.id }}'"
-            style="cursor: pointer"
-          >
-            <td>{{ account.account_name }}</td>
-            <td>{{ account.classification }}</td>
-            <td>{{ account.manager }}</td>
-            <td>{{ account.country }}</td>
-            <td>{{ account.date }}</td>
-            <td>{{ "Pending" if account.pending else "Verified" }}</td>
-            <td>
-              <button
-                type="button"
-                class="ds_link"
-                onclick="window.location.href='/accounts/{{ account.id }}'"
-              >
-                Manage
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% endif %}
+    <div class="ds_layout__list">
+      <div class="ds_search-results">
+        <div class="ds_tabs" data-module="ds-tabs">
+          <nav class="ds_tabs__navigation" aria-labelledby="ds_tabs__title">
+            <h2 id="ds_tabs__title" class="ds_tabs__title">Contents</h2>
+            <ul class="ds_tabs__list" id="tablist">
+              <li class="ds_tabs__tab">
+                <a class="ds_tabs__tab-link" href="#projects">Projects</a>
+              </li>
+              <li class="ds_tabs__tab">
+                <a class="ds_tabs__tab-link" href="#mapOverview">Map</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="ds_tabs__content ds_tabs__content--bordered" id="projects">
+            {% include "/layouts/registry/tabs/projects.html" %}
+          </div>
+          <div class="ds_tabs__content ds_tabs__content--bordered" id="mapOverview">
+            {{ renderMap(osApiKey, projects) }}
+          </div>
+        </div>
       
       {% block sequentialNavigation %}
       <nav class="ds_pagination" aria-label="Search result pages">
@@ -100,7 +84,7 @@
           </li>
         </ul>
       </nav>
-      {% endblock %}
+    {% endblock %}
     
     </div>
     {% endblock %}

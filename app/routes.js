@@ -273,12 +273,22 @@ router.get('/', (req, res) => {
   }
 });
 
-router.get('/admin/accounts', (req, res) => {
+router.get('/admin/accounts', getAccounts, (req, res) => {
   if (req.session.userType !== 'admin') {
     res.redirect('/');
   }
   res.render('/admin/accounts', {
-    accounts,
+    accounts
+  })
+});
+
+router.get('/admin/projects', applyProjectFilters, (req, res) => {
+  if (req.session.userType !== 'admin') {
+    res.redirect('/');
+  }
+  res.render('/admin/projects', {
+    projects,
+    osApiKey: process.env.OS_API_KEY,
     filters: res.locals.projectFilters
   })
 });
