@@ -9,6 +9,7 @@ module.exports = {
     5: 'Not delivered'
   },
   projectFields: [
+    'account_name',
     'project_name',
     'project_description',
     'category',
@@ -72,6 +73,5 @@ module.exports = {
     'credits',
     'clearFilters'
   ],
-  account_name: 'GreenRoots CIC',
   searchBy: 'name'
 }

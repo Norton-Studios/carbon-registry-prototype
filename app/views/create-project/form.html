@@ -5,7 +5,7 @@
 {% set bodyClasses = "govuk-frontend-supported" %}
 
 {% set detailsFields = [
-  { id: 1, label: "Account name", fieldType: "text", readonly: true, formGroup: "What are the details of your project?" },
+  { id: 1, label: "Account name", fieldType: "text", readonly: true, value: "GreenRoots CIC", formGroup: "What are the details of your project?" },
   { id: 2, label: "Project name", fieldType: "text", readonly: false, formGroup: "What are the details of your project?" },
   { id: 3, label: "Project description", fieldType: "textarea", readonly: false, formGroup: "What are the details of your project?" },
   { id: 4, label: "Category", fieldType: "radio", options: [
@@ -224,7 +224,7 @@
                   type="text"
                   id="{{ field.id }}"
                   name="{{ field.label | lower | replace(" ", "_") }}"
-                  value="{{ data[field.label | lower | replace(" ", "_")] or '' }}">
+                  value="{{ data[field.label | lower | replace(" ", "_")] or field.value or '' }}">
               {% endif %}
             </div>
           {% endfor %}
