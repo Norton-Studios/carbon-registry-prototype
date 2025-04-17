@@ -5,6 +5,7 @@
 {% set bodyClasses = "govuk-frontend-supported" %}
 
 {% block main %}
+
 <div class="ds_wrapper">
   <main id="main-content">
     {% block mainHeader %}
@@ -19,7 +20,6 @@
 
     {% block mainContent %}
     <div class="ds_layout__content table-overflow">
-
       <h2>Credits</h2>
       <table class="ds_table">
         <thead>
@@ -40,81 +40,108 @@
         </tbody>
       </table>
       {% if pendingAccounts %}
-      <h2>Pending accounts ({{ pendingAccounts | length }})</h2>
-      <table class="ds_table">
-        <thead>
-          <tr>
-            <th scope="col">Organisation</th>
-            <th scope="col">Classification</th>
-            <th scope="col">Account Manager</th>
-            <th scope="col">Country</th>
-            <th scope="col">Date</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for account in pendingAccounts %}
-          <tr
-            onclick="window.location.href='accounts/{{ account.id }}'"
-            style="cursor: pointer"
-          >
-            <td>{{ account.account_name }}</td>
-            <td>{{ account.classification }}</td>
-            <td>{{ account.manager }}</td>
-            <td>{{ account.country }}</td>
-            <td>{{ account.date }}</td>
-            <td>
-              <button
-                type="button"
-                class="ds_link"
-                onclick="window.location.href='account/{{ account.id }}'"
-              >
-                Review
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <a href="/admin/accounts/" class="ds_button">view all</a>
+      <div class="ds_accordion" data-module="ds-accordion">
+        <div class="ds_accordion-item">
+          <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-1" aria-labelledby="panel-1-heading">
+          <div class="ds_accordion-item__header">
+            <h2 id="panel-1-heading" class="ds_accordion-item__title">
+              Accounts pending review ({{ pendingAccounts | length }})
+            </h2>
+            <span class="ds_accordion-item__indicator"></span>
+            <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
+          </div>
+          <div class="ds_accordion-item__body">
+            <table class="ds_table">
+              <thead>
+                <tr>
+                  <th scope="col">Organisation</th>
+                  <th scope="col">Classification</th>
+                  <th scope="col">Account Manager</th>
+                  <th scope="col">Country</th>
+                  <th scope="col">Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for account in pendingAccounts %}
+                <tr
+                  onclick="window.location.href='accounts/{{ account.id }}'"
+                  style="cursor: pointer"
+                >
+                  <td>{{ account.account_name }}</td>
+                  <td>{{ account.classification }}</td>
+                  <td>{{ account.manager }}</td>
+                  <td>{{ account.country }}</td>
+                  <td>{{ account.date }}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="ds_link"
+                      onclick="window.location.href='account/{{ account.id }}'"
+                    >
+                      Review
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       {% endif %}
 
-      <h2 id="projects">Projects</h1>
-      <table class="ds_table">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Standard</th>
-            <th scope="col">Project Type</th>
-            <th scope="col">Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for project in projects %}
-          <tr
-            onclick="window.location.href='projects/{{ project.details_url }}'"
-            style="cursor: pointer"
-          >
-            <td>{{ project.name }}</td>
-            <td>{{ project.category }}</td>
-            <td>{{ project.standard_name }}</td>
-            <td>{{ project.type }}</td>
-            <td>{{ data['statusEnum'][project.status] }}</td>
-            <td>
-              <button
-                type="button"
-                class="ds_link"
+      {% if pendingProjects %}
+      <div class="ds_accordion-item">
+        <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-2" aria-labelledby="panel-2-heading">
+        <div class="ds_accordion-item__header">
+          <h2 id="panel-2-heading" class="ds_accordion-item__title">
+            Projects pending review ({{ pendingProjects | length }})
+          </h2>
+          <span class="ds_accordion-item__indicator"></span>
+          <label class="ds_accordion-item__label" for="panel-2"><span class="visually-hidden">Show all</span></label>
+        </div>
+        <div class="ds_accordion-item__body">
+          <table class="ds_table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Standard</th>
+                <th scope="col">Project Type</th>
+                <th scope="col">Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in pendingProjects %}
+              <tr
                 onclick="window.location.href='projects/{{ project.details_url }}'"
+                style="cursor: pointer"
               >
-                Manage
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                <td>{{ project.name }}</td>
+                <td>{{ project.category }}</td>
+                <td>{{ project.standard_name }}</td>
+                <td>{{ project.type }}</td>
+                <td>Pending review</td>
+                <td>
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='projects/{{ project.details_url }}'"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+      
     </div>
     {% endblock %}
   </main>

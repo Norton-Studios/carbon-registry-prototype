@@ -55,6 +55,10 @@ function getAccounts(req, res, next) {
   if (!res.locals.accounts) {
     res.locals.accounts = accounts
   }
+  // Also get projects here until I figure out a better way
+  if (!res.locals.projects) {
+    res.locals.projects = projects
+  }
   next();
 }
 
@@ -249,11 +253,14 @@ router.get('/', (req, res) => {
   switch (req.session.userType) {
     case 'admin':
       getAccounts(req, res, () => {
+        const pendingProjects = res.locals.projects
+        .filter(project => project.status == 6)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
         const pendingAccounts = res.locals.accounts
           .filter(account => account.pending)
           .sort((a, b) => new Date(a.date) - new Date(b.date))
         res.render('/admin/dashboard', {
-          projects,
+          pendingProjects,
           pendingAccounts,
         });
       });
