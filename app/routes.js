@@ -228,9 +228,12 @@ router.get('/my-projects', getMyProjects, (req, res) => {
 router.get('/', (req, res) => {
   switch (req.session.userType) {
     case 'admin':
-      res.render('dashboard', {
+      const pendingAccounts = accounts
+        .filter(account => account.pending)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+      res.render('admin/dashboard', {
         projects,
-        authenticated: true
+        pendingAccounts,
       });
       break;
 

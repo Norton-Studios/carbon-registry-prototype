@@ -2,73 +2,109 @@
   {
     "account_name": "Abersenny Ltd",
     "classification": "Project Developer",
+    "manager": "Jane Smith",
     "country": "United Kingdom",
-    "website": "https://www.abersenny.com"
+    "website": "https://www.abersenny.com",
+    "date": "2025-04-10",
+    "pending": true
   },
   {
     "account_name": "Accenture Global Solutions",
-    "classification": "Corporate",
+    "classification": "Corporate End User",
+    "manager": "John Smith",
     "country": "Ireland",
-    "website": "https://www.accenture.com"
+    "website": "https://www.accenture.com",
+    "date": "2025-04-17",
+    "pending": true
   },
   {
     "account_name": "Achnacarry Estate",
     "classification": "Project Proponent",
+    "manager": "Bob McFong",
     "country": "Scotland",
-    "website": "https://www.achnacarry.com/"
+    "website": "https://www.achnacarry.com/",
+    "date": "2025-04-11",
+    "pending": true
   },
   {
     "account_name": "ACRE Buffer Account",
     "classification": "Government",
+    "manager": "Jane Smith",
     "country": "Brazil",
-    "website": "https://www.ac.gov.br"
+    "website": "https://www.ac.gov.br",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "ACT Financial Solutions B.V.",
     "classification": "Trader",
+    "manager": "Jane Smith",
     "country": "United Kingdom",
-    "website": "https://www.actcommodities.com/"
+    "website": "https://www.actcommodities.com/",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "Active Woodlands",
     "classification": "Project Developer",
+    "manager": "Jane Smith",
     "country": "United Kingdom",
-    "website": ""
+    "website": "",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "ACWA Power Maroc",
     "classification": "Project Developer",
+    "manager": "Jane Smith",
     "country": "Morocco",
-    "website": "https://www.acwapower.com"
+    "website": "https://www.acwapower.com",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "ADALBERTO VARGAS",
     "classification": "Government",
+    "manager": "Jane Smith",
     "country": "Mexico",
-    "website": "https://www.conafor.gob.mx"
+    "website": "https://www.conafor.gob.mx",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "Addisons Surveyors LLP",
     "classification": "Project Developer",
+    "manager": "Jane Smith",
     "country": "United Kingdom",
-    "website": "https://addisons-surveyors.co.uk/"
+    "website": "https://addisons-surveyors.co.uk/",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "A.E.Dyke & Son",
     "classification": "Project Developer",
+    "manager": "Jane Smith",
     "country": "England",
-    "website": "https://www.millfarmglamping.co.uk"
+    "website": "https://www.millfarmglamping.co.uk",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "Aether Energy",
     "classification": "Project Developer",
+    "manager": "Jane Smith",
     "country": "United Kingdom",
-    "website": "https://www.aetherenergy.co.uk"
+    "website": "https://www.aetherenergy.co.uk",
+    "date": "2025-04-15",
+    "pending": false
   },
   {
     "account_name": "Aethersys Ltd",
     "classification": "Project Developer",
+    "manager": "Jane Smith",
     "country": "United Kingdom",
-    "website": "https://www.aethersys.com"
+    "website": "https://www.aethersys.com",
+    "date": "2025-04-15",
+    "pending": true
   }
 ]

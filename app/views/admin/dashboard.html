@@ -1,0 +1,122 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Dashboard{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Admin dashboard</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content table-overflow">
+
+      <h2 id="credits">Credits</h2>
+      <table class="ds_table">
+        <thead>
+          <tr>
+            <th scope="col">Issued</th>
+            <th scope="col">Active</th>
+            <th scope="col">Retired</th>
+            <th scope="col">Assigned</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>3,249,233</td>
+            <td>2,376,780</td>
+            <td>52,450</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+      {% if pendingAccounts %}
+      <h2 id="accounts">Pending accounts ({{ pendingAccounts | length }})</h2>
+      <span>view all</span>
+      <table class="ds_table">
+        <thead>
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Classification</th>
+            <th scope="col">Account Manager</th>
+            <th scope="col">Country</th>
+            <th scope="col">Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for account in pendingAccounts %}
+          <tr
+            onclick="window.location.href='projects/{{ project.details_url }}'"
+            style="cursor: pointer"
+          >
+            <td>{{ account.account_name }}</td>
+            <td>{{ account.classification }}</td>
+            <td>{{ account.manager }}</td>
+            <td>{{ account.country }}</td>
+            <td>{{ account.date }}</td>
+            <td>
+              <button
+                type="button"
+                class="ds_link"
+                onclick="window.location.href='projects/{{ account.id }}'"
+              >
+                Review
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+      <h2 id="projects">Projects</h1>
+      <table class="ds_table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Standard Name</th>
+            <th scope="col">Project Type</th>
+            <th scope="col">Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+          <tr
+            onclick="window.location.href='projects/{{ project.details_url }}'"
+            style="cursor: pointer"
+          >
+            <td>{{ project.name }}</td>
+            <td>{{ project.category }}</td>
+            <td>{{ project.standard_name }}</td>
+            <td>{{ project.type }}</td>
+            <td>{{ data['statusEnum'][project.status] }}</td>
+            <td>
+              <button
+                type="button"
+                class="ds_link"
+                onclick="window.location.href='projects/{{ project.details_url }}'"
+              >
+                Manage
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}
