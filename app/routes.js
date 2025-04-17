@@ -48,6 +48,16 @@ function getMyProjects(req, res, next) {
   next();
 }
 
+function getAccounts(req, res, next) {
+  if (req.session.userType !== 'admin') {
+    return res.redirect('/');
+  }
+  if (!res.locals.accounts) {
+    res.locals.accounts = accounts
+  }
+  next();
+}
+
 function applyProjectFilters(req, res, next) {
   res.locals.filteredProjects = filterProjects(projects, req.session.data);
   res.locals.projectFilters = generateFilters(projects);
@@ -202,7 +212,7 @@ router.post('/register/main-contact', (req, res) => {
 });
 
 router.post('/register/declaration', (req, res) => {
-  // Use registration responses to create new user in req.session.data.users
+  // Use registration responses to create new user in res.locals.accounts
   res.redirect('/register/confirm-details')
 });
 
@@ -228,12 +238,14 @@ router.get('/my-projects', getMyProjects, (req, res) => {
 router.get('/', (req, res) => {
   switch (req.session.userType) {
     case 'admin':
-      const pendingAccounts = accounts
-        .filter(account => account.pending)
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
-      res.render('admin/dashboard', {
-        projects,
-        pendingAccounts,
+      getAccounts(req, res, () => {
+        const pendingAccounts = res.locals.accounts
+          .filter(account => account.pending)
+          .sort((a, b) => new Date(a.date) - new Date(b.date))
+        res.render('/admin/dashboard', {
+          projects,
+          pendingAccounts,
+        });
       });
       break;
 
@@ -256,6 +268,16 @@ router.get('/', (req, res) => {
       });
       break;
   }
+});
+
+router.get('/admin/accounts', (req, res) => {
+  if (req.session.userType !== 'admin') {
+    res.redirect('/');
+  }
+  res.render('/admin/accounts', {
+    accounts,
+    filters: res.locals.projectFilters
+  })
 });
 
 router.get('/login', (_, res) => {
@@ -293,7 +315,4 @@ router.get('/account/verification', (req, res) => {
   });
 });
 
-
-
 module.exports = router;
-// Add your routes here

@@ -20,7 +20,7 @@
     {% block mainContent %}
     <div class="ds_layout__content table-overflow">
 
-      <h2 id="credits">Credits</h2>
+      <h2>Credits</h2>
       <table class="ds_table">
         <thead>
           <tr>
@@ -40,8 +40,7 @@
         </tbody>
       </table>
       {% if pendingAccounts %}
-      <h2 id="accounts">Pending accounts ({{ pendingAccounts | length }})</h2>
-      <span>view all</span>
+      <h2>Pending accounts ({{ pendingAccounts | length }})</h2>
       <table class="ds_table">
         <thead>
           <tr>
@@ -77,6 +76,7 @@
           {% endfor %}
         </tbody>
       </table>
+      <a href="/admin/accounts/" class="ds_button">view all</a>
       {% endif %}
 
       <h2 id="projects">Projects</h1>

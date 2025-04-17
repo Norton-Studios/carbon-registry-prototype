@@ -1,0 +1,110 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Accounts overview{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Accounts overview</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content table-overflow">
+      {% if accounts %}
+      <table class="ds_table">
+        <thead>
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Classification</th>
+            <th scope="col">Account Manager</th>
+            <th scope="col">Country</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for account in accounts %}
+          <tr
+            onclick="window.location.href='projects/{{ project.details_url }}'"
+            style="cursor: pointer"
+          >
+            <td>{{ account.account_name }}</td>
+            <td>{{ account.classification }}</td>
+            <td>{{ account.manager }}</td>
+            <td>{{ account.country }}</td>
+            <td>{{ account.date }}</td>
+            <td>{{ "Pending" if account.pending else "Verified" }}</td>
+            <td>
+              <button
+                type="button"
+                class="ds_link"
+                onclick="window.location.href='projects/{{ account.id }}'"
+              >
+                Manage
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+      
+      {% block sequentialNavigation %}
+    <nav class="ds_pagination" aria-label="Search result pages">
+      <ul class="ds_pagination__list">
+        <li class="ds_pagination__item">
+          <a aria-label="Page 1" aria-current="page" class="ds_pagination__link  ds_current" href="#">
+            <span class="ds_pagination__link-label">1</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Page 2" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">2</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Page 3" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">3</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Page 4" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">4</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item" aria-hidden="true">
+          <span class="ds_pagination__link  ds_pagination__link--ellipsis">&hellip;</span>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Last page, page 27" class="ds_pagination__link" href="#">
+            <span class="ds_pagination__link-label">27</span>
+          </a>
+        </li>
+        <li class="ds_pagination__item">
+          <a aria-label="Next page" class="ds_pagination__link  ds_pagination__link--text  ds_pagination__link--icon" href="#">
+            <span class="ds_pagination__link-label">Next</span>
+            <svg class="ds_icon" aria-hidden="true" role="img">
+              <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {% endblock %}
+    
+    </div>
+    {% endblock %}
+
+  </main>
+</div>
+{% endblock %}
