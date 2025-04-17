@@ -35,20 +35,50 @@
                 <label class="ds_radio__label" for="class-proponent">Project Proponent</label>
               </div>
               <div class="ds_radio">
-                <input class="ds_radio__input" id="class-corporate" name="classification" type="radio" value="Corporate End User">
-                <label class="ds_radio__label" for="class-corporate">Corporate End User</label>
+                <input class="ds_radio__input" id="class-buyer" name="classification" type="radio" value="Buyer">
+                <label class="ds_radio__label" for="class-buyer">Buyer</label>
               </div>
-              <div class="ds_radio">
-                <input class="ds_radio__input" id="class-trading" name="classification" type="radio" value="Trader">
-                <label class="ds_radio__label" for="class-trading">Trader</label>
+
+              <div id="buyer-options" class="ds_field-group" style="display: none; margin-left: 1rem;">
+                <p class="ds_hint-text">Which type of buyer is your organisation:</p>
+                <div class="ds_radio">
+                  <input class="ds_radio__input" id="class-corporate" name="buyer-classification" type="radio" value="Corporate End User">
+                  <label class="ds_radio__label" for="class-corporate">Corporate End User</label>
+                </div>
+                <div class="ds_radio">
+                  <input class="ds_radio__input" id="class-trading" name="buyer-classification" type="radio" value="Trader">
+                  <label class="ds_radio__label" for="class-trading">Trader (FCA registered)</label>
+                </div>
+                <div class="ds_radio">
+                  <input class="ds_radio__input" id="class-retail" name="buyer-classification" type="radio" value="Retail Aggregator">
+                  <label class="ds_radio__label" for="class-retail">Retail Aggregator (non-FCA registered)</label>
+                </div>
               </div>
-              <div class="ds_radio">
-                <input class="ds_radio__input" id="class-retail" name="classification" type="radio" value="Retail Aggregator">
-                <label class="ds_radio__label" for="class-retail">Retail Aggregator</label>
-              </div>
+
+              <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                  const buyerRadio = document.getElementById('class-buyer');
+                  const buyerOptions = document.getElementById('buyer-options');
+
+                  buyerRadio.addEventListener('change', function () {
+                    if (buyerRadio.checked) {
+                      buyerOptions.style.display = 'block';
+                    }
+                  });
+
+                  const otherRadios = document.querySelectorAll('input[name="classification"]:not(#class-buyer)');
+                  otherRadios.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                      if (radio.checked) {
+                        buyerOptions.style.display = 'none';
+                      }
+                    });
+                  });
+                });
+              </script>
             </div>
           </fieldset>
-        
+
         </div>
         <div class="button-group">
           <button class="ds_button ds_button--has-icon">

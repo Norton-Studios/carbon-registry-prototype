@@ -67,7 +67,6 @@ async function resetProjectFields(req, _, next) {
 }
 
 function applyUserType(req, res, next) {
-  console.log(req.session.data)
   const userType = req.session.userType;
   res.locals.userType = userType || 'guest';
   next();
@@ -99,6 +98,21 @@ router.get('/register/company-number', (req, res) => {
   });
 });
 
+router.get('/register/company-details-confirmation', (req, res) => {
+  const formError = req.session.formError;
+  delete req.session.formError;
+
+  res.render('register/company-details-confirmation', {
+    formError,
+    responses: req.session.data.registration.responses,
+  });
+});
+
+router.post('/register/company-details-confirmation', (req, res) => {
+  // Proceed to the next step after confirmation
+  res.redirect('/register/classification');
+});
+
 router.post('/register/company-number', async (req, res) => {
   const { companyNumber } = req.body;
 
@@ -128,7 +142,7 @@ router.post('/register/company-number', async (req, res) => {
       {
         label: 'Organisation Name',
         value: company.title,
-        changeUrl: '/register/registered-name' 
+        changeUrl: '/register/registered-name'
       },
       {
         label: 'Address',
@@ -137,7 +151,7 @@ router.post('/register/company-number', async (req, res) => {
       }
     ]);
 
-    res.redirect('/register/classification');
+    res.redirect('/register/company-details-confirmation');
   } catch (err) {
     req.session.formError = {
       message: 'There was a problem connecting to Companies House. Please try again later.',
@@ -150,7 +164,7 @@ router.post('/register/classification', (req, res) => {
   if (req.body.classification) {
     updateRegistrationResponses(req, {
       label: 'Classification',
-      value: req.body.classification,
+      value: req.body['buyer-classification'] || req.body.classification,
       changeUrl: '/register/classification'
     });
     res.redirect('/register/standard');
@@ -171,24 +185,25 @@ router.post('/register/standard', async (req, res) => {
 
 router.post('/register/privacy', async (req, res) => {
     // save this post request later
-    res.redirect('/register/confirm-details');
+    res.redirect('/register/main-contact');
 });
 
 router.post('/register/main-contact', (req, res) => {
   const {firstName, lastName, email, phone} = req.body;
   if (firstName && lastName && email && phone) {
-    updateRegistrationResponses(req, {
-      label: 'contact',
-      value: {firstName, lastName, email, phone},
-      changeUrl: '/register/standard'
-    })
+    updateRegistrationResponses(req, [
+      { label: 'First Name', value: firstName, changeUrl: '/register/main-contact' },
+      { label: 'Last Name', value: lastName, changeUrl: '/register/main-contact' },
+      { label: 'Email', value: email, changeUrl: '/register/main-contact' },
+      { label: 'Phone Number', value: phone, changeUrl: '/register/main-contact' }
+    ])
     res.redirect('/register/declaration');
   }
 });
 
 router.post('/register/declaration', (req, res) => {
   // Use registration responses to create new user in req.session.data.users
-  res.redirect('/register/success')
+  res.redirect('/register/confirm-details')
 });
 
 router.post('/registry', (req, res) => {

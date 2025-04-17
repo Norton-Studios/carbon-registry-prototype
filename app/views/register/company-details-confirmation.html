@@ -1,0 +1,36 @@
+{% from "components/summary-list.html" import summaryList %}
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Confirm Company Details{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout ds_layout--question-page">
+    <div class="ds_layout__content">
+      <form action="/register/company-details-confirmation" method="post">
+        <div class="ds_question">
+          <legend class="ds_page-header">
+            <h1 class="ds_page-header__title">
+              Confirm your company details
+            </h1>
+          </legend>
+          <fieldset>
+            <p class="ds_hint-text">Please confirm the details below are correct:</p>
+            {{ summaryList(responses) }}
+          </fieldset>
+        </div>
+        <div class="button-group">
+          <a href="/register/company-number" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
+            Back
+          </a>
+          <button class="ds_button ds_button--has-icon" type="submit">
+            Confirm
+            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+{% endblock %}

@@ -11,27 +11,15 @@
       {% if userType == 'developer' and data['paymentSuccess'] %}
         {% set title = "Payment successful" %}
         {% set message = "Project is now submitted for validation" %}
-        {% set action = {
-          "link": "/my-projects",
-          "message": "You may view your project"
-          }
-      %}
+        {% set action = "You may view your project <a href='/my-projects'here</a> or return to the <a href='/'home page</a>." %}
       {% elseif  userType == 'developer' %}
         {% set title = "Form Submitted" %}
         {% set message = "Project is sent for review by regulators" %}
-        {% set action = {
-          "link": "/my-projects/highland-rewilding/verification",
-          "message": "You may view your invoice"
-          }
-        %}
+        {% set action = "You may view your invoice <a href='/my-projects/highland-rewilding/verification'here</a> or return to the <a href='/'home page</a>." %}
       {% else %}
         {% set title = "Registration Complete" %}
         {% set message = "Your registration was successful and your account has been created." %}
-        {% set action = {
-          "link": "/",
-          "message": "Please submit your organisational details for verification"
-          }
-        %}
+        {% set action = "Before your account becomes active you will need to verify your account, go to your <a href='/account/verification'>verification dashboard</a> to complete the checks." %}
       {% endif %}
 
         {% block mainHeader %}
@@ -47,7 +35,7 @@
 
         {% block mainContent %}
         <div class="ds_layout__content">
-            <p>{{ action.message }} <a href="{{ action.link }}">here</a> or return to the <a href="/">home page</a>.</p>
+            <p>{{ action | safe }}</p>
         </div>
         {% endblock %}
     </main>

@@ -56,35 +56,37 @@ async function lookupCompany(companyNumber, apiKey) {
   return data.items?.[0] || null;
 }
 
+const accountQuestions = [
+  'First Name',
+  'Last Name',
+  'Email',
+  'Phone Number',
+];
+
 function updateRegistrationResponses(req, responses) {
   const responsesArray = Array.isArray(responses) ? responses : [responses];
-  
-  if (!req.session.data) {
-    req.session.data = {};
-  }
-  
-  if (!req.session.data.registration) {
-    req.session.data.registration = {};
-  }
-  
-  if (!req.session.data.registration.responses) {
-    req.session.data.registration.responses = [];
-  }
-  
+  req.session.data = req.session.data ?? {};
+  req.session.data.registration = req.session.data.registration ?? {};
+  req.session.data.registration.responses = req.session.data.registration.responses ?? [];
+  req.session.data.registration.accountResponses = req.session.data.registration.accountResponses ?? [];
+
+
   // Process each response
   responsesArray.forEach(response => {
     const { label, value, changeUrl } = response;
-    
-    const existingIndex = req.session.data.registration.responses.findIndex(
+    const responses = accountQuestions.includes(label)
+      ? req.session.data.registration.accountResponses
+      : req.session.data.registration.responses;
+    const existingIndex = responses.findIndex(
       item => item.label === label
     );
-    
+
     if (existingIndex >= 0) {
       // Update existing entry
-      req.session.data.registration.responses[existingIndex].value = value;
+      responses[existingIndex].value = value;
     } else {
       // Add new entry
-      req.session.data.registration.responses.push({
+      responses.push({
         label,
         value,
         changeUrl

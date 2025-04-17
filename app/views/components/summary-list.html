@@ -1,0 +1,31 @@
+{% macro summaryList(items) %}
+<ul class="ds_summary-list">
+  {% if items and items.length > 0 %}
+  {% for item in items %}
+  <li class="ds_summary-list__item">
+    <span class="ds_summary-list__key">{{ item.label }}</span>
+    <span class="ds_summary-list__value" id="q{{ loop.index }}">
+          <span class="visually-hidden">Your answer is: </span>
+          <q class="ds_summary-list__answer">{{ item.value }}</q>
+        </span>
+    {% if item.changeUrl %}
+    <div class="ds_summary-list__actions">
+      <ul class="ds_summary-list__actions-list">
+        <li class="ds_summary-list__actions-list-item">
+          <button type="button" class="ds_link" aria-describedby="q{{ loop.index }}" onclick="location.href='{{ item.changeUrl }}'">
+            Change <span class="visually-hidden">your answer for: {{ item.label }}</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    {% endif %}
+  </li>
+  {% endfor %}
+  {% else %}
+  <li class="ds_summary-list__item">
+    <span class="ds_summary-list__key">No details available</span>
+    <span class="ds_summary-list__value"></span>
+  </li>
+  {% endif %}
+</ul>
+{% endmacro %}
