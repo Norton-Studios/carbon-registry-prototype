@@ -108,11 +108,7 @@
 {% set lastFieldId = detailsFields.length + 1 %}
 
 {% if nextField is none or nextField.formGroup != (fields | first).formGroup %}
-  {% if data[prevField.label | lower | replace(" ", "_")] or currentFieldId == lastFieldId - 1 %}
     {% set formAction = "/create-project/answer-summary?lastFieldId=" ~ lastFieldId %}
-  {% else %}
-    {% set formAction = "/create-project" %}
-  {% endif %}
 {% else %}
   {% set formAction = "/create-project/form" %}
 {% endif %}

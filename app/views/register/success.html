@@ -11,11 +11,11 @@
       {% if userType == 'developer' and data['paymentSuccess'] %}
         {% set title = "Payment successful" %}
         {% set message = "Project is now submitted for validation" %}
-        {% set action = "You may view your project <a href='/my-projects'here</a> or return to the <a href='/'home page</a>." %}
+        {% set action = "You may view your project <a class='ds_default-link' href='/my-projects'>here</a> or return to the <a class='ds_default-link' href='/'>home page</a>." %}
       {% elseif  userType == 'developer' %}
         {% set title = "Form Submitted" %}
         {% set message = "Project is sent for review by regulators" %}
-        {% set action = "You may view your invoice <a href='/my-projects/highland-rewilding/verification'here</a> or return to the <a href='/'home page</a>." %}
+        {% set action = "You may view your invoice <a class='ds_default-link' href='/my-projects/highland-rewilding/verification'>here</a> or return to the <a class='ds_default-link' href='/'>home page</a>." %}
       {% else %}
         {% set title = "Registration Complete" %}
         {% set message = "Your registration was successful and your account has been created." %}
