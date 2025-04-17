@@ -4,6 +4,12 @@
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/register/standard">Back</a>
+</div>
+{% endblock %}
+
 {% block main %}
 <div class="ds_wrapper">
   <main id="main-content" class="ds_layout  ds_layout--question-page">
@@ -43,10 +49,6 @@
           </fieldset>
         </div>
         <div class="button-group">
-          <a href="/register/standard" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
-            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
-            Back
-          </a>
           <button class="ds_button  ds_button--has-icon">
             Next
             <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>

@@ -4,14 +4,9 @@
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
-{# 'Part of' notification message - in place of breadcrumbs #}
 {% block breadcrumbs %}
 <div class="ds_wrapper">
-  <nav class="ds_notification-message">
-    <h3 class="ds_notification-message__title">
-      Part of <a href="/register">Registration form</a>
-    </h3>
-  </nav>
+  <a class="ds_back-link" href="/register/confirm-details">Back</a>
 </div>
 {% endblock %}
 
@@ -23,7 +18,7 @@
     <div class="ds_layout__content">
         
       {# Set the action attribute to the next page in your form's journey #}
-      <form action="/register/organisation-details/trading-name" method="post">
+      <form action="/register/address" method="post">
         <div class="ds_question">
           <legend class="ds_page-header">
             <h1 class="ds_page-header__title">
@@ -58,50 +53,13 @@
 
         </div>
         <div class="button-group">
-          <a href="/register/organisation-details/classification" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
-            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
-            Back
-          </a>
-          <button class="ds_button  ds_button--has-icon">
+          <button class="ds_button ds_button--has-icon">
             Next
             <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
           </button>
         </div>
       </form>
 
-    </div>
-    {% endblock %}
-
-    {# Optionally show submitted answers so far #}
-    {% block answerSummary %}
-    <div class="ds_layout__footer">
-      <div class="ds_!_margin-top--4">
-        <h2>Your answers</h2>
-        <p><button class="ds_link">Clear answers and start again</button></p>
-        <ol class="ds_summary-list">
-          <li class="ds_summary-list__item"><span class="ds_summary-list__key" id="item-1-key">Company Name</span> <span class="ds_summary-list__value"><q class="ds_summary-list__answer">My answer</q></span>
-            <div class="ds_summary-list__actions">
-              <ul class="ds_summary-list__actions-list">
-                <li class="ds_summary-list__actions-list-item"><button class="ds_link" aria-describedby="item-1-key">Change</button></li>
-              </ul>
-            </div>
-          </li>
-          <li class="ds_summary-list__item"><span class="ds_summary-list__key" id="item-2-key">Trading Name</span> <span class="ds_summary-list__value"><q class="ds_summary-list__answer">My answer</q></span>
-            <div class="ds_summary-list__actions">
-              <ul class="ds_summary-list__actions-list">
-                <li class="ds_summary-list__actions-list-item"><button class="ds_link" aria-describedby="item-2-key">Change</button></li>
-              </ul>
-            </div>
-          </li>
-          <li class="ds_summary-list__item"><span class="ds_summary-list__key" id="item-2-key">Classification</span> <span class="ds_summary-list__value"><q class="ds_summary-list__answer">My answer</q></span>
-            <div class="ds_summary-list__actions">
-              <ul class="ds_summary-list__actions-list">
-                <li class="ds_summary-list__actions-list-item"><button class="ds_link" aria-describedby="item-2-key">Change</button></li>
-              </ul>
-            </div>
-          </li>
-        </ol>
-      </div>
     </div>
     {% endblock %}
 

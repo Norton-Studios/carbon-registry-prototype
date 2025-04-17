@@ -91,8 +91,8 @@ router.get('/projects/:name', getProjectMiddleware, (req, res) => {
 });
 
 router.get('/register/company-number', (req, res) => {
-  const formError = req.session.formError;
-  delete req.session.formError;
+  const formError = req.session.data.formError;
+  delete req.session.data.formError;
 
   res.render('register/company-number', {
     formError,
@@ -106,14 +106,14 @@ router.post('/register/company-number', async (req, res) => {
     const company = await lookupCompany(companyNumber, process.env.COMPANY_INFO_API_KEY);
 
     if (!company) {
-      req.session.formError = {
+      req.session.data.formError = {
         message: `No company found with registration ${companyNumber}. Please check the number and try again.`,
       };
       return res.redirect('/register/company-number');
     }
 
     if (company.company_status !== 'active') {
-      req.session.formError = {
+      req.session.data.formError = {
         message: `${company.title} is ${company.company_status}. Only active companies can register.`,
       };
       return res.redirect('/register/company-number');
@@ -128,12 +128,12 @@ router.post('/register/company-number', async (req, res) => {
       {
         label: 'Organisation Name',
         value: company.title,
-        changeUrl: '/register/company-number' // Possibly create /register/organisation-name.html in future
+        changeUrl: '/register/registered-name' 
       },
       {
         label: 'Address',
         value: company.address_snippet,
-        changeUrl: '/register/company-number' // Possibly create /register/address.html in future
+        changeUrl: '/register/address'
       }
     ]);
 
@@ -184,13 +184,12 @@ router.post('/register/main-contact', (req, res) => {
     })
     res.redirect('/register/declaration');
   }
-})
+});
 
 router.post('/register/declaration', (req, res) => {
-  if (req.body.declaration) {
-    res.redirect('/register/success');
-  }
-})
+  // Use registration responses to create new user in req.session.data.users
+  res.redirect('/register/success')
+});
 
 router.post('/registry', (req, res) => {
   if (req.body.submitAction === 'reset') {

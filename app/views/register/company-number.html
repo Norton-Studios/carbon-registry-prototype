@@ -4,6 +4,12 @@
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/register">Back</a>
+</div>
+{% endblock %}
+
 {% block main %}
 <div class="ds_wrapper">
   <main id="main-content" class="ds_layout  ds_layout--question-page">
@@ -22,7 +28,7 @@
             </legend>
             <div>
               <label class="ds_label" for="companyNumber">Your eight-character Company Registration Number (CRN):</label>
-              {% if formError %}
+              {% if data['formError'] %}
               <input class="ds_input ds_input--error" type="text" id="companyNumber" name="companyNumber" placeholder="SC000000" pattern="^[A-Z0-9]{2}\d{6}$"
               title="Company Registration Numbers must be 8 characters long, with the last 6 as numbers" required>
               {% else %}
@@ -30,18 +36,14 @@
               title="Company Registration Numbers must be 8 characters long, with the last 6 as numbers" required>
               {% endif %}
             </div>
-            {% if formError %}
+            {% if data['formError'] %}
               <div class="govuk-error-message">
                 <span class="govuk-visually-hidden">Error:</span>
-                {{ formError.message }}
+                {{ data['formError']['message'] }}
               </div>
             {% endif %}
             </div>
             <div class="button-group">
-              <a href="/register" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
-                <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
-                Back
-              </a>
               <button class="ds_button ds_button--has-icon">
                 Next
                 <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>

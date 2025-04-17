@@ -4,14 +4,9 @@
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
-{# 'Part of' notification message - in place of breadcrumbs #}
 {% block breadcrumbs %}
 <div class="ds_wrapper">
-  <nav class="ds_notification-message">
-    <h3 class="ds_notification-message__title">
-      Part of <a href="/register">Registration form</a>
-    </h3>
-  </nav>
+  <a class="ds_back-link" href="/register/confirm-details">Back</a>
 </div>
 {% endblock %}
 
@@ -23,7 +18,7 @@
     <div class="ds_layout__content">
         
       {# Set the action attribute to the next page in your form's journey #}
-      <form action="/register/organisation-details/trading-name" method="post">
+      <form action="/register/registered-name" method="post">
         <div class="ds_question">
           <fieldset>
             <legend class="ds_page-header">
@@ -41,19 +36,12 @@
           </fieldset>
         </div>
         <div class="button-group">
-          <a href="/register" class="ds_button ds_button--cancel ds_button--has-icon ds_button--has-icon--left">
-            <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_left"></use></svg>
-            Back
-          </a>
           <button class="ds_button  ds_button--has-icon">
             Next
             <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
           </button>
         </div>
       </form>
-
-        
-
 
     </div>
     {% endblock %}
