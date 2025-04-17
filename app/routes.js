@@ -283,5 +283,17 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+router.get('/account', (req, res) => {
+  res.redirect('/account/verification'); // maybe something else later
+});
+
+router.get('/account/verification', (req, res) => {
+  res.render('account/verification', {
+    userType: req.session.userType
+  });
+});
+
+
+
 module.exports = router;
 // Add your routes here
