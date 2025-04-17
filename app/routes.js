@@ -219,6 +219,13 @@ router.post('/register/declaration', (req, res) => {
   res.redirect('/register/confirm-details')
 });
 
+router.post('/register/confirm-details', (req, res) => {
+  console.log(req.session.data.registration.responses)
+  req.session.userType = req.session.data.registration.responses.some(f => f.label === "Classification" && f.value === 'Project Developer') ? 'developer' : 'trader'; // might need to do something better eventually
+  req.session.authenticated = true;
+  res.redirect('/register/success');
+});
+
 router.post('/registry', (req, res) => {
   if (req.body.submitAction === 'reset') {
     (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
@@ -314,7 +321,7 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.session.userType = "guest ";
+  req.session.userType = "guest";
   res.redirect('/');
 });
 
@@ -323,9 +330,15 @@ router.get('/account', (req, res) => {
 });
 
 router.get('/account/verification', (req, res) => {
-  res.render('account/verification', {
-    userType: req.session.userType
-  });
+  res.render('account/verification', {});
+});
+
+router.post('/account/company-registration', (req, res) => {
+  res.redirect('/account/verification');
+});
+
+router.post('/account/payment', (req, res) => {
+  res.redirect('/account/account-verified');
 });
 
 module.exports = router;

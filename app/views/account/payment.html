@@ -1,0 +1,59 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Invoice/Payment{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/account/verification">Back</a>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Create Account</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <ol class="ds_summary-list">
+        {% set billItems = [
+        { key: "Registration Fee", value: "£500", id: "invoice-registration" },
+        { key: "Subtotal", value: "500", id: "invoice-subtotal" },
+        { key: "VAT (20%)", value: "£100", id: "invoice-vat" },
+        { key: "Total Amount Due", value: "£600", id: "invoice-total" }
+        ]%}
+
+        {% for field in billItems %}
+        <li class="ds_summary-list__item">
+          <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+          <span class="ds_summary-list__value">
+            {% if loop.last and field.id == "invoice-total" %}
+              <h2>{{ field.value }}</h2>
+            {% else %}
+              <q class="ds_summary-list__answer">{{ field.value }}</q>
+            {% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ol>
+      <div class="button-group">
+        <a href="/account/account-verified" class="ds_button ds_button--has-icon">
+          Pay online
+          <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+        </a>
+      </div>
+    </div>
+    {%  endblock %}
+  </main>
+</div>
+{% endblock %}
