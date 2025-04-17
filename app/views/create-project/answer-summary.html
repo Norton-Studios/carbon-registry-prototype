@@ -29,7 +29,7 @@
         <p><button type="submit" name="reset" value="true" class="ds_link">Clear answers and start again</button></p>
         <ul class="ds_summary-list">
           {% for key in data['projectFields'] %}
-          {% if data[key] %}
+          {% if data[key] and key != 'paymentSuccess' %}
           <li class="ds_summary-list__item">
             <span class="ds_summary-list__key">{{ key | replace('_', ' ') | capitalize }}</span>
             <span class="ds_summary-list__value">{{ data[key] }}</span>
