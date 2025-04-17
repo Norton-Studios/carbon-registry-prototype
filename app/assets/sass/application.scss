@@ -35,6 +35,12 @@ a:visited {
   text-decoration: none; /* Remove underline */
 }
 
+a.ds_default-link,
+a.ds_default-link,
+a.ds_task-list__task-link {
+  text-decoration: underline;
+}
+
 a.ds_button:not(.ds_button--secondary):not(.ds_button--cancel):visited {
   @extend .ds_button
 }
