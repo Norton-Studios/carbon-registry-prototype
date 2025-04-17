@@ -56,7 +56,7 @@ module.exports = {
     "predicted_claimable_emission_reductions_over_project_lifetime_tco2e",
     "predicted_contribution_to_buffer_over_project_lifetime_tco2e",
     "country",
-    "state",
+    "state/province/county",
     "zip/postal_code",
     "latitude",
     "longitude",

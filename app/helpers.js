@@ -1,3 +1,6 @@
+const fs = require('fs');
+const pdfParse = require('pdf-parse');
+
 function generateFilters(projects) {
   return {
     Country: [...new Set(projects.map(project => project.country).sort((a, b) => a.localeCompare(b)))],
@@ -95,10 +98,24 @@ function updateRegistrationResponses(req, responses) {
   });
 }
 
+async function extractPdfText(filePath) {
+  const dataBuffer = fs.readFileSync(filePath);
+  const pdfData = await pdfParse(dataBuffer);
+  return pdfData.text;
+}
+
+function extractGridRefs(text) {
+  // Match patterns like "NH123456", "ST 123456", "EH123 456", etc.
+  const matches = text.match(/\b[A-Z]{2}\s?\d{3}\s?\d{3}\b/g);
+  return matches || [];
+}
+
 module.exports = {
   generateFilters,
   filterProjects,
   getProject,
   lookupCompany,
-  updateRegistrationResponses
+  updateRegistrationResponses,
+  extractGridRefs,
+  extractPdfText
 };

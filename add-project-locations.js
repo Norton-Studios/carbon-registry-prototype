@@ -37,6 +37,47 @@ async function getCoordinatesFromAddress(address) {
   }
 }
 
+// Get location from grid refernce
+async function getLocationFromGridRef(gridRef) {
+  const endpoint = `https://api.os.uk/search/places/v1/find?key=${apiKey}&query=${gridRef}`;
+  const countryCode = {
+    'E': 'England',
+    'W': 'Wales',
+    'S': 'Scotland',
+    'N': 'Northern Ireland',
+  }
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+
+    if (data.results && data.results.length > 0) {
+      const result = data.results[0];
+      const [longitude, latitude] = proj4(
+        "EPSG:27700", // OSGB36
+        "EPSG:4326", // WGS84
+        [result.DPA.X_COORDINATE, result.DPA.Y_COORDINATE]
+      );
+
+      return {
+        'country': countryCode[result.DPA.COUNTRY_CODE] ?? '',
+        'state/province/county': result.DPA.POST_TOWN ?? '',
+        'zip/postal_code': result.DPA.POSTCODE ?? '',
+        'longitude': longitude ?? '',
+        'latitude': latitude ?? '',
+        'address': result.DPA.ADDRESS ?? '',
+        'nearest_town': result.DPA.POST_TOWN ?? '',
+        'grid_reference': gridRef,
+      };
+    } else {
+      console.warn('No results found for grid reference');
+      return null;
+    }
+  } catch (err) {
+    console.error('Error fetching OS data:', err);
+    return null;
+  }
+}
+
 // Main function to update projects.json
 async function updateProjectsWithLocation() {
   const filePath = 'app/assets/data/projects.json';
@@ -63,4 +104,6 @@ async function updateProjectsWithLocation() {
 }
 
 // Run the script
-updateProjectsWithLocation();
+// updateProjectsWithLocation();
+// getLocationFromGridRef('NH 291 162');
+module.exports = { getLocationFromGridRef }

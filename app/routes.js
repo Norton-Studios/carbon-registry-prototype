@@ -8,7 +8,19 @@ const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
 const projects = require('./assets/data/projects.json');
 const accounts = require('./assets/data/accounts.json');
-const { generateFilters, filterProjects, getProject, lookupCompany, updateRegistrationResponses } = require('./helpers.js');
+const multer = require('multer');
+const upload = multer({ dest: 'app/assets/uploads/' });
+const path = require('path');
+const {
+  generateFilters,
+  filterProjects,
+  getProject,
+  lookupCompany,
+  updateRegistrationResponses,
+  extractGridRefs,
+  extractPdfText
+} = require('./helpers.js');
+const { getLocationFromGridRef } = require('../add-project-locations.js');
 
 dotenv.config();
 
@@ -79,8 +91,38 @@ async function resetProjectFields(req, _, next) {
 
     req.session.data.fieldId = '1';
   }
-
   next();
+}
+
+async function getProjectSiteDetails(req, res, next) {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  const filePath = file.path;
+  const ext = path.extname(file.originalname).toLowerCase();
+
+  try {
+    if (ext === '.pdf') {
+      const rawText = await extractPdfText(filePath);
+      const nhCode = extractGridRefs(rawText)[0];
+      const siteDetails = await getLocationFromGridRef(nhCode);
+
+      if (!siteDetails) {
+        return res.status(400).send('Unable to get location details.');
+      }
+
+      req.session.data = {
+        ...req.session.data,
+        ...siteDetails
+      }
+    } else {
+      return res.status(400).send('Unsupported file type. Only PDF and CSV allowed.');
+    }
+    next();
+  } catch (err) {
+    res.status(500).send('Error processing file.');
+  }
 }
 
 function applyUserType(req, res, next) {
@@ -90,6 +132,10 @@ function applyUserType(req, res, next) {
 }
 
 router.use(applyUserType);
+
+router.post('/upload', upload.single('fileUpload'), getProjectSiteDetails, async (_, res) => {
+  res.redirect('/create-project');
+});
 
 router.post('/create-project', resetProjectFields, (_, res) => {
   res.render('create-project');

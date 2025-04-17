@@ -24,9 +24,12 @@
   <main id="main-content">
     {% block mainContent %}
     <div class="ds_layout__content">
+      <h2>Your answers</h2>
+      <p>
+      <form action="/create-project" method="post">
+        <button type="submit" name="reset" value="true" class="ds_link">Clear answers and start again</button></p>
+      </form>
       <form action="{{ nextAction }}" method="post" class="ds_!_margin-top--4">
-        <h2>Your answers</h2>
-        <p><button type="submit" name="reset" value="true" class="ds_link">Clear answers and start again</button></p>
         <ul class="ds_summary-list">
           {% for key in data['projectFields'] %}
           {% if data[key] and key != 'paymentSuccess' %}
