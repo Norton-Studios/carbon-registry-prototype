@@ -1,0 +1,57 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Upload Company Registration Details{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/account/verification">Back</a>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Upload Company Registration Details</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <form action="/account/company-registration" method="post" enctype="multipart/form-data" class="ds_form">
+        <div class="ds_form-group">
+          <fieldset>
+            <div class="ds_form-group">
+              <label class="ds_label" for="file-upload-1">
+                Upload your company registration document
+              </label>
+              <div
+                class="govuk-drop-zone"
+                data-module="govuk-file-upload">
+                <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="button-group">
+          <button class="ds_button ds_button--has-icon">
+            Submit
+            <svg class="ds_icon" aria-hidden="true" role="img">
+              <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

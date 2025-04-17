@@ -1,0 +1,31 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Payment Confirmation{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout ds_layout--article">
+
+    {% block mainHeader %}
+    <div class="ds_layout__header">
+      <header class="ds_page-header">
+        <div class="ds_notification-panel ds_notification-panel--success">
+          <h1 class="ds_notification-panel__title">Payment successful</h1>
+          <div class="ds_notification-panel__content">Your account registration fee has been paid and recorded against your account.</div>
+        </div>
+      </header>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <h2>Next steps</h2>
+      <p>Your account verification is now complete and you can go to your account <a class="ds_link" href="/">dashboard</a>.</p>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}
