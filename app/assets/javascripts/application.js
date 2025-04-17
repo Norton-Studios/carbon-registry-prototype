@@ -6,6 +6,7 @@ const protectedRoutes = [
   '/register',
   '/login',
   '/logout',
+  '/account'
 ];
 
 window.GOVUKPrototypeKit.documentReady(() => {

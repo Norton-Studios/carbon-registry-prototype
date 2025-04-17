@@ -39,6 +39,10 @@ a.ds_button:not(.ds_button--secondary):not(.ds_button--cancel):visited {
   @extend .ds_button
 }
 
+a.ds_task-list__task-link:visited {
+  @extend .ds_link
+}
+
 .ds_layout--search-results--filters .ds_pagination {
   grid-area: f;
 }
