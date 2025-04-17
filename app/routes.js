@@ -55,14 +55,17 @@ function applyProjectFilters(req, res, next) {
 }
 
 async function resetProjectFields(req, _, next) {
-  const fields = req.session.data.projectFields || [];
-  for (const key of fields) {
-    if (req.session.data[key]) {
-      delete req.session.data[key];
+  if (req.body.reset) {
+    const fields = req.session.data.projectFields || [];
+    for (const key of fields) {
+      if (req.session.data[key]) {
+        delete req.session.data[key];
+      }
     }
+
+    req.session.data.fieldId = '1';
   }
 
-  req.session.data.fieldId = '1';
   next();
 }
 
@@ -74,7 +77,7 @@ function applyUserType(req, res, next) {
 
 router.use(applyUserType);
 
-router.get('/create-project', resetProjectFields, (_, res) => {
+router.post('/create-project', resetProjectFields, (_, res) => {
   res.render('create-project');
 });
 
