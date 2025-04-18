@@ -4,7 +4,7 @@ function getAccount(req, res, next) {
     const account = res.locals.accounts || accounts
       .find(account => account.id === req.params.id);
     if (!account) {
-      return res.status(404).redirect('/error-page-not-found');
+      return res.status(404).redirect('/');
     };
     res.locals.account = account;
   next();
