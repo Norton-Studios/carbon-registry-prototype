@@ -5,7 +5,11 @@
 {% set bodyClasses = "govuk-frontend-supported" %}
 
 {% set currentFieldId = data['fieldId'] | int %}
-{% set backAction = "/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
+{% if currentFieldId < 2 %}
+  {% set backAction = "/create-project" %}
+{% else %}
+  {% set backAction = "/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
+{% endif %}
 
 {% if data['lastFieldId'] != data['fieldId'] %}
   {% set nextAction = "/create-project" %}

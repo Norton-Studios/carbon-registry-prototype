@@ -45,7 +45,7 @@ function applyUserType(req, res, next) {
 router.use(applyUserType);
 
 router.post('/upload', upload.single('fileUpload'), getProjectSiteDetails, async (_, res) => {
-  res.redirect('/create-project');
+  res.redirect('/create-project/answer-summary');
 });
 
 router.post('/create-project/form', updateProjectResponses, (req, res) => {
