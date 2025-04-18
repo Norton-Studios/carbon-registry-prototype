@@ -12,6 +12,11 @@ addFilter('customSelectAttr', function (array, key, value) {
   if (Array.isArray(value)) {
     return array.filter(item => value.includes(item[key]))
   }
+  if (typeof value === "string") {
+    return array.filter(item =>
+      typeof item[key] === "string" && item[key].toLowerCase() === value.toLowerCase()
+    );
+  }
   return array.filter(item => item[key] === value);
 })
 addFilter('merge', function (a, b) {

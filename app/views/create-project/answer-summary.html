@@ -11,10 +11,12 @@
   {% set backAction = "/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
 {% endif %}
 
-{% if data['lastFieldId'] != data['fieldId'] %}
-  {% set nextAction = "/create-project" %}
-{% else %}
+{% if data['projectResponseValidated'] %}
   {% set nextAction = "/register/success" %}
+  {% set buttonText = "Submit your application" %}
+{% else %}
+  {% set nextAction = "/create-project" %}
+  {% set buttonText = "Continue your application" %}
 {% endif %}
 
 {% block breadcrumbs %}
@@ -36,12 +38,15 @@
       <form action="{{ nextAction }}" method="post" class="ds_!_margin-top--4">
         <ul class="ds_summary-list">
           {% for key in data['projectFields'] %}
-          {% if data['project']['responses'][key] and key != 'paymentSuccess' %}
-          <li class="ds_summary-list__item">
-            <span class="ds_summary-list__key">{{ key | replace('_', ' ') | capitalize }}</span>
-            <span class="ds_summary-list__value">{{ data['project']['responses'][key] }}</span>
-          </li>
-          {% endif %}
+            {% if data['project']['responses'][key] and key != 'paymentSuccess' %}
+            <li class="ds_summary-list__item">
+              <span class="ds_summary-list__key">{{ key | replace('_', ' ') | capitalize }}</span>
+              <span class="ds_summary-list__value">{{ data['project']['responses'][key] }}</span>
+              <div class="ds_summary-list__actions">
+                <a href="/create-project/form?changeFormLabel={{ key }}" class="ds_link" aria-describedby="q2">Change</a>
+              </div>
+            </li>
+            {% endif %}
           {% endfor %}
         </ul>
 
@@ -49,7 +54,7 @@
           <button
             type="submit"
             class="ds_button ds_button--has-icon">
-            Next
+            {{ buttonText }}
             <svg class="ds_icon" aria-hidden="true" role="img">
               <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
             </svg>

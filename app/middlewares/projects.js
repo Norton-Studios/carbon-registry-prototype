@@ -1,5 +1,6 @@
 const path = require('path');
 const projects = require('../assets/data/projects.json');
+const formGroups = require('../assets/data/formGroups.json')
 const {
   generateFilters,
   filterProjects,
@@ -47,13 +48,48 @@ async function resetProjectFields(req, _, next) {
   next();
 }
 
+function getFormGroupStatus(req, res, next) {
+  const responses = req.session.data?.project?.responses || {};
+
+  // Group fields by formGroupId
+  const groupStatus = {};
+
+  const groupedFields = formGroups.reduce((acc, field) => {
+    if (!acc[field.formGroupId]) acc[field.formGroupId] = [];
+    acc[field.formGroupId].push(field);
+    return acc;
+  }, {});
+
+  for (const groupId in groupedFields) {
+    const fields = groupedFields[groupId];
+    const total = fields.length;
+    let filled = 0;
+
+    fields.forEach(field => {
+      const value = responses[field.key];
+      if (value !== undefined && value !== null && value !== '') {
+        filled++;
+      }
+    });
+
+    if (filled === 0) {
+      groupStatus[groupId] = 0; // not started
+    } else if (filled < total) {
+      groupStatus[groupId] = 1; // incomplete
+    } else {
+      groupStatus[groupId] = 2; // completed
+    }
+  }
+
+  req.session.data.project.status = groupStatus;
+  next();
+}
+
 function updateProjectResponses(req, _, next) {
   const projectFields = req.session.data.projectFields || [];
   const responses = req.session.data.project?.responses || {};
-
   const updatedResponses = projectFields.reduce((acc, key) => {
     const value = req.session.data[key];
-
     if (value) {
       acc[key] = value;
       delete req.session.data[key];
@@ -66,10 +102,31 @@ function updateProjectResponses(req, _, next) {
 
   req.session.data.project = {
     ...(req.session.data.project || {}),
-    responses: updatedResponses
+    responses: {
+      ...responses,
+      ...updatedResponses
+    }
   };
 
   next();
+}
+
+function projectResponseValidate(req, res, next) {
+  const { lastFieldId } = req.query;
+
+  if (!lastFieldId) return next();
+
+  const responses = req.session.data?.project?.responses || {};
+  const formLength = responses.standard === "UK Woodland Carbon Code" ? 25 : 33;
+
+  const projectResponseValidated = Object.keys(responses).length === formLength;
+
+  Object.assign(req.session.data, {
+    lastFieldId,
+    projectResponseValidated
+  });
+
+  return res.redirect('/create-project/answer-summary');
 }
 
 async function getProjectSiteDetails(req, res, next) {
@@ -79,6 +136,16 @@ async function getProjectSiteDetails(req, res, next) {
   }
   const filePath = file.path;
   const ext = path.extname(file.originalname).toLowerCase();
+  const existingProject = req.session.data.project || {};
+
+  const fileData = {
+    filePath,
+    ext,
+    name: file.originalname,
+    size: (file.size / 1024).toFixed(2) // Convert to KB
+  };
+
+  let responses = { ...existingProject.responses, files: [...(existingProject.responses?.files || []), fileData]};
 
   try {
     if (ext === '.pdf') {
@@ -90,22 +157,12 @@ async function getProjectSiteDetails(req, res, next) {
         return res.status(400).send('Unable to get location details.');
       }
 
-      const existingProject = req.session.data.project || {};
-
-      req.session.data.project = {
-        ...existingProject,
-        responses: {
-          ...existingProject.responses,
-          ...siteDetails,
-          files: [
-            ...(existingProject.responses?.files || []),
-            req.file
-          ]
-        }
-      };
-    } else {
-      return res.status(400).send('Unsupported file type. Only PDF and CSV allowed.');
+      responses = { ...responses, ...siteDetails, pdfFile: true };
+    } else if (ext.toLowerCase() === '.xlsx') {
+      responses = { ...responses, csvFile: true };
     }
+
+    req.session.data.project = { ...existingProject, responses };
     next();
   } catch (err) {
     res.status(500).send('Error processing file.');
@@ -118,5 +175,7 @@ module.exports = {
   getMyProjects,
   getProject,
   updateProjectResponses,
+  projectResponseValidate,
+  getFormGroupStatus,
   getProjectSiteDetails
 }

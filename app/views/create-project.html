@@ -4,6 +4,27 @@
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
+
+{% set formGroupId = "Where is the site located?" %}
+{% set allFieldsFilled = true %}
+
+{% for field in fields if field.formGroup == formGroup %}
+  {% set fieldKey = field.label | lower | replace(" ", "_") %}
+  {% if not data['project']['responses'][fieldKey] %}
+    {% set allFieldsFilled = false %}
+  {% endif %}
+{% endfor %}
+
+{% if data['project']['responses']['standard'] == "UK Peatland Code" %}
+  {% set idQuery = [1, 4, 10, 18] %}
+{% else %}
+  {% set idQuery = [1, 4, 10, 13] %}
+{% endif %}
+
+<strong class="{% if allFieldsFilled %}ds_tag ds_tag--green{% endif %}" aria-hidden="true">
+  {% if allFieldsFilled %}Draft completed{% else %}Not started{% endif %}
+</strong>
+
 {% block main %}
 <div class="ds_wrapper">
   <main id="main-content">
@@ -17,6 +38,16 @@
     </div>
     {% endblock %}
 
+    {% macro getProjectStatus(value) %}
+      {% if value == 1 %}
+        <strong class="ds_tag ds_tag--grey" aria-hidden="true">Incomplete</strong>
+      {% elif value == 2 %}
+        <strong class="ds_tag ds_tag--green" aria-hidden="true">Complete</strong>
+      {% else %}
+        <strong>Not started</strong>
+      {% endif %}
+    {% endmacro %}
+
     {% block mainContent %}
     <div class="ds_layout__content">
       <h2>Upload your documents</h2>
@@ -27,9 +58,8 @@
               <a class="ds_task-list__task-link" href="/create-project/document-upload">Upload your site map<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="{% if data['project']['responses']['grid_reference'] %}ds_tag ds_tag--green{% endif %}" aria-hidden="true">
-            {% if data['project']['responses']['grid_reference'] %}Draft completed{% else %}Not started{% endif %}
-          </strong>
+          {% set pdfFile = data.project.responses.pdfFile and 2 or 0 %}
+          {{ getProjectStatus(pdfFile) }}
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
@@ -37,7 +67,8 @@
               <a class="ds_task-list__task-link" href="/create-project/document-upload">Upload your carbon calculations<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="" aria-hidden="true">Not started</strong>
+          {% set csvFile = data.project.responses.csvFile and 2 or 0 %}
+          {{ getProjectStatus(csvFile) }}
         </li>
       </ul>
       <h2>Continue your progress</h2>
@@ -45,7 +76,7 @@
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/create-project/form?fieldId=4">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/create-project/form?fieldId={{ idQuery[1] }}">Project activity and type<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
         </li>
@@ -55,36 +86,39 @@
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/create-project/form?fieldId=1">Project details and description<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/create-project/form?fieldId={{ idQuery[0] }}">Project details and description<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="ds_tag  ds_tag--green" aria-hidden="true">Draft completed</strong>
+          {{ getProjectStatus(data.project.status['1']) }}
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/create-project/form?fieldId=4">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/create-project/form?fieldId={{ idQuery[1] }}">Project activity and type<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="ds_tag  ds_tag--grey" aria-hidden="true">Incomplete</strong>
+          {{ getProjectStatus(data.project.status['2']) }}
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/create-project/form?fieldId=10">Addtional information<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/create-project/form?fieldId={{ idQuery[2] }}">Addtional information<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="" aria-hidden="true">Not started</strong>
+          {% if data.project.responses.standard == "UK Woodland Carbon Code" %}
+            {% set statusIndex = '3' %}
+          {% else %}
+            {% set statusIndex = '5' %}
+          {% endif %}
+          {{ getProjectStatus(data.project.status[statusIndex]) }}
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/create-project/form?fieldId=19">Project site details<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/create-project/form?fieldId={{ idQuery[3] }}">Project site details<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="{% if data['project']['responses']['grid_reference'] %}ds_tag ds_tag--green{% endif %}" aria-hidden="true">
-            {% if data['project']['responses']['grid_reference'] %}Draft completed{% else %}Not started{% endif %}
-          </strong>
+          {{ getProjectStatus(data.project.status['4']) }}
         </li>
       </ul>
     </div>
