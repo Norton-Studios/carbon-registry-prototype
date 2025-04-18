@@ -24,7 +24,9 @@ const {
   getMyProjects,
   getProject,
   updateProjectResponses,
-  getProjectSiteDetails
+  projectResponseValidate,
+  getFormGroupStatus,
+  getProjectSiteDetails,
 } = require('./middlewares/projects.js');
 const { applyUserType, ensureAdmin } = require ('./middlewares/users.js')
 
@@ -32,15 +34,21 @@ dotenv.config();
 
 router.use(applyUserType);
 
-router.post('/upload', upload.single('fileUpload'), getProjectSiteDetails, async (_, res) => {
+router.post('/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
   res.redirect('/create-project/answer-summary');
 });
 
-router.post('/create-project/form', updateProjectResponses, (req, res) => {
-  if (req.query.lastFieldId) {
-    return res.redirect(`/create-project/answer-summary?lastFieldId=${req.query.lastFieldId}`)
-  }
+router.post('/create-project/form', updateProjectResponses, getFormGroupStatus, projectResponseValidate, (_, res) => {
   res.render('create-project/form')
+});
+
+router.get('/create-project/form', (req, res) => {
+  const { changeFormLabel } = req.session.data;
+  if (changeFormLabel) {
+    delete req.session.data.changeFormLabel;
+    return res.render('create-project/form', { key: changeFormLabel });
+  }
+  res.render('create-project/form');
 });
 
 router.post('/create-project', resetProjectFields, (_, res) => {
@@ -59,7 +67,6 @@ router.get('/my-projects/:name/verification', (_, res) => {
 })
 
 router.get('/my-projects', getMyProjects, (req, res) => {
-  delete req.session.data['paymentSuccess'];
   res.render('dashboard', {
     projects: res.locals.projects,
     authenticated: true
@@ -230,6 +237,7 @@ router.get('/', (req, res) => {
 
     case 'developer':
       getMyProjects(req, res, () => {
+        delete req.session.data['paymentSuccess'];
         res.render('milestones', {
           projects: res.locals.projects
         });
