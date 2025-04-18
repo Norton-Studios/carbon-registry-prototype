@@ -258,7 +258,7 @@ router.get('/admin/projects/review/:name', getProject, (req, res) => {
   })
 });
 
-router.get('/admin/accounts/review/:name', getAccount, (req, res) => {
+router.get('/admin/accounts/review/:id', getAccount, (req, res) => {
   res.render('/admin/review-account', {
     project: res.locals.account,
     osApiKey: process.env.OS_API_KEY
