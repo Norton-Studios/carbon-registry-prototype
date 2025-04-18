@@ -11,6 +11,7 @@ const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
+const { getAccount } = require('./middlewares/accounts.js');
 const {
   applyProjectFilters,
   resetProjectFields,
@@ -19,28 +20,9 @@ const {
   updateProjectResponses,
   getProjectSiteDetails
 } = require('./middlewares/projects.js');
+const { applyUserType, ensureAdmin } = require ('./middlewares/users.js')
 
 dotenv.config();
-
-function getAccounts(req, res, next) {
-  if (req.session.userType !== 'admin') {
-    return res.redirect('/');
-  }
-  if (!res.locals.accounts) {
-    res.locals.accounts = accounts
-  }
-  // Also get projects here until I figure out a better way
-  if (!res.locals.projects) {
-    res.locals.projects = projects
-  }
-  next();
-}
-
-function applyUserType(req, res, next) {
-  const userType = req.session.userType;
-  res.locals.userType = userType || 'guest';
-  next();
-}
 
 router.use(applyUserType);
 
@@ -88,6 +70,8 @@ router.get('/projects/:name', getProject, (req, res) => {
     ...(isAdmin || isDev ? { authenticated: true } : {})
   });
 });
+
+// Registration routes
 
 router.get('/register/company-number', (req, res) => {
   const formError = req.session.data.formError;
@@ -216,17 +200,15 @@ router.post('/register/confirm-details', (req, res) => {
 router.get('/', (req, res) => {
   switch (req.session.userType) {
     case 'admin':
-      getAccounts(req, res, () => {
-        const pendingProjects = res.locals.projects
-        .filter(project => project.status == 6)
+      const pendingProjects = res.locals.projects || projects
+      .filter(project => project.status == 6)
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+      const pendingAccounts = res.locals.accounts || accounts
+        .filter(account => account.pending)
         .sort((a, b) => new Date(a.date) - new Date(b.date))
-        const pendingAccounts = res.locals.accounts
-          .filter(account => account.pending)
-          .sort((a, b) => new Date(a.date) - new Date(b.date))
-        res.render('/admin/dashboard', {
-          pendingProjects,
-          pendingAccounts,
-        });
+      res.render('/admin/dashboard', {
+        pendingProjects,
+        pendingAccounts,
       });
       break;
 
@@ -251,25 +233,39 @@ router.get('/', (req, res) => {
   }
 });
 
-router.get('/admin/accounts', getAccounts, (req, res) => {
-  if (req.session.userType !== 'admin') {
-    res.redirect('/');
-  }
+// Admin routes
+
+router.use('/admin', ensureAdmin);
+
+router.get('/admin/accounts', (req, res) => {
   res.render('/admin/accounts', {
-    accounts
+    accounts: res.locals.accounts || accounts
   })
 });
 
 router.get('/admin/projects', applyProjectFilters, (req, res) => {
-  if (req.session.userType !== 'admin') {
-    res.redirect('/');
-  }
   res.render('/admin/projects', {
     projects,
     osApiKey: process.env.OS_API_KEY,
     filters: res.locals.projectFilters
   })
 });
+
+router.get('/admin/projects/review/:name', getProject, (req, res) => {
+  res.render('/admin/review-project', {
+    project: res.locals.project,
+    osApiKey: process.env.OS_API_KEY
+  })
+});
+
+router.get('/admin/accounts/review/:name', getAccount, (req, res) => {
+  res.render('/admin/review-account', {
+    project: res.locals.account,
+    osApiKey: process.env.OS_API_KEY
+  })
+});
+
+// Authentication routes
 
 router.get('/login', (_, res) => {
   res.render('login', { });
@@ -295,6 +291,8 @@ router.get('/logout', (req, res) => {
   req.session.userType = "guest";
   res.redirect('/');
 });
+
+// Account routes
 
 router.get('/account', (req, res) => {
   res.redirect('/account/verification'); // maybe something else later
