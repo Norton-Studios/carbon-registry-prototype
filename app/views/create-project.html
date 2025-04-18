@@ -4,26 +4,11 @@
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
-
-{% set formGroupId = "Where is the site located?" %}
-{% set allFieldsFilled = true %}
-
-{% for field in fields if field.formGroup == formGroup %}
-  {% set fieldKey = field.label | lower | replace(" ", "_") %}
-  {% if not data['project']['responses'][fieldKey] %}
-    {% set allFieldsFilled = false %}
-  {% endif %}
-{% endfor %}
-
 {% if data['project']['responses']['standard'] == "UK Peatland Code" %}
   {% set idQuery = [1, 4, 10, 18] %}
 {% else %}
   {% set idQuery = [1, 4, 10, 13] %}
 {% endif %}
-
-<strong class="{% if allFieldsFilled %}ds_tag ds_tag--green{% endif %}" aria-hidden="true">
-  {% if allFieldsFilled %}Draft completed{% else %}Not started{% endif %}
-</strong>
 
 {% block main %}
 <div class="ds_wrapper">
