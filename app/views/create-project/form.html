@@ -108,7 +108,7 @@
 {% set lastFieldId = detailsFields.length + 1 %}
 
 {% if nextField is none or nextField.formGroup != (fields | first).formGroup %}
-    {% set formAction = "/create-project/answer-summary?lastFieldId=" ~ lastFieldId %}
+    {% set formAction = "/create-project/form?lastFieldId=" ~ lastFieldId %}
 {% else %}
   {% set formAction = "/create-project/form" %}
 {% endif %}
@@ -143,7 +143,7 @@
               <label class="ds_label" for="{{ field.id }}">{{ field.label }}</label>
 
               {% if field.fieldType == "textarea" %}
-                <textarea class="ds_input" rows="3" id="{{ field.id }}" name="{{ field.label | lower | replace(" ", "_") }}">{{ data[field.label | lower | replace(" ", "_")] or '' }}</textarea>
+                <textarea class="ds_input" rows="3" id="{{ field.id }}" name="{{ field.label | lower | replace(" ", "_") }}">{{ data['project']['responses'][field.label | lower | replace(" ", "_")] or '' }}</textarea>
 
               {% elseif field.fieldType == "dropdown" %}
                 <div class="ds_select-wrapper ds_input--fluid-two-third">
@@ -151,7 +151,7 @@
                     {% for item in field.options %}
                       <option
                         value="{{ item.value }}"
-                        {% if data[field.label | lower | replace(" ", "_")] == item.value %}
+                        {% if data.project.responses[field.label | lower | replace(" ", "_")] == item.value %}
                           selected
                         {% endif %}
                       >{{ item.label }}</option>
@@ -169,7 +169,7 @@
                             name="{{ field.label | lower | replace(" ", "_") }}"
                             type="radio"
                             value="{{ item.value }}"
-                            {% if data[field.label | lower | replace(" ", "_")] == item.value %}
+                            {% if data.project.responses[field.label | lower | replace(" ", "_")] == item.value %}
                               checked
                             {% endif %}>
                       <label class="ds_radio__label" for="{{ field.id }}-{{ item.value | lower | replace(" ", "-") }}">
@@ -189,7 +189,7 @@
                         </label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="{{ field.id }}-day"
                           name="{{ field.label | lower | replace(" ", "_") }}-day" type="text" inputmode="numeric"
-                          value="{{ data[field.label | lower | replace(" ", "_") ~ '-day' ] or '' }}">
+                          value="{{ data['project']['responses'][field.label | lower | replace(" ", "_") ~ '-day' ] or '' }}">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">
@@ -199,7 +199,7 @@
                         </label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="{{ field.id }}-month"
                           name="{{ field.label | lower | replace(" ", "_") }}-month" type="text" inputmode="numeric"
-                          value="{{ data[field.label | lower | replace(" ", "_") ~ '-month' ] or '' }}">
+                          value="{{ data['project']['responses'][field.label | lower | replace(" ", "_") ~ '-month' ] or '' }}">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">
@@ -209,7 +209,7 @@
                         </label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="{{ field.id }}-year"
                           name="{{ field.label | lower | replace(" ", "_") }}-year" type="text" inputmode="numeric"
-                          value="{{ data[field.label | lower | replace(" ", "_") ~ '-year' ] or '' }}">
+                          value="{{ data['project']['responses'][field.label | lower | replace(" ", "_") ~ '-year' ] or '' }}">
                       </div>
                     </div>
                 </div>
@@ -220,7 +220,7 @@
                   type="text"
                   id="{{ field.id }}"
                   name="{{ field.label | lower | replace(" ", "_") }}"
-                  value="{{ data[field.label | lower | replace(" ", "_")] or field.value or '' }}">
+                  value="{{ data['project']['responses'][field.label | lower | replace(" ", "_")] or field.value or '' }}">
               {% endif %}
             </div>
           {% endfor %}
