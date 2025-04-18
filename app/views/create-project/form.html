@@ -180,39 +180,18 @@
                 </div>
 
               {% elseif field.fieldType == "date" %}
-                <div class="govuk-form-group">
-                  <div class="govuk-date-input" id="{{ field.id }}">
-                    <div class="govuk-date-input__item">
-                      <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="{{ field.id }}-day">
-                          Day
-                        </label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="{{ field.id }}-day"
-                          name="{{ field.label | lower | replace(" ", "_") }}-day" type="text" inputmode="numeric"
-                          value="{{ data['project']['responses'][field.label | lower | replace(" ", "_") ~ '-day' ] or '' }}">
-                      </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                      <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="{{ field.id }}-month">
-                          Month
-                        </label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="{{ field.id }}-month"
-                          name="{{ field.label | lower | replace(" ", "_") }}-month" type="text" inputmode="numeric"
-                          value="{{ data['project']['responses'][field.label | lower | replace(" ", "_") ~ '-month' ] or '' }}">
-                      </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                      <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="{{ field.id }}-year">
-                          Year
-                        </label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="{{ field.id }}-year"
-                          name="{{ field.label | lower | replace(" ", "_") }}-year" type="text" inputmode="numeric"
-                          value="{{ data['project']['responses'][field.label | lower | replace(" ", "_") ~ '-year' ] or '' }}">
-                      </div>
-                    </div>
-                </div>
+              <div data-module="ds-datepicker" class="ds_datepicker">
+                  <p class="ds_hint-text">Use dd/mm/yyyy format. For example, 31/01/2023.</p>
+                  <div class="ds_input__wrapper">
+                      <input
+                        id="{{ field.label | lower | replace(" ", "_") }}"
+                        name="{{ field.label | lower | replace(" ", "_") }}"
+                        type="text"
+                        class="ds_input  ds_input--fixed-10"
+                        value="{{ data['project']['responses'][field.label | lower | replace(" ", "_")] or field.value or '' }}"
+                        >
+                  </div>
+              </div>
 
               {% else %}
                 <input class="ds_input ds_input--fluid-one-third"
@@ -222,7 +201,7 @@
                   name="{{ field.label | lower | replace(" ", "_") }}"
                   value="{{ data['project']['responses'][field.label | lower | replace(" ", "_")] or field.value or '' }}">
               {% endif %}
-            </div>
+              </div>
           {% endfor %}
 
           <div class="button-group">

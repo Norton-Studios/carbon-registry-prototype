@@ -4,9 +4,17 @@
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/">Back</a>
+</div>
+{% endblock %}
+
 {% block main %}
 <div class="ds_wrapper">
   <main id="main-content">
+
     {% block mainHeader %}
     <div class="ds_layout">
       <div class="ds_layout__header">
@@ -44,16 +52,15 @@
               <q class="ds_summary-list__answer">{{ field.value }}</q>
             {% endif %}
           </span>
-          {% if loop.last and field.id == "invoice-total" %}
-            <form action="/register/success" method="post">
-              <button class="ds_button" type="submit" name="paymentSuccess" value="true"  style="margin-bottom: 1rem; width: max-content;">
-                Pay online
-              </button>
-            </form>
-          {% endif %}
         </li>
         {% endfor %}
       </ol>
+
+      <form action="/register/success" method="post">
+        <button class="ds_button ds_button--max" type="submit" name="paymentSuccess" value="true"  style="margin-bottom: 1rem; width: max-content;">
+          Pay online
+        </button>
+      </form>
 
       <div class="ds_inset-text">
         <div class="ds_inset-text__text">

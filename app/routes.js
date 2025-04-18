@@ -53,7 +53,6 @@ router.get('/my-projects/:name/verification', (_, res) => {
 })
 
 router.get('/my-projects', getMyProjects, (req, res) => {
-  delete req.session.data['paymentSuccess'];
   res.render('dashboard', {
     projects: res.locals.projects,
     authenticated: true
@@ -214,6 +213,7 @@ router.get('/', (req, res) => {
 
     case 'developer':
       getMyProjects(req, res, () => {
+        delete req.session.data['paymentSuccess'];
         res.render('milestones', {
           projects: res.locals.projects
         });

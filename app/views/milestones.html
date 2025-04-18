@@ -11,14 +11,8 @@
     <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Overview</h1>
-        </header>
-      </div>
-    </div>
-    {% endblock %}
 
-    {% block mainContent %}
-    <div class="ds_layout__content project-details">
+          {% if not data['paymentSuccess'] %}
       <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
         <div class="govuk-notification-banner__header">
           <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -32,47 +26,16 @@
           </p>
         </div>
       </div>
-
-      <nav aria-labelledby="task-list-status" class="ds_task-list-status">
-        <p>Actions required for 1 of {{ projects.length }} projects.</p>
-        <p><a href="#task2" class="js-task-list-skip-link">Skip to first incomplete section</a></p>
-      </nav>
-
-      <ul class="ds_task-list">
-        {% for project in projects %}
-          {% set status = project.status %}
-          {% if [4].includes(status) %}
-            {% set tagColor = "green" %}
-            {% set summary = "This project has been submitted or approved. No further action is currently required." %}
-          {% elif [1, 2].includes(status) %}
-            {% set tagColor = "grey" %}
-            {% set summary = "This project is in progress or ready for submission. Continue or review before submitting." %}
-          {% else %}
-            {% set tagColor = "red" %}
-            {% set summary = "This project has not been started yet. Begin your submission when ready." %}
           {% endif %}
 
-          <li class="ds_task-list__task" id="task{{ loop.index }}">
-            <div class="ds_task-list__task-details">
-              <h3 class="ds_task-list__task-heading">
-                <a class="ds_task-list__task-link" href="/projects/{{ project.details_url }}">
-                  {{ project.name }} <span class="visually-hidden">({{ data['statusEnum'][status] }})</span>
-                </a>
-              </h3>
-              <p class="ds_hint-text ds_task-list__task-summary">
-                {{ summary }}
-              </p>
+          <h1 class="ds_page-header__title">Milestones</h1>
+        </header>
             </div>
-            {% if status == 3 %}
-            <strong>Pending payment</strong>
-            {% else %}
-            <strong class="ds_tag ds_tag--{{ tagColor }}" aria-hidden="true">{{ data['statusEnum'][status] }}</strong>
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
     </div>
+    {% endblock %}
 
+    {% block mainContent %}
+    <div class="ds_layout__content project-details">
     {% macro milestoneList(projects, title, summary, status, open=false) %}
       <div class="ds_category-item">
         <h2>{{ title }}</h2>
@@ -95,10 +58,11 @@
       </div>
     {% endmacro %}
 
-    <div class="ds_category-list ds_layout__sidebar">
+      <div class="ds_category-list">
       {{ milestoneList(projects, "Upcoming milestones", "View milestones", 5, true) }}
       {{ milestoneList(projects, "Pending payments", "View invoices", 3) }}
       {{ milestoneList(projects, "Pending approvals", "View transfer approvals", 1) }}
+      </div>
     </div>
     {% endblock %}
   </main>
