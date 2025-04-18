@@ -96,7 +96,11 @@ async function getProjectSiteDetails(req, res, next) {
         ...existingProject,
         responses: {
           ...existingProject.responses,
-          ...siteDetails
+          ...siteDetails,
+          files: [
+            ...(existingProject.responses?.files || []),
+            req.file
+          ]
         }
       };
     } else {
