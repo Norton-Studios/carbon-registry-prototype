@@ -1,8 +1,16 @@
+{% from "components/summary-list.html" import summaryList %}
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Account Verification{% endblock %}
 
 {% set bodyClasses = "govuk-frontend-supported" %}
+
+{# Back link - in place of breadcrumbs #}
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="javascript:window.history.back()">Back</a>
+</div>
+{% endblock %}
 
 {% block main %}
 <div class="ds_wrapper">
@@ -11,8 +19,31 @@
     <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Review account for {{ account.account_name }}</h1>
+          <h1 class="ds_page-header__title">Review {{ account.account_name }} account</h1>
         </header>
+        <fieldset>
+          <p class="ds_hint-text">Please confirm the details below are correct:</p>
+          <ul class="ds_summary-list">
+            {% for key, value in account %}
+            <li class="ds_summary-list__item">
+              <span class="ds_summary-list__key">{{ key }}</span>
+              <span class="ds_summary-list__value" id="q{{ loop.index }}">
+                <span class="visually-hidden">Your answer is: </span>
+                <q class="ds_summary-list__answer">{{ value }}</q>
+              </span>
+              <div class="ds_summary-list__actions">
+                <ul class="ds_summary-list__actions-list">
+                  <li class="ds_summary-list__actions-list-item">
+                    <button type="button" class="ds_link" aria-describedby="q{{ loop.index }}" onclick="location.href='{{ item.changeUrl }}'">
+                      Change <span class="visually-hidden">your answer for: {{ key }}</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </fieldset>
       </div>
     </div>
     {% endblock %}
@@ -33,7 +64,7 @@
               Proof of company address
             </h3>
           </div>
-          <strong class="ds_tag ds_tag--green" aria-hidden="true">Complete</strong>
+          <strong class="ds_tag {{ 'ds_tag--green' if account.address else 'ds_tag--grey' }}" aria-hidden="true">{{ 'Complete' if account.address else 'Incomplete'}}</strong>
         </li>
         <li class="ds_task-list__task">
           <div class="ds_task-list__task-details">

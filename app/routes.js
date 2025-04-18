@@ -11,7 +11,13 @@ const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
-const { getAccount } = require('./middlewares/accounts.js');
+const { 
+  validateAccount,
+  saveAccount,
+  updateAccount,
+  loadAccount,
+  loadAllAccounts
+} = require('./middlewares/accounts.js');
 const {
   applyProjectFilters,
   resetProjectFields,
@@ -185,30 +191,40 @@ router.post('/register/main-contact', (req, res) => {
   }
 });
 
-router.post('/register/declaration', (req, res) => {
-  // Use registration responses to create new user in res.locals.accounts
-  res.redirect('/register/confirm-details')
+router.get('/register/confirm-details', (req, res) => {
+  res.render('register/confirm-details', {
+    account: res.locals.account
+  });
 });
 
-router.post('/register/confirm-details', (req, res) => {
-  console.log(req.session.data.registration.responses)
+router.post('/register/confirm-details', saveAccount, (req, res) => {
   req.session.userType = req.session.data.registration.responses.some(f => f.label === "Classification" && f.value === 'Project Developer') ? 'developer' : 'trader'; // might need to do something better eventually
   req.session.authenticated = true;
   res.redirect('/register/success');
 });
 
+router.get('/register/success', loadAccount, (req, res) => {
+  res.render('register/success', {
+    account: res.locals.account
+  });
+});
+
 router.get('/', (req, res) => {
   switch (req.session.userType) {
     case 'admin':
-      const pendingProjects = res.locals.projects || projects
-      .filter(project => project.status == 6)
-      .sort((a, b) => new Date(a.date) - new Date(b.date))
-      const pendingAccounts = res.locals.accounts || accounts
-        .filter(account => account.pending)
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-      res.render('/admin/dashboard', {
-        pendingProjects,
-        pendingAccounts,
+      loadAllAccounts(req, res, () => {
+        const pendingProjects = projects
+          .filter(project => project.status == 6)
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        const pendingAccounts = res.locals.accounts
+          .filter(account => account.status == "verified")
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        res.render('admin/dashboard', {
+          pendingProjects,
+          pendingAccounts
+        });
       });
       break;
 
@@ -238,13 +254,13 @@ router.get('/', (req, res) => {
 router.use('/admin', ensureAdmin);
 
 router.get('/admin/accounts', (req, res) => {
-  res.render('/admin/accounts', {
+  res.render('admin/accounts', {
     accounts: res.locals.accounts || accounts
   })
 });
 
 router.get('/admin/projects', applyProjectFilters, (req, res) => {
-  res.render('/admin/projects', {
+  res.render('admin/projects', {
     projects,
     osApiKey: process.env.OS_API_KEY,
     filters: res.locals.projectFilters
@@ -252,16 +268,18 @@ router.get('/admin/projects', applyProjectFilters, (req, res) => {
 });
 
 router.get('/admin/projects/review/:name', getProject, (req, res) => {
-  res.render('/admin/review-project', {
+  res.render('admin/review-project', {
     project: res.locals.project,
     osApiKey: process.env.OS_API_KEY
   })
 });
 
-router.get('/admin/accounts/review/:id', getAccount, (req, res) => {
-  res.render('/admin/review-account', {
+router.get('/admin/accounts/review/:id', loadAccount, async (req, res) => {
+  validationErrors = await validateAccount(res.locals.account, process.env.COMPANY_INFO_API_KEY)
+  res.render('admin/review-account', {
     project: res.locals.account,
-    osApiKey: process.env.OS_API_KEY
+    osApiKey: process.env.OS_API_KEY,
+    validationErrors: validationErrors
   })
 });
 
@@ -294,13 +312,29 @@ router.get('/logout', (req, res) => {
 
 // Account routes
 
-router.get('/account', (req, res) => {
-  res.redirect('/account/verification'); // maybe something else later
+router.get('/account', loadAccount, (req, res) => {
+  if (res.locals.account == "unverified") {
+    res.redirect('/account/verification', {
+      account: res.locals.account
+    });
+  } else {
+    res.redirect('/account/account-verified', {
+      account: res.locals.account
+    });
+  }
 });
 
-router.get('/account/verification', (req, res) => {
-  res.render('account/verification', {});
+router.get('/account/verification', loadAccount, (req, res) => {
+  res.render('account/verification', {
+    account: res.locals.account
+  });
 });
+
+router.get('/account/account-verified', updateAccount({ status: 'verified' }), (req, res) => {
+  res.render('account/verification', {
+    account: res.locals.account
+  })
+})
 
 router.post('/account/company-registration', (req, res) => {
   res.redirect('/account/verification');

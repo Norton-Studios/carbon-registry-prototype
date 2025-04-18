@@ -41,7 +41,23 @@ function filterProjects(projects, sessionData) {
 
     return matchesSearch && matchesFilters;
   });
+};
+
+function toTitleCase(str) {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
+
+function generateObjectId() {
+  const timestamp = Math.floor(Date.now() / 1000).toString(16);
+  const random = 'xxxxxxxxxxxxxxxx'.replace(/x/g, () =>
+    Math.floor(Math.random() * 16).toString(16)
+  );
+  return timestamp + random;
+};
 
 async function lookupCompany(companyNumber, apiKey) {
   const url = `https://api.company-information.service.gov.uk/search/companies?q=${companyNumber}`;
@@ -127,6 +143,7 @@ function extractGridRefs(text) {
 }
 
 module.exports = {
+  toTitleCase,
   generateFilters,
   filterProjects,
   getProjectByName,
@@ -134,5 +151,6 @@ module.exports = {
   updateRegistrationResponses,
   getProjectViewModel,
   extractPdfText,
+  generateObjectId,
   extractGridRefs
 };

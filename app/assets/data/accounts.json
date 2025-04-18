@@ -3,21 +3,22 @@
     "id": "68014eeaead19794dee64489",
     "account_name": "Abersenny Ltd",
     "classification": "Project Developer",
-    "manager": "Jane Smith",
+    "manager": "John Smith",
     "country": "United Kingdom",
     "website": "https://www.abersenny.com",
     "date": "2025-04-10",
-    "pending": true
+    "status": "active"
   },
   {
     "id": "68014eeaf2e79a77f54877bf",
     "account_name": "Accenture Global Solutions",
     "classification": "Corporate End User",
-    "manager": "John Smith",
+    "manager": "Jane Smith",
     "country": "Ireland",
     "website": "https://www.accenture.com",
     "date": "2025-04-17",
-    "pending": true
+    "crn": "BR007606",
+    "status": "verified"
   },
   {
     "id": "68014eea956bb796a7b516d8",
@@ -27,7 +28,7 @@
     "country": "Scotland",
     "website": "https://www.achnacarry.com/",
     "date": "2025-04-11",
-    "pending": true
+    "status": "active"
   },
   {
     "id": "68014eeaa80715c40abaed0a",
@@ -37,7 +38,7 @@
     "country": "Brazil",
     "website": "https://www.ac.gov.br",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eea83f24779d3460ac2",
@@ -47,7 +48,7 @@
     "country": "United Kingdom",
     "website": "https://www.actcommodities.com/",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eea4da1d2a79aa07e58",
@@ -57,7 +58,7 @@
     "country": "United Kingdom",
     "website": "",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eea08c6bb0ab943581d",
@@ -67,7 +68,7 @@
     "country": "Morocco",
     "website": "https://www.acwapower.com",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eea04bad355d5146a8a",
@@ -77,7 +78,7 @@
     "country": "Mexico",
     "website": "https://www.conafor.gob.mx",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eead7874b1c4099ac6c",
@@ -87,7 +88,7 @@
     "country": "United Kingdom",
     "website": "https://addisons-surveyors.co.uk/",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eea8ca22d76cbfa1446",
@@ -97,7 +98,7 @@
     "country": "England",
     "website": "https://www.millfarmglamping.co.uk",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eea98e634e18ff2bfa2",
@@ -107,7 +108,7 @@
     "country": "United Kingdom",
     "website": "https://www.aetherenergy.co.uk",
     "date": "2025-04-15",
-    "pending": false
+    "status": "active"
   },
   {
     "id": "68014eea8e9eb18b8013f350",
@@ -117,6 +118,6 @@
     "country": "United Kingdom",
     "website": "https://www.aethersys.com",
     "date": "2025-04-15",
-    "pending": true
+    "status": "active"
   }
 ]
