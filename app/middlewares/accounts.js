@@ -121,7 +121,6 @@ function updateAccount(updates = {}) {
       account.id === currentAccount.id ? { ...account, ...updates } : account
     );
 
-    console.log('Updated session.accounts:', JSON.stringify(req.session.accounts));  // Log after update
     res.locals.account = req.session.account;
 
     next();
