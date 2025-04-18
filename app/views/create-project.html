@@ -27,7 +27,9 @@
               <a class="ds_task-list__task-link" href="/create-project/document-upload">Upload your site map<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="ds_tag  ds_tag--green" aria-hidden="true">Draft completed</strong>
+          <strong class="{% if data['project']['responses']['grid_reference'] %}ds_tag ds_tag--green{% endif %}" aria-hidden="true">
+            {% if data['project']['responses']['grid_reference'] %}Draft completed{% else %}Not started{% endif %}
+          </strong>
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
@@ -35,7 +37,7 @@
               <a class="ds_task-list__task-link" href="/create-project/document-upload">Upload your carbon calculations<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="ds_tag  ds_tag--grey" aria-hidden="true">Incomplete</strong>
+          <strong class="" aria-hidden="true">Not started</strong>
         </li>
       </ul>
       <h2>Continue your progress</h2>
@@ -80,7 +82,9 @@
               <a class="ds_task-list__task-link" href="/create-project/form?fieldId=19">Project site details<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
-          <strong class="" aria-hidden="true">Not started</strong>
+          <strong class="{% if data['project']['responses']['grid_reference'] %}ds_tag ds_tag--green{% endif %}" aria-hidden="true">
+            {% if data['project']['responses']['grid_reference'] %}Draft completed{% else %}Not started{% endif %}
+          </strong>
         </li>
       </ul>
     </div>
