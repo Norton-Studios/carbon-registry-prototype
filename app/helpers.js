@@ -4,7 +4,9 @@ const pdfParse = require('pdf-parse');
 function generateFilters(projects) {
   return {
     Country: [...new Set(projects.map(project => project.country).sort((a, b) => a.localeCompare(b)))],
-    Status: [...new Set(projects.map(project => String(project.status)).sort((a, b) => a - b))],
+    Status: [...new Set(projects.map(project => String(project.status))
+      .filter((status) => ['2', '3', '4', '5'].includes(status))
+      .sort((a, b) => a - b))],
     Type: [...new Set(projects.map(project => project.type).sort((a, b) => a.localeCompare(b)))],
     Category: [...new Set(projects.map(project => project.category).sort((a, b) => a.localeCompare(b)))],
     "Account Name": [...new Set(projects.map(project => project.account_name).sort((a, b) => a.localeCompare(b)))],

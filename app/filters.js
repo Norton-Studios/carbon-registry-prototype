@@ -9,6 +9,9 @@ const addFilter = govukPrototypeKit.views.addFilter
 // Add your filters here
 addFilter('customSelectAttr', function (array, key, value) {
   if (!Array.isArray(array)) return [];
+  if (Array.isArray(value)) {
+    return array.filter(item => value.includes(item[key]))
+  }
   return array.filter(item => item[key] === value);
 })
 addFilter('merge', function (a, b) {

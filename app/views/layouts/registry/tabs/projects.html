@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody id="search-results">
-      {% for project in projects %}
+      {% for project in projects | customSelectAttr('status', [2, 3, 4, 5]) %}
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">{{ project.name }}</td>
         <td class="govuk-table__cell">{{ project.category }}</td>
