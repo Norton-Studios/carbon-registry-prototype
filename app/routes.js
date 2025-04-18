@@ -10,55 +10,17 @@ const projects = require('./assets/data/projects.json');
 const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
-const path = require('path');
+const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
 const {
-  generateFilters,
-  filterProjects,
+  applyProjectFilters,
+  resetProjectFields,
+  getMyProjects,
   getProject,
-  lookupCompany,
-  updateRegistrationResponses,
-  extractGridRefs,
-  extractPdfText
-} = require('./helpers.js');
-const { getLocationFromGridRef } = require('../add-project-locations.js');
+  updateProjectResponses,
+  getProjectSiteDetails
+} = require('./middlewares/projects.js');
 
 dotenv.config();
-
-function getProjectMiddleware(req, res, next) {
-  const projectName = req.params.name;
-  const project = getProject(projects, projectName);
-  if (!project) {
-    return res.status(404).redirect('/error-page-not-found');
-  }
-
-  res.locals.project = getProjectViewModel(project);
-  next();
-}
-
-function getProjectViewModel(project) {
-  const numPages = parseInt(Math.random() * 100);
-  return {
-    ...project,
-    documents: project.documents.map(doc => ({
-      url: doc,
-      name: doc.replaceAll('_', ' ').replace('.pdf', '').replace('.docx', '').replace('.xlsx', '').replace('.xls', ''),
-      type: doc.endsWith('.pdf') ? 'pdf' : doc.endsWith('.docx') ? 'word' : 'excel',
-      size: doc.endsWith('.pdf') ? '1.2MB' : doc.endsWith('.docx') ? '500KB' : '2.5MB',
-      description: doc.endsWith('.pdf') ? `${numPages} page PDF` : doc.endsWith('.docx') ? `${numPages} page Word Document` : 'XLSX Spreadsheet',
-    })),
-  };
-}
-
-function getMyProjects(req, res, next) {
-  if (req.session.userType !== 'developer') {
-    return res.redirect('/');
-  }
-
-  res.locals.projects = filterProjects(projects, {
-    filterKeys: req.session.data.filterKeys,
-  });
-  next();
-}
 
 function getAccounts(req, res, next) {
   if (req.session.userType !== 'admin') {
@@ -74,57 +36,6 @@ function getAccounts(req, res, next) {
   next();
 }
 
-function applyProjectFilters(req, res, next) {
-  res.locals.filteredProjects = filterProjects(projects, req.session.data);
-  res.locals.projectFilters = generateFilters(projects);
-  next();
-}
-
-async function resetProjectFields(req, _, next) {
-  if (req.body.reset) {
-    const fields = req.session.data.projectFields || [];
-    for (const key of fields) {
-      if (req.session.data[key]) {
-        delete req.session.data[key];
-      }
-    }
-
-    req.session.data.fieldId = '1';
-  }
-  next();
-}
-
-async function getProjectSiteDetails(req, res, next) {
-  const file = req.file;
-  if (!file) {
-    return res.status(400).send('No file uploaded.');
-  }
-  const filePath = file.path;
-  const ext = path.extname(file.originalname).toLowerCase();
-
-  try {
-    if (ext === '.pdf') {
-      const rawText = await extractPdfText(filePath);
-      const nhCode = extractGridRefs(rawText)[0];
-      const siteDetails = await getLocationFromGridRef(nhCode);
-
-      if (!siteDetails) {
-        return res.status(400).send('Unable to get location details.');
-      }
-
-      req.session.data = {
-        ...req.session.data,
-        ...siteDetails
-      }
-    } else {
-      return res.status(400).send('Unsupported file type. Only PDF and CSV allowed.');
-    }
-    next();
-  } catch (err) {
-    res.status(500).send('Error processing file.');
-  }
-}
-
 function applyUserType(req, res, next) {
   const userType = req.session.userType;
   res.locals.userType = userType || 'guest';
@@ -137,11 +48,37 @@ router.post('/upload', upload.single('fileUpload'), getProjectSiteDetails, async
   res.redirect('/create-project');
 });
 
+router.post('/create-project/form', updateProjectResponses, (req, res) => {
+  if (req.query.lastFieldId) {
+    return res.redirect(`/create-project/answer-summary?lastFieldId=${req.query.lastFieldId}`)
+  }
+  res.render('create-project/form')
+});
+
 router.post('/create-project', resetProjectFields, (_, res) => {
   res.render('create-project');
 });
 
-router.get('/projects/:name', getProjectMiddleware, (req, res) => {
+router.post('/registry', (req, res) => {
+  if (req.body.submitAction === 'reset') {
+    (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
+  }
+  res.redirect('/#projects');
+});
+
+router.get('/my-projects/:name/verification', (_, res) => {
+  res.render('payment');
+})
+
+router.get('/my-projects', getMyProjects, (req, res) => {
+  delete req.session.data['paymentSuccess'];
+  res.render('dashboard', {
+    projects: res.locals.projects,
+    authenticated: true
+  });
+});
+
+router.get('/projects/:name', getProject, (req, res) => {
   const isAdmin = req.session.userType === 'admin';
   const isDev = req.session.userType === 'developer';
 
@@ -274,25 +211,6 @@ router.post('/register/confirm-details', (req, res) => {
   req.session.userType = req.session.data.registration.responses.some(f => f.label === "Classification" && f.value === 'Project Developer') ? 'developer' : 'trader'; // might need to do something better eventually
   req.session.authenticated = true;
   res.redirect('/register/success');
-});
-
-router.post('/registry', (req, res) => {
-  if (req.body.submitAction === 'reset') {
-    (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
-  }
-  res.redirect('/#projects');
-});
-
-router.get('/my-projects/:name/verification', (_, res) => {
-  res.render('payment');
-})
-
-router.get('/my-projects', getMyProjects, (req, res) => {
-  delete req.session.data['paymentSuccess'];
-  res.render('dashboard', {
-    projects: res.locals.projects,
-    authenticated: true
-  });
 });
 
 router.get('/', (req, res) => {

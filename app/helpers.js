@@ -14,7 +14,7 @@ function generateFilters(projects) {
   };
 }
 
-function getProject(projects, projectName) {
+function getProjectByName(projects, projectName) {
   return projects.find(project => project.name.toLowerCase().replace(/\s+/g, '-') === projectName.toLowerCase());
 }
 
@@ -100,6 +100,20 @@ function updateRegistrationResponses(req, responses) {
   });
 }
 
+function getProjectViewModel(project) {
+  const numPages = parseInt(Math.random() * 100);
+  return {
+    ...project,
+    documents: project.documents.map(doc => ({
+      url: doc,
+      name: doc.replaceAll('_', ' ').replace('.pdf', '').replace('.docx', '').replace('.xlsx', '').replace('.xls', ''),
+      type: doc.endsWith('.pdf') ? 'pdf' : doc.endsWith('.docx') ? 'word' : 'excel',
+      size: doc.endsWith('.pdf') ? '1.2MB' : doc.endsWith('.docx') ? '500KB' : '2.5MB',
+      description: doc.endsWith('.pdf') ? `${numPages} page PDF` : doc.endsWith('.docx') ? `${numPages} page Word Document` : 'XLSX Spreadsheet',
+    })),
+  };
+}
+
 async function extractPdfText(filePath) {
   const dataBuffer = fs.readFileSync(filePath);
   const pdfData = await pdfParse(dataBuffer);
@@ -115,9 +129,10 @@ function extractGridRefs(text) {
 module.exports = {
   generateFilters,
   filterProjects,
-  getProject,
+  getProjectByName,
   lookupCompany,
   updateRegistrationResponses,
-  extractGridRefs,
-  extractPdfText
+  getProjectViewModel,
+  extractPdfText,
+  extractGridRefs
 };
