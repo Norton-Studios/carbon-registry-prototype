@@ -65,7 +65,7 @@
               <tbody>
                 {% for account in pendingAccounts %}
                 <tr
-                  onclick="window.location.href='accounts/{{ account.id }}'"
+                  onclick="window.location.href='/admin/accounts/review/{{ account.id }}'"
                   style="cursor: pointer"
                 >
                   <td>{{ account.account_name }}</td>
@@ -77,7 +77,7 @@
                     <button
                       type="button"
                       class="ds_link"
-                      onclick="window.location.href='account/{{ account.id }}'"
+                      onclick="window.location.href='/admin/accounts/review/{{ account.id }}'"
                     >
                       Review
                     </button>
@@ -115,7 +115,7 @@
             <tbody>
               {% for project in pendingProjects %}
               <tr
-                onclick="window.location.href='projects/{{ project.details_url }}'"
+                onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
                 style="cursor: pointer"
               >
                 <td>{{ project.name }}</td>
@@ -126,7 +126,7 @@
                   <button
                     type="button"
                     class="ds_link"
-                    onclick="window.location.href='projects/{{ project.details_url }}'"
+                    onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
                   >
                     Review
                   </button>

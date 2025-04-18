@@ -1,0 +1,85 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Account Verification{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Review account for {{ account.account_name }}</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <!-- Summary Section -->
+      <div class="ds_inset-text">
+        <p>Account verification is incomplete. <a href="#organisation-verification">Skip to the first incomplete section</a>.</p>
+      </div>
+
+      <!-- Organisation Verification -->
+      <h2 id="organisation-verification">Organisation Verification</h2>
+      <ul class="ds_task-list">
+        <li class="ds_task-list__task">
+          <div class="ds_task-list__task-details">
+            <h3 class="ds_task-list__task-heading">
+              Proof of company address
+            </h3>
+          </div>
+          <strong class="ds_tag ds_tag--green" aria-hidden="true">Complete</strong>
+        </li>
+        <li class="ds_task-list__task">
+          <div class="ds_task-list__task-details">
+            <h3 class="ds_task-list__task-heading">
+              <a href="/account/company-registration" class="ds_task-list__task-link">Proof of company registration</a>
+            </h3>
+          </div>
+          <strong class="ds_tag ds_tag--grey" aria-hidden="true">Incomplete</strong>
+        </li>
+      </ul>
+
+      <!-- User Account Verification -->
+      <h2 id="user-account-verification">User Account Verification</h2>
+      <ul class="ds_task-list">
+        <li class="ds_task-list__task">
+          <div class="ds_task-list__task-details">
+            <h3 class="ds_task-list__task-heading">
+              Identity card
+            </h3>
+          </div>
+          <strong class="ds_tag ds_tag--green" aria-hidden="true">Complete</strong>
+        </li>
+        <li class="ds_task-list__task">
+          <div class="ds_task-list__task-details">
+            <h3 class="ds_task-list__task-heading">
+              <a href="/account/liveness-verification" class="ds_task-list__task-link">Liveness verification</a>
+            </h3>
+          </div>
+          <strong class="ds_tag ds_tag--grey" aria-hidden="true">Incomplete</strong>
+        </li>
+      </ul>
+
+      <!-- Payment -->
+      <h2 id="payment">Payment</h2>
+      <ul class="ds_task-list">
+        <li class="ds_task-list__task">
+          <div class="ds_task-list__task-details">
+            <h3 class="ds_task-list__task-heading">
+              <a href="/account/payment" class="ds_task-list__task-link">Pay opening fee</a>
+            </h3>
+          </div>
+          <strong class="ds_tag ds_tag--grey" aria-hidden="true">Incomplete</strong>
+        </li>
+      </ul>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}
