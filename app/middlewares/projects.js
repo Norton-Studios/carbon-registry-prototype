@@ -90,10 +90,15 @@ async function getProjectSiteDetails(req, res, next) {
         return res.status(400).send('Unable to get location details.');
       }
 
-      req.session.data.project.responses = {
-        ...req.session.data.project.responses,
-        ...siteDetails
-      }
+      const existingProject = req.session.data.project || {};
+
+      req.session.data.project = {
+        ...existingProject,
+        responses: {
+          ...existingProject.responses,
+          ...siteDetails
+        }
+      };
     } else {
       return res.status(400).send('Unsupported file type. Only PDF and CSV allowed.');
     }
