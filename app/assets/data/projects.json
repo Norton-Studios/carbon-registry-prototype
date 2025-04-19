@@ -234,7 +234,7 @@
     "category": "Peatland",
     "standard_name": "Peatland Code",
     "type": "Peatland Restoration",
-    "status": 6,
+    "status": 1,
     "pius_listed": "Yes",
     "validator": "PeatRevive",
     "developer": "EcoTay Ltd.",
@@ -243,6 +243,7 @@
     "details_url": "tayside-peatland-revival",
     "account_name": "EcoTay Ltd.",
     "credits": 1100,
+    "pendingApproval": true,
     "documents": [
       "Bridge_End_Design_and_Access_GR.pdf",
       "WCC_Bridge_End_Farm_Year5_MonitoringReport_Strat_2_17.5.23.xlsx",

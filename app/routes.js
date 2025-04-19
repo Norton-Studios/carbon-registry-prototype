@@ -225,7 +225,7 @@ router.get('/', (req, res) => {
     case 'admin':
       loadAllAccounts(req, res, () => {
         const pendingProjects = projects
-          .filter(project => project.status == 6)
+          .filter(project => project.status.pendingApproval)
           .sort((a, b) => new Date(a.date) - new Date(b.date));
 
         const pendingAccounts = res.locals.accounts

@@ -7,8 +7,7 @@ module.exports = {
     3: 'Validated',
     4: 'Verified',
     5: 'Not delivered',
-    6: 'Pending review',
-    7: 'Under review' // Projects should be locked when under review (UKLCR020)
+    6: 'Under review' // Projects should be locked when under review (UKLCR020)
   },
   projectFields: [
     'account_name',
