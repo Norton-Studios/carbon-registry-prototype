@@ -4,7 +4,7 @@ const accounts = require('../assets/data/accounts.json');
 function loadAccount(req, res, next) {
   const account = res.locals.account || req.session.account;
 
-  if (req.session.userType == "Developer") {
+  if (req.session.userType == "developer") {
     res.locals.account = accounts[0];
   } else if (!account || !account.id) {
     res.locals.account = {};

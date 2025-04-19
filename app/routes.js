@@ -323,6 +323,7 @@ router.get('/logout', (req, res) => {
 // Account routes
 
 router.get('/account', loadAccount, (req, res) => {
+  console.log(res.locals.account);
   res.render('/account/dashboard', {
     account: res.locals.account
   });
