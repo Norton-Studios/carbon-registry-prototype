@@ -9,7 +9,8 @@ const {
   extractGridRefs,
   getProjectViewModel
 } = require('../helpers');
-const { getLocationFromGridRef } = require('../../add-project-locations.js');
+
+const { getLocationFromGridRef } = require('../../scripts/add-project-locations.js');
 
 //projects
 function applyProjectFilters(req, res, next) {
@@ -115,7 +116,11 @@ function projectResponseValidate(req, res, next) {
   const { lastFieldId } = req.query;
 
   const project = req.session.data?.project || {};
-  const projectResponseValidated = Object.values(project.status).filter(status => status == 2).length == 4;
+  const standardPeatland = project.standard === "UK Peatland Code";
+  const excludedKey = standardPeatland ? '3' : '5';
+  const projectResponseValidated = Object.keys(project.status)
+    .filter(key => key !== excludedKey)
+    .every(key => project.status[key] == 2);
 
   Object.assign(req.session.data, {
     ...(lastFieldId ?? {}),
@@ -123,7 +128,7 @@ function projectResponseValidate(req, res, next) {
   });
 
   if (lastFieldId) {
-    return res.redirect('/create-project/answer-summary');
+    return res.redirect('/developer/create-project/answer-summary');
   }
   next();
 }
@@ -131,7 +136,10 @@ function projectResponseValidate(req, res, next) {
 async function getProjectSiteDetails(req, res, next) {
   const file = req.file;
   if (!file) {
-    return res.status(400).send('No file uploaded.');
+    req.session.data.formError = {
+      message: `No file selected. Please select a file to continue.`
+    }
+    return res.redirect('/developer/create-project/document-upload');
   }
   const filePath = file.path;
   const ext = path.extname(file.originalname).toLowerCase();
@@ -141,6 +149,7 @@ async function getProjectSiteDetails(req, res, next) {
     filePath,
     ext,
     name: file.originalname,
+    filename: file.filename,
     size: (file.size / 1024).toFixed(2) // Convert to KB
   };
 
@@ -153,7 +162,9 @@ async function getProjectSiteDetails(req, res, next) {
       const siteDetails = await getLocationFromGridRef(nhCode);
 
       if (!siteDetails) {
-        return res.status(400).send('Unable to get location details.');
+        responses = { ...responses, pdfFile: true };
+        req.session.data.project = { ...existingProject, responses };
+        return res.redirect('/developer/create-project/document-upload?bannerState=documentSuccess');
       }
 
       responses = { ...responses, ...siteDetails, pdfFile: true };
@@ -164,7 +175,7 @@ async function getProjectSiteDetails(req, res, next) {
     req.session.data.project = { ...existingProject, responses };
     next();
   } catch (err) {
-    res.status(500).send('Error processing file.');
+    return res.redirect('/developer/banner-success?bannerState=documentSuccess');
   }
 }
 

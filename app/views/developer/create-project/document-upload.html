@@ -1,0 +1,75 @@
+{% from "components/file.html" import fileDownload %}
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Create Project{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/developer/create-project">Back</a>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainContent %}
+    {% if bannerState == 'documentSuccess' or formError %}
+      {% set bannerStateLocal = bannerState %}
+      {% set formErrorLocal = formError %}
+      {% include "../banner-notification-partial.html" %}
+    {% endif %}
+    <div class="ds_layout__content">
+      <form action="/developer/upload?fieldId=1" method="post" enctype="multipart/form-data">
+        <div class="ds_question">
+          <fieldset>
+            <div class="ds_page-header">
+              <h1 class="ds_page-header__title">
+                Document uploads
+              </h1>
+            </div>
+            {# Example of a form input - in this case a date input with datepicker #}
+            <div class="ds_form-group">
+              <label class="ds_label" for="file-upload-1">
+                Upload a file
+              </label>
+              <div
+                class="govuk-drop-zone"
+                data-module="govuk-file-upload">
+                <input class="govuk-file-upload" id="file-upload-1" name="fileUpload" type="file">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="button-group">
+          <button class="ds_button  ds_button--has-icon">
+            Next
+            <svg class="ds_icon" aria-hidden="true" role="img">
+              <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+    {% endblock %}
+
+    {% block answerSummary %}
+    <div class="ds_layout__footer">
+      <div class="ds_!_margin-top--4">
+        {% for file in data['project']['responses']['files'] %}
+        {{
+          fileDownload(
+            "/public/svg/" ~ file.ext | replace('.', '') ~ ".svg",
+            "/public/uploads/" ~ file.filename,
+            file.name,
+            file.ext | replace('.', '') | upper,
+            file.size
+          )
+          }}
+        {% endfor %}
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

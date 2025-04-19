@@ -22,13 +22,13 @@
         <div class="govuk-notification-banner__content">
           <p class="govuk-notification-banner__heading">
             {{ (projects | first).name }} has been validated. Check the invoice for payments due.
-            <a class="govuk-notification-banner__link" href="/my-projects/{{ (projects | first).details_url }}/verification">View invoice</a>
+            <a class="govuk-notification-banner__link" href="/developer/my-projects/{{ (projects | first).details_url }}/verification">View invoice</a>
           </p>
         </div>
       </div>
           {% endif %}
 
-          <h1 class="ds_page-header__title">Milestones</h1>
+          <h1 class="ds_page-header__title">Overview</h1>
         </header>
             </div>
     </div>
@@ -60,8 +60,8 @@
 
       <div class="ds_category-list">
       {{ milestoneList(projects, "Upcoming milestones", "View milestones", 5, true) }}
-      {{ milestoneList(projects, "Pending payments", "View invoices", 3) }}
-      {{ milestoneList(projects, "Pending approvals", "View transfer approvals", 1) }}
+      {{ milestoneList(projects, "Pending payments", "View invoices", 3, true) }}
+      {{ milestoneList(projects, "Pending approvals", "View transfer approvals", 1, true) }}
       </div>
     </div>
     {% endblock %}
