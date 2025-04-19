@@ -1,0 +1,84 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<h1>Credits</h1>
+<div class="tabs">
+    <ul>
+        <li><a href="#pending">Pending</a></li>
+        <li><a href="#verified">Verified</a></li>
+        <li><a href="#retired">Retired</a></li>
+    </ul>
+    <div id="pending" class="tab-content">
+        <h2>Pending</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Project</th>
+                    <th>Issue Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1200</td>
+                    <td>Borders Peatland Recovery</td>
+                    <td>January 15, 2025</td>
+                </tr>
+                <tr>
+                    <td>1100</td>
+                    <td>Tayside Peatland Revival</td>
+                    <td>March 10, 2025</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="verified" class="tab-content">
+        <h2>Verified</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Project</th>
+                    <th>Issue Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1500</td>
+                    <td>Highland Rewilding</td>
+                    <td>February 20, 2025</td>
+                </tr>
+                <tr>
+                    <td>950</td>
+                    <td>Cairngorms Woodland Regeneration</td>
+                    <td>April 5, 2025</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="retired" class="tab-content">
+        <h2>Retired</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Project</th>
+                    <th>Issue Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>800</td>
+                    <td>Loch Lomond Wetland Restoration</td>
+                    <td>March 25, 2025</td>
+                </tr>
+                <tr>
+                    <td>1300</td>
+                    <td>Moffat Hills Rewilding Project</td>
+                    <td>April 1, 2025</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

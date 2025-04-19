@@ -370,4 +370,8 @@ router.post('/account/payment', (req, res) => {
   res.redirect('/account/account-verified');
 });
 
+router.get('/credits', (req, res) => {
+    res.render('credits');
+});
+
 module.exports = router;
