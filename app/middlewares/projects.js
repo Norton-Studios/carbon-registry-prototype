@@ -148,6 +148,7 @@ async function getProjectSiteDetails(req, res, next) {
     filePath,
     ext,
     name: file.originalname,
+    filename: file.filename,
     size: (file.size / 1024).toFixed(2) // Convert to KB
   };
 
