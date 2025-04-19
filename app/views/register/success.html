@@ -12,7 +12,7 @@
         {% set title = "Payment successful" %}
         {% set message = "Project is now submitted for validation" %}
         {% set action = "Return to the <a class='ds_default-link' href='/'>dashboard</a>." %}
-      {% elseif  userType == 'developer' and data['projectResponseValidate'] %}
+      {% elseif  userType == 'developer' and data['projectResponseValidated'] %}
        {% set title = "Form Submitted" %}
        {% set message = "Project is sent for review by regulators" %}
        {% set action = "Check your <a class='ds_default-link' href='/'>pending drafts</a> or return to the <a class='ds_default-link' href='/'>home page</a>." %}

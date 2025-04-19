@@ -114,19 +114,18 @@ function updateProjectResponses(req, _, next) {
 function projectResponseValidate(req, res, next) {
   const { lastFieldId } = req.query;
 
-  if (!lastFieldId) return next();
-
-  const responses = req.session.data?.project?.responses || {};
-  const formLength = responses.standard === "UK Woodland Carbon Code" ? 25 : 33;
-
-  const projectResponseValidated = Object.keys(responses).length === formLength;
+  const project = req.session.data?.project || {};
+  const projectResponseValidated = Object.values(project.status).filter(status => status == 2).length == 4;
 
   Object.assign(req.session.data, {
-    lastFieldId,
+    ...(lastFieldId ?? {}),
     projectResponseValidated
   });
 
-  return res.redirect('/create-project/answer-summary');
+  if (lastFieldId) {
+    return res.redirect('/create-project/answer-summary');
+  }
+  next();
 }
 
 async function getProjectSiteDetails(req, res, next) {
