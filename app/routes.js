@@ -331,6 +331,13 @@ router.get('/account', loadAccount, (req, res) => {
   });
 });
 
+router.get('/account/:id', loadAccount, (req, res) => {
+  console.log(res.locals.account);
+  res.render('/account/dashboard', {
+    account: res.locals.account
+  });
+});
+
 router.get('/account/verification', (req, res) => {
   res.render('account/verification', {
     account: res.locals.account

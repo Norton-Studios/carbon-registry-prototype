@@ -1,0 +1,42 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Account dashboard{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% from "components/summary-list.html" import summaryList %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--question-page">
+
+    {% block mainHeader %}
+    <div class="ds_layout__header">
+      <header class="ds_page-header">
+        <h1 class="ds_page-header__title">{{ account.name }}</h1>
+      </header>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <form action="/register/confirm-details" method="post">
+        <div class="ds_question">
+          {{ summaryList(account) }}
+          <h2>Account users:</h2>
+          {{ summaryList(account.users) if account.users }}
+
+          <div class="button-group">
+            <button class="ds_button  ds_button--has-icon">
+              Next
+              <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    {% endblock %}
+
+  </main>
+</div>
+{% endblock %}
