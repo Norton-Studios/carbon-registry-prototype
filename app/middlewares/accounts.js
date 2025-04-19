@@ -1,41 +1,15 @@
 const { lookupCompany, generateObjectId, toTitleCase } = require('../helpers');
 const accounts = require('../assets/data/accounts.json');
 
-function formatAccountFromResponses(responses = [], manager) {
-  const getValue = label =>
-    responses.find(item => item.label === label)?.value || '';
-
-  const addressSnippet = getValue('Address');
-  const addressParts = addressSnippet.split(',').map(part => part.trim());
-  const country = addressParts[addressParts.length - 2] || ''; // second last part
-  const name = getValue('Organisation Name');
-
-  return {
-    id: generateObjectId(),
-    status: 'unverified',
-    crn: getValue('Company Registration Number'),
-    account_name: toTitleCase(name),
-    address: addressSnippet,
-    country,
-    classification: getValue('Classification'),
-    standard: getValue('Standard'),
-    manager: manager,
-    date: getTodayFormatted()
-  };
-}
-
-function getTodayFormatted(date = new Date()) {
-  return new Date().toISOString().split('T')[0];
-}
-
 function loadAccount(req, res, next) {
   const account = res.locals.account || req.session.account;
 
   if (!account || !account.id) {
-    return res.status(400).send('No account ID available');
+    res.locals.account = {};
+  } else {
+    res.locals.account = account;
   }
 
-  res.locals.account = account;
   next();
 }
 
@@ -66,6 +40,8 @@ function loadAllAccounts(req, res, next) {
   res.locals.accounts = req.session.accounts || accounts;
   next();
 }
+
+// Account-specific helpers
 
 async function validateAccount(account, apiKey) {
   let organisation = {}; 
@@ -127,6 +103,32 @@ function updateAccount(updates = {}) {
   };
 }
 
+function formatAccountFromResponses(responses = [], manager) {
+  const getValue = label =>
+    responses.find(item => item.label === label)?.value || '';
+
+  const addressSnippet = getValue('Address');
+  const addressParts = addressSnippet.split(',').map(part => part.trim());
+  const country = addressParts[addressParts.length - 2] || ''; // second last part
+  const name = getValue('Organisation Name');
+
+  return {
+    id: generateObjectId(),
+    status: 'unverified',
+    crn: getValue('Company Registration Number'),
+    account_name: toTitleCase(name),
+    address: addressSnippet,
+    country,
+    classification: getValue('Classification'),
+    standard: getValue('Standard'),
+    manager: manager,
+    date: getTodayFormatted()
+  };
+}
+
+function getTodayFormatted(date = new Date()) {
+  return new Date().toISOString().split('T')[0];
+}
 
 module.exports = {
   saveAccount,

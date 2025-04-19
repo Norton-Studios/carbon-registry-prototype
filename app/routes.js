@@ -86,6 +86,10 @@ router.get('/projects/:name', getProject, (req, res) => {
 
 // Registration routes
 
+router.get('/register', (req, res) => {
+  res.render('register/start')
+})
+
 router.get('/register/company-number', (req, res) => {
   const formError = req.session.data.formError;
   delete req.session.data.formError;
@@ -321,18 +325,18 @@ router.get('/logout', (req, res) => {
 // Account routes
 
 router.get('/account', loadAccount, (req, res) => {
-  res.redirect('/account/verification', {
+  res.render('/account/dashboard', {
     account: res.locals.account
   });
 });
 
-router.get('/account/verification', loadAccount, (req, res) => {
+router.get('/account/verification', (req, res) => {
   res.render('account/verification', {
     account: res.locals.account
   });
 });
 
-router.get('/account/account-verified', updateAccount({ status: 'verified' }), (req, res) => {
+router.get('/account/account-verified', updateAccount({ pendingApproval: true }), (req, res) => {
   res.render('account/verification', {
     account: res.locals.account
   })
