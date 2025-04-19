@@ -10,6 +10,8 @@ const {
   getProjectViewModel
 } = require('../helpers');
 
+const { getLocationFromGridRef } = require('../../scripts/add-project-locations.js');
+
 //projects
 function applyProjectFilters(req, res, next) {
   res.locals.filteredProjects = filterProjects(projects, req.session.data);
