@@ -36,7 +36,39 @@
             </ul>
           </nav>
           <div class="ds_tabs__content ds_tabs__content--bordered" id="projects">
-            {% include "/layouts/registry/tabs/projects.html" %}
+            {%  block tabContent %}
+            <div class="table-overflow">
+              <table class="govuk_table">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Name</th>
+                    <th scope="col" class="govuk-table__header">Category</th>
+                    <th scope="col" class="govuk-table__header">Standard</th>
+                    <th scope="col" class="govuk-table__header">Project Type</th>
+                    <th scope="col" class="govuk-table__header">Status</th>
+                    <th class="govuk-table__header"></th>
+                  </tr>
+                </thead>
+                <tbody id="search-results">
+                  {% for project in projects | customSelectAttr('status', [2, 3, 4, 5]) %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ project.name }}</td>
+                    <td class="govuk-table__cell">{{ project.category }}</td>
+                    <td class="govuk-table__cell">{{ project.standard_name }}</td>
+                    <td class="govuk-table__cell">{{ project.type }}</td>
+                    <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
+                    <td class="govuk-table__cell">
+                      <button type="button" class="ds_link"
+                        onclick="window.location.href='/projects/{{ project.details_url }}'">
+                        Assess
+                      </button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% endblock %}
           </div>
           <div class="ds_tabs__content ds_tabs__content--bordered" id="mapOverview">
             {{ renderMap(osApiKey, projects) }}
