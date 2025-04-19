@@ -229,7 +229,7 @@ router.get('/', (req, res) => {
           .sort((a, b) => new Date(a.date) - new Date(b.date));
 
         const pendingAccounts = res.locals.accounts
-          .filter(account => account.status == "verified")
+          .filter(account => account.status.pendingApproval)
           .sort((a, b) => new Date(a.date) - new Date(b.date));
 
         res.render('admin/dashboard', {
@@ -325,6 +325,7 @@ router.get('/logout', (req, res) => {
 // Account routes
 
 router.get('/account', loadAccount, (req, res) => {
+  console.log(res.locals.account);
   res.render('/account/dashboard', {
     account: res.locals.account
   });

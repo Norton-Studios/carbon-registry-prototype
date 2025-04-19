@@ -39,7 +39,7 @@
           </tr>
         </tbody>
       </table>
-      {% if pendingAccounts %}
+      {% if pendingAccounts >= 1 %}
       <div class="ds_accordion" data-module="ds-accordion">
         <div class="ds_accordion-item">
           <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-1" aria-labelledby="panel-1-heading">
@@ -58,7 +58,8 @@
                   <th scope="col">Classification</th>
                   <th scope="col">Account Manager</th>
                   <th scope="col">Country</th>
-                  <th scope="col">Date</th>
+                  <th scope="col">Last Updated</th>
+                  <th scope="col">Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -73,6 +74,7 @@
                   <td>{{ account.manager }}</td>
                   <td>{{ account.country }}</td>
                   <td>{{ account.date }}</td>
+                  <td>{{ account.status }}</td>
                   <td>
                     <button
                       type="button"
@@ -89,9 +91,24 @@
           </div>
         </div>
       </div>
+
+      {% else %}
+    
+      <div class="ds_confirmation-message" aria-live="polite">
+        <svg class="ds_confirmation-message__icon  ds_icon  ds_icon--24" aria-hidden="true" role="img">
+            <use href="/assets/images/icons/icons.stack.svg#check_circle"></use>
+        </svg>
+        <h3 class="ds_confirmation-message__title">
+            Accounts are up-to-date
+        </h3>
+        <div class="ds_confirmation-message__body">
+            <p>There are no new accounts to be reviewed.</p>
+        </div>
+      </div>
+
       {% endif %}
 
-      {% if pendingProjects %}
+      {% if pendingProjects >= 1 %}
       <div class="ds_accordion-item">
         <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-2" aria-labelledby="panel-2-heading">
         <div class="ds_accordion-item__header">
@@ -137,6 +154,21 @@
           </table>
         </div>
       </div>
+
+      {% else %}
+
+      <div class="ds_confirmation-message" aria-live="polite">
+        <svg class="ds_confirmation-message__icon  ds_icon  ds_icon--24" aria-hidden="true" role="img">
+            <use href="/assets/images/icons/icons.stack.svg#check_circle"></use>
+        </svg>
+        <h3 class="ds_confirmation-message__title">
+            Projects are up-to-date
+        </h3>
+        <div class="ds_confirmation-message__body">
+            <p>There are no new projects to be reviewed.</p>
+        </div>
+      </div>
+
       {% endif %}
     </div>
       
