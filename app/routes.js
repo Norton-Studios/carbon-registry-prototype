@@ -11,7 +11,7 @@ const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
-const { 
+const {
   validateAccount,
   saveAccount,
   updateAccount,
@@ -34,40 +34,45 @@ dotenv.config();
 
 router.use(applyUserType);
 
-router.post('/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
-  res.redirect('/create-project/answer-summary');
+router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
+  res.redirect('/developer/create-project/answer-summary');
 });
 
-router.post('/create-project/form', updateProjectResponses, getFormGroupStatus, projectResponseValidate, (_, res) => {
-  res.render('create-project/form')
+router.get('/developer/create-project/document-upload', (req, res) => {
+  const {formError, bannerState} = req.session.data || {};
+  if (formError) delete req.session.data.formError;
+  if (bannerState) delete req.session.data.bannerState;
+
+  if (bannerState) {
+    res.render('/developer/create-project', { bannerState })
+  } else {
+    res.render('/developer/create-project/document-upload', { formError: formError ?? null })
+  }
 });
 
-router.get('/create-project/form', (req, res) => {
+router.post('/developer/create-project/form', updateProjectResponses, getFormGroupStatus, projectResponseValidate, (_, res) => {
+  res.render('developer/create-project/form')
+});
+
+router.get('/developer/create-project/form', (req, res) => {
   const { changeFormLabel } = req.session.data;
   if (changeFormLabel) {
     delete req.session.data.changeFormLabel;
-    return res.render('create-project/form', { key: changeFormLabel });
+    return res.render('developer/create-project/form', { key: changeFormLabel });
   }
-  res.render('create-project/form');
+  res.render('developer/create-project/form');
 });
 
-router.post('/create-project', resetProjectFields, (_, res) => {
-  res.render('create-project');
+router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, (_, res) => {
+  res.render('developer/create-project');
 });
 
-router.post('/registry', (req, res) => {
-  if (req.body.submitAction === 'reset') {
-    (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
-  }
-  res.redirect('/#projects');
-});
-
-router.get('/my-projects/:name/verification', (_, res) => {
+router.get('/developer/my-projects/:name/verification', (_, res) => {
   res.render('payment');
-})
+});
 
-router.get('/my-projects', getMyProjects, (req, res) => {
-  res.render('dashboard', {
+router.get('/developer/my-projects', getMyProjects, (req, res) => {
+  res.render('developer/my-projects', {
     projects: res.locals.projects,
     authenticated: true
   });
@@ -82,6 +87,13 @@ router.get('/projects/:name', getProject, (req, res) => {
     osApiKey: process.env.OS_API_KEY,
     ...(isAdmin || isDev ? { authenticated: true } : {})
   });
+});
+
+router.post('/registry', (req, res) => {
+  if (req.body.submitAction === 'reset') {
+    (req.session.data.filterKeys || []).forEach(key => delete req.session.data[key]);
+  }
+  res.redirect('/#projects');
 });
 
 // Registration routes
@@ -242,7 +254,7 @@ router.get('/', (req, res) => {
     case 'developer':
       getMyProjects(req, res, () => {
         delete req.session.data['paymentSuccess'];
-        res.render('milestones', {
+        res.render('developer/milestones', {
           projects: res.locals.projects
         });
       });

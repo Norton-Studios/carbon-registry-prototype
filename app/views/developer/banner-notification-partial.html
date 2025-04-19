@@ -1,0 +1,31 @@
+{% if bannerStateLocal == 'documentSuccess' %}
+  {% set title = 'Document upload successful' %}
+  {% set message = "Continue with your application <a class='ds_default-link' href='/developer/create-project'>here</a>." %}
+  {% set borderColor = '#428542' %}
+{% elseif formErrorLocal %}
+  {% set title = 'Error' %}
+  {% set message = formErrorLocal.message or formErrorLocal %}
+  {% set borderColor = '#d32205' %}
+{% else %}
+  {% set title = 'Success' %}
+  {% set message = "Return to <a class='ds_default-link' href='/developer/create-project'>home</a>." %}
+  {% set borderColor = '#428542' %}
+{% endif %}
+
+<div class="ds_layout__content">
+  <div class="ds_confirmation-message" aria-live="polite" style="border-color:{{ borderColor }}">
+    <svg class="ds_confirmation-message__icon  ds_icon  ds_icon--24" aria-hidden="true" role="img" style="color:{{ borderColor }}">
+        {% if formError %}
+          <use href="{{ assetPath }}/images/icons/icons.stack.svg#cancel"></use>
+        {% else %}
+          <use href="{{ assetPath }}/images/icons/icons.stack.svg#check_circle"></use>
+        {% endif %}
+    </svg>
+    <h3 class="ds_confirmation-message__title">
+      {{ title }}
+    </h3>
+    <div class="ds_confirmation-message__body">
+        <p>{{ message | safe }}</p>
+    </div>
+  </div>
+</div>

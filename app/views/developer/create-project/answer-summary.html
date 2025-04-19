@@ -6,16 +6,16 @@
 
 {% set currentFieldId = data['fieldId'] | int %}
 {% if currentFieldId < 2 %}
-  {% set backAction = "/create-project" %}
+  {% set backAction = "/developer/create-project" %}
 {% else %}
-  {% set backAction = "/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
+  {% set backAction = "/developer/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
 {% endif %}
 
 {% if data['projectResponseValidated'] %}
   {% set nextAction = "/register/success" %}
   {% set buttonText = "Submit your application" %}
 {% else %}
-  {% set nextAction = "/create-project" %}
+  {% set nextAction = "/developer/create-project" %}
   {% set buttonText = "Continue your application" %}
 {% endif %}
 
@@ -29,10 +29,15 @@
 <div class="ds_wrapper">
   <main id="main-content">
     {% block mainContent %}
+      {% if bannerState == 'documentSuccess' or formError %}
+      {% set bannerStateLocal = bannerState %}
+      {% set formErrorLocal = formError %}
+      {% include "../banner-notification-partial.html" %}
+    {% endif %}
     <div class="ds_layout__content">
       <h2>Your answers</h2>
       <p>
-      <form action="/create-project" method="post">
+      <form action="/developer/create-project" method="post">
         <button type="submit" name="reset" value="true" class="ds_link">Clear answers and start again</button></p>
       </form>
       <form action="{{ nextAction }}" method="post" class="ds_!_margin-top--4">
@@ -43,7 +48,7 @@
               <span class="ds_summary-list__key">{{ key | replace('_', ' ') | capitalize }}</span>
               <span class="ds_summary-list__value">{{ data['project']['responses'][key] }}</span>
               <div class="ds_summary-list__actions">
-                <a href="/create-project/form?changeFormLabel={{ key }}" class="ds_link" aria-describedby="q2">Change</a>
+                <a href="/developer/create-project/form?changeFormLabel={{ key }}" class="ds_link" aria-describedby="q2">Change</a>
               </div>
             </li>
             {% endif %}

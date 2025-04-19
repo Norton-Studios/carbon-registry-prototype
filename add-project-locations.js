@@ -37,9 +37,50 @@ async function getCoordinatesFromAddress(address) {
   }
 }
 
+//Function to convert grid reference to easting norting
+function osgrToEN(osgr) {
+  const letterMap = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'; // I is skipped
+
+  const gridRef = osgr.toUpperCase().replace(/\s+/g, ''); // strips all whitespace
+  const firstLetter = gridRef.charAt(0);
+  const secondLetter = gridRef.charAt(1);
+  const numbers = gridRef.slice(2);
+  const digits = numbers.length / 2;
+  const l1 = letterMap.indexOf(firstLetter);
+  const l2 = letterMap.indexOf(secondLetter);
+
+  if (l1 === -1 || l2 === -1) {
+    throw new Error(`Invalid grid letters: ${let1}${let2}`);
+  }
+  const offset = {
+    'e': 1000 * 1000,
+    'n': 500 * 1000
+  }
+  const grid500k = {
+    'e': (l1 % 5) * 500 * 1000,
+    'n': (4 - Math.floor(l1 / 5)) * 500 * 1000
+  }
+  const grid100k = {
+    'e': (l2 % 5) * 100 * 1000,
+    'n': (4 - Math.floor(l2 / 5)) * 100 * 1000
+  }
+  const grid100m = {
+    'e': parseInt(numbers.slice(0, digits)) * 100,
+    'n': parseInt(numbers.slice(digits)) * 100
+  }
+
+  const easting = grid500k.e + grid100k.e + grid100m.e - offset.e;
+  const northing = grid500k.n + grid100k.n + grid100m.n - offset.n;
+
+  return { easting, northing }
+}
+
 // Get location from grid refernce
 async function getLocationFromGridRef(gridRef) {
+  // const { easting, northing } = osgrToEN(gridRef.replace(/\s+/g, ''));
+  // const endpoint = `https://api.os.uk/search/places/v1/nearest?key=${apiKey}&point=${easting},${northing}&radius=1000`;
   const endpoint = `https://api.os.uk/search/places/v1/find?key=${apiKey}&query=${gridRef}`;
+
   const countryCode = {
     'E': 'England',
     'W': 'Wales',
@@ -105,5 +146,8 @@ async function updateProjectsWithLocation() {
 
 // Run the script
 // updateProjectsWithLocation();
+// getLocationFromGridRef('ST 179 764');
 // getLocationFromGridRef('NH 291 162');
+// console.log(osgrToEN('TQ301804'));
+// console.log(osgrToEN('NH291162'));
 module.exports = { getLocationFromGridRef }

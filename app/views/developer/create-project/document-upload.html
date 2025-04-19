@@ -6,7 +6,7 @@
 
 {% block breadcrumbs %}
 <div class="ds_wrapper">
-  <a class="ds_back-link" href="/create-project">Back</a>
+  <a class="ds_back-link" href="/developer/create-project">Back</a>
 </div>
 {% endblock %}
 
@@ -14,8 +14,13 @@
 <div class="ds_wrapper">
   <main id="main-content">
     {% block mainContent %}
+    {% if bannerState == 'documentSuccess' or formError %}
+      {% set bannerStateLocal = bannerState %}
+      {% set formErrorLocal = formError %}
+      {% include "../banner-notification-partial.html" %}
+    {% endif %}
     <div class="ds_layout__content">
-      <form action="/upload?fieldId=1" method="post" enctype="multipart/form-data">
+      <form action="/developer/upload?fieldId=1" method="post" enctype="multipart/form-data">
         <div class="ds_question">
           <fieldset>
             <div class="ds_page-header">
