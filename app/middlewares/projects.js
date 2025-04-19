@@ -9,7 +9,6 @@ const {
   extractGridRefs,
   getProjectViewModel
 } = require('../helpers');
-const { getLocationFromGridRef } = require('../../add-project-locations.js');
 
 //projects
 function applyProjectFilters(req, res, next) {
