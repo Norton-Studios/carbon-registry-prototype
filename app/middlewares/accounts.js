@@ -45,41 +45,6 @@ function loadAllAccounts(req, res, next) {
 
 // Account-specific helpers
 
-async function validateAccount(account, apiKey) {
-  let organisation = {}; 
-  let users = {}; 
-  let payment = {}; 
-  let company = await lookupCompany(account.crn, apiKey);
-
-  const validations = [
-    {
-      condition: !company,
-      key: 'companyNotFound',
-      message: 'Not found on Companies House.'
-    },
-    {
-      condition: company && !company.company_status,
-      key: 'invalidStatus',
-      message: () => `${company.title} is ${company.company_status}`
-    },
-    {
-      condition: company && account.account_name !== company.title,
-      key: 'nameMismatch',
-      message: () =>
-        `${account.account_name} does not match the Companies House registered name: ${company.title}`
-    }
-  ];
-
-  validations.forEach(rule => {
-    if (rule.condition) {
-      organisation[rule.key] =
-        typeof rule.message === 'function' ? rule.message() : rule.message;
-    }
-  });
-
-  return {organisation, users, payment};
-}
-
 function updateAccount(updates = {}) {
   return (req, res, next) => {
     const currentAccount = req.session.account;
@@ -136,6 +101,5 @@ module.exports = {
   saveAccount,
   updateAccount,
   loadAccount,
-  loadAllAccounts,
-  validateAccount
+  loadAllAccounts
 }
