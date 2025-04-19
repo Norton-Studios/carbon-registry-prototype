@@ -39,7 +39,7 @@
           </tr>
         </tbody>
       </table>
-      {% if pendingAccounts > 0 %}
+      {% if pendingAccounts|length >= 1 %}
       <div class="ds_accordion" data-module="ds-accordion">
         <div class="ds_accordion-item">
           <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-1" aria-labelledby="panel-1-heading">
@@ -108,7 +108,7 @@
 
       {% endif %}
 
-      {% if pendingProjects %}
+      {% if pendingProjects|length >= 1  %}
       <div class="ds_accordion-item">
         <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-2" aria-labelledby="panel-2-heading">
         <div class="ds_accordion-item__header">
