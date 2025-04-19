@@ -321,15 +321,9 @@ router.get('/logout', (req, res) => {
 // Account routes
 
 router.get('/account', loadAccount, (req, res) => {
-  if (res.locals.account == "unverified") {
-    res.redirect('/account/verification', {
-      account: res.locals.account
-    });
-  } else {
-    res.redirect('/account/account-verified', {
-      account: res.locals.account
-    });
-  }
+  res.redirect('/account/verification', {
+    account: res.locals.account
+  });
 });
 
 router.get('/account/verification', loadAccount, (req, res) => {
