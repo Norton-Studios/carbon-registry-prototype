@@ -24,3 +24,11 @@ addFilter('merge', function (a, b) {
   if (!Array.isArray(b)) b = [];
   return a.concat(b);
 });
+
+addFilter('sortByDateDesc', function(arr) {
+  return arr.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+});
+
+addFilter('sortByDateAsc', function(arr) {
+  return arr.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+});

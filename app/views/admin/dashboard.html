@@ -66,7 +66,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% for account in pendingAccounts %}
+                {% for account in pendingAccounts | sortByDateAsc %}
                 <tr class="govuk-table__row"
                   onclick="window.location.href='/account/{{ account.id }}'"
                   style="cursor: pointer"
@@ -128,7 +128,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% for project in pendingProjects %}
+                {% for project in pendingProjects | sortByDateAsc %}
                 <tr class="govuk-table__row"
                   onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
                   style="cursor: pointer"

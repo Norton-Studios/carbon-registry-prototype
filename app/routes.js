@@ -261,10 +261,8 @@ router.get('/', (req, res) => {
     case 'admin':
       const pendingProjects = projects
         .filter(project => project.pendingApproval)
-        .sort((a, b) => new Date(a.dateCreated) - new Date(b.dateCreated));
       const pendingAccounts = accounts
         .filter(account => account.pendingApproval)
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
       res.render('admin/dashboard', {
         pendingProjects,
         pendingAccounts
