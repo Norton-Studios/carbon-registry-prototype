@@ -11,11 +11,15 @@ const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses, toTitleCase } = require('./helpers.js');
-const { saveAccount, updateAccount, loadAccount } = require('./middlewares/accounts.js');
+const { 
+  saveAccount, 
+  updateAccount, 
+  loadAccount,
+  getAccountsByDeveloper
+} = require('./middlewares/accounts.js');
 const {
   applyProjectFilters,
   resetProjectFields,
-  getMyProjects,
   getProject,
   updateProjectResponses,
   projectResponseValidate,
@@ -27,6 +31,15 @@ const { applyUserType, ensureAdmin } = require ('./middlewares/users.js')
 dotenv.config();
 
 router.use(applyUserType);
+
+router.get('/developer/manage-units', getAccountsByDeveloper, (_, res) => {
+  const set = [...new Set(res.locals.filteredAccounts.map(a => a.account_name))]
+  res.render('/developer/manage-units', {
+    myAccounts: res.locals.filteredAccounts,
+    myProjects: projects.filter(p => set.includes(p.account_name)),
+    projects,
+  })
+})
 
 router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
   res.redirect('/developer/create-project/answer-summary');
@@ -65,9 +78,9 @@ router.get('/developer/my-projects/:name/verification', (_, res) => {
   res.render('payment');
 });
 
-router.get('/developer/my-projects', getMyProjects, (req, res) => {
+router.get('/developer/my-projects', (req, res) => {
   res.render('developer/my-projects', {
-    projects: res.locals.projects,
+    projects,
     authenticated: true
   });
 });
@@ -246,10 +259,12 @@ router.get('/', (req, res) => {
       break;
 
     case 'developer':
-      getMyProjects(req, res, () => {
-        delete req.session.data['paymentSuccess'];
-        res.render('developer/milestones', {
-          projects: res.locals.projects
+      getAccountsByDeveloper(req, res, () => {
+        const set = [...new Set(res.locals.filteredAccounts.map(a => a.account_name))]
+        res.render('developer/dashboard', {
+          projects,
+          myProjects: projects.filter(p => set.includes(p.account_name)),
+          myAccounts: res.locals.filteredAccounts
         });
       });
       break;

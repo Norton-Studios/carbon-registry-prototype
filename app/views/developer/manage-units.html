@@ -1,0 +1,90 @@
+{% from "components/file.html" import fileDownload %}
+{% from "components/map.html" import renderMap %}
+
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Units overview{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
+      {% block mainHeader %}
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title"></h1>
+        </header>
+      </div>
+      {% endblock %}
+
+      {% include "/developer/manage-units/side-navigation.html" %}
+
+      {% block mainContent %}
+      <div class="ds_layout__list side_navigation">
+        <div class="ds_layout__content table-overflow">
+          <h2>Credit summary</h2>
+          <table class="ds_table">
+            <thead>
+              <tr>
+                <th scope="col">Standard</th>
+                <th scope="col">Measure</th>
+                <th scope="col">Issuances</th>
+                <th scope="col">Holdings</th>
+                <th scope="col">Retirements</th>
+                <th scope="col">Pending Issuances</th>
+                <th scope="col">Pending Transfer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ (myProjects | first).standard or 'WCC' }}</td>
+                <td>VER (tCO2e)</td>
+                <td>5,626,013</td>
+                <td>3,249,233</td>
+                <td>2,376,780</td>
+                <td>52,450</td>
+                <td>52,450</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header"></th>
+                <th scope="col" class="govuk-table__header"></th>
+                <th scope="col" class="govuk-table__header"></th>
+                <th scope="col" class="govuk-table__header"></th>
+                <th scope="col" class="govuk-table__header"></th>
+                <th scope="col" class="govuk-table__header"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in myProjects  | customSelectAttr('status', 4) %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell">
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='projects/{{ project.details_url }}'">
+                    View
+                  </button> |
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='projects/{{ project.details_url }}'">
+                    Assign
+                  </button> |
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='projects/{{ project.details_url }}'">
+                    Retire
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+      {% endblock %}
+  </main>
+</div>
+{% endblock %}
