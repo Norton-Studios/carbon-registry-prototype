@@ -155,18 +155,19 @@ async function getProjectSiteDetails(req, res, next) {
       if (!siteDetails) {
         responses = { ...responses, pdfFile: true };
         req.session.data.project = { ...existingProject, responses };
-        return res.redirect('/developer/create-project/document-upload?bannerState=documentSuccess');
+        return res.redirect('/developer/create-project?bannerState=documentSuccess');
       }
 
       responses = { ...responses, ...siteDetails, pdfFile: true };
     } else if (ext.toLowerCase() === '.xlsx') {
       responses = { ...responses, csvFile: true };
+      return res.redirect('/developer/create-project?bannerState=documentSuccess');
     }
 
     req.session.data.project = { ...existingProject, responses };
     next();
   } catch (err) {
-    return res.redirect('/developer/banner-success?bannerState=documentSuccess');
+    return res.redirect('/developer/create-project?bannerState=documentSuccess');
   }
 }
 
@@ -180,6 +181,7 @@ function filterDeveloperProjects(req, res, next) {
       return project.id === updated.id ? { ...project, ...updated } : project;
     });
 
+    res.locals.updatedProject = updated;
     delete req.session.data.updatedProject;
   }
 

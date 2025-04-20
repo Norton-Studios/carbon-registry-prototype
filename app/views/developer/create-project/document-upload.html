@@ -1,4 +1,5 @@
 {% from "components/file.html" import fileDownload %}
+{% from "components/banner-notification.html" import banner %}
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Create Project{% endblock %}
@@ -15,10 +16,10 @@
 <div class="ds_wrapper">
   <main id="main-content">
     {% block mainContent %}
-    {% if bannerState == 'documentSuccess' or formError %}
-      {% set bannerStateLocal = bannerState %}
-      {% set formErrorLocal = formError %}
-      {% include "../banner-notification-partial.html" %}
+    {% if formError %}
+      {% set bannerTitle = 'Error' %}
+      {% set bannerMessage = formError.message %}
+      {{ banner(bannerState, bannerTitle, bannerMessage, assetPath) }}
     {% endif %}
     <div class="ds_layout__content">
       <form action="/developer/upload?fieldId=1" method="post" enctype="multipart/form-data">

@@ -1,3 +1,4 @@
+{% from "components/banner-notification.html" import banner %}
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Create Project{% endblock %}
@@ -22,6 +23,12 @@
       </div>
     </div>
     {% endblock %}
+
+    {% if bannerState and bannerState == 'documentSuccess' %}
+    {% set bannerTitle = 'Document upload successful' %}
+    {% set bannerMessage = "Continue with your application <a class='ds_default-link' href='/developer/create-project/form?fieldId=" ~ idQuery[1] ~ "'>here</a>."%}
+    {{ banner('success', bannerTitle, bannerMessage, assetPath) }}
+    {% endif %}
 
     {% macro getProjectStatus(value) %}
       {% if value == 1 %}

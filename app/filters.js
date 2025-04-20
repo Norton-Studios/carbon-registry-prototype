@@ -32,3 +32,8 @@ addFilter('sortByDateDesc', function(arr) {
 addFilter('sortByDateAsc', function(arr) {
   return arr.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
 });
+
+addFilter('searchString', function (string, search) {
+  const normalize = (str) => str.toLowerCase().replace(/\s+/g, '');
+  return normalize(string).includes(normalize(search));
+})
