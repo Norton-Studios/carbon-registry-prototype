@@ -277,11 +277,18 @@
     "account_name": "EcoTay Ltd.",
     "credits": 1100,
     "pendingApproval": true,
+    "comments": [ 
+      {
+        "author": "Amirul Roslan",
+        "comment": "Is the country listed correctly? I thought Dundee was in Scotland...",
+        "date": "2025-04-05"
+      }
+    ], 
     "reviews": [
       {
         "date": "2025-04-01",
         "approved": false,
-        "comments": "Site map shows wrong location and the project name does not match VFN statement."
+        "comments": "Site map shows wrong location and the project name does not match Monitoring Report."
       },
       {
         "date": "2025-04-03",
