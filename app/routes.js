@@ -12,9 +12,9 @@ const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
-const { 
-  saveAccount, 
-  updateAccount, 
+const {
+  saveAccount,
+  updateAccount,
   loadAccount,
   getAccountsByDeveloper
 } = require('./middlewares/accounts.js');
@@ -26,6 +26,8 @@ const {
   projectResponseValidate,
   getFormGroupStatus,
   getProjectSiteDetails,
+  filterDeveloperProjects,
+  updateUnits
 } = require('./middlewares/projects.js');
 const { applyUserType, ensureAdmin } = require ('./middlewares/users.js')
 
@@ -33,14 +35,28 @@ dotenv.config();
 
 router.use(applyUserType);
 
-router.get('/developer/manage-units', getAccountsByDeveloper, (_, res) => {
-  const set = [...new Set(res.locals.filteredAccounts.map(a => a.account_name))]
-  res.render('/developer/manage-units', {
-    myAccounts: res.locals.filteredAccounts,
-    myProjects: projects.filter(p => set.includes(p.account_name)),
-    projects,
+
+router.get('/developer/manage-units/update-listing/:name', getProject, (_, res) => {
+  res.render('developer/manage-units/update-listing', {
+    project: res.locals.project
   })
-})
+});
+
+router.post('/developer/manage-units/update-listing', updateUnits, (req, res) => {
+  req.session.data.updatedProject = res.locals.project;
+  res.redirect(`/developer/manage-units`)
+});
+
+router.use('/developer', getAccountsByDeveloper, filterDeveloperProjects, (req, res, next) => {
+  if (req.path === '/manage-units/update-listing/:name') {
+    return next();
+  }
+  res.locals.myAccounts = res.locals.filteredAccounts;
+  res.locals.myProjects = res.locals.filteredProjects;
+  res.locals.projects = res.locals.projects;
+
+  next();
+});
 
 router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
   res.redirect('/developer/create-project/answer-summary');
@@ -257,11 +273,12 @@ router.get('/', (req, res) => {
 
     case 'developer':
       getAccountsByDeveloper(req, res, () => {
-        const set = [...new Set(res.locals.filteredAccounts.map(a => a.account_name))]
-        res.render('developer/dashboard', {
-          projects,
-          myProjects: projects.filter(p => set.includes(p.account_name)),
-          myAccounts: res.locals.filteredAccounts
+        filterDeveloperProjects(req, res, () => {
+          res.render('developer/dashboard', {
+            projects,
+            myProjects: res.locals.filteredProjects,
+            myAccounts: res.locals.filteredAccounts
+          });
         });
       });
       break;

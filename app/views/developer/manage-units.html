@@ -48,6 +48,7 @@
               </tr>
             </tbody>
           </table>
+          <h2 class="ds_section__title">WCC Holdings</h2>
           <table class="govuk_table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
@@ -61,23 +62,16 @@
             </thead>
             <tbody>
               {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
+              {% if not 'Peatland' in project.name %}
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ project.piu_units }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units }}</td>
                 <td class="govuk-table__cell">
-                  {% if project.status == 3 %}
-                    {{ loop.index * 12 }},{{ loop.index * 100 }}
-                  {% endif %}
-                </td>
-                <td class="govuk-table__cell">
-                  {% if project.status == 4 %}
-                    {{ loop.index + 1 }},{{ loop.index * 123 }},{{ loop.index * 100 }}
-                  {% else %}
-                    0
-                  {% endif %}
-                </td>
-                <td class="govuk-table__cell">
-                  {% if loop.index % 2 == 0 %}
-                    {{ 100 * loop.index }}
+                  {% if project.piu_units and project.pius_listed !== "0" %}
+                    {{ project.pius_listed }}
+                  {% elseif project.verified_units and project.verified_listed !== "0" %}
+                    {{ project.verified_listed }}
                   {% else %}
                     <strong>Not listed</strong>
                   {% endif %}
@@ -85,22 +79,66 @@
                 <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
                 <td class="govuk-table__cell" style="text-align: right;">
                   <button type="button" class="ds_link"
-                    onclick="window.location.href='projects/{{ project.details_url }}'">
-                    View
+                    onclick="window.location.href='/projects/{{ project.details_url }}'">
+                    Manage
                   </button> |
                   <button type="button" class="ds_link"
                     onclick="window.location.href='projects/{{ project.details_url }}'">
-                    Assign
-                  </button> |
-                  <button type="button" class="ds_link"
-                    onclick="window.location.href='projects/{{ project.details_url }}'">
-                    Retire
+                    Transfer
                   </button>
                 </td>
               </tr>
+              {% endif %}
               {% endfor %}
             </tbody>
           </table>
+          <a class="ds_link" href="/developer/manage-units">View all</a>
+          <h2 class="ds_section__title">Peatland Holdings</h2>
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Credit block</th>
+                <th scope="col" class="govuk-table__header">PIU's</th>
+                <th scope="col" class="govuk-table__header">Verified units</th>
+                <th scope="col" class="govuk-table__header">Units listed</th>
+                <th scope="col" class="govuk-table__header">Retired units</th>
+                <th scope="col" class="govuk-table__header"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
+              {% if 'Peatland' in project.name %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ project.piu_units }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units }}</td>
+                <td class="govuk-table__cell">
+                  {% if project.piu_units and project.pius_listed !== "0" %}
+                    {{ project.pius_listed }}
+                  {% elseif project.verified_units and project.verified_listed !== "0" %}
+                    {{ project.verified_listed }}
+                  {% else %}
+                    <strong>Not listed</strong>
+                  {% endif %}
+                </td>
+                <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
+                <td class="govuk-table__cell" style="text-align: right;">
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='/projects/{{ project.details_url }}'">
+                    Manage
+                  </button> |
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='projects/{{ project.details_url }}'">
+                    Transfer
+                  </button>
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          <a class="ds_link" href="/developer/manage-units">View all</a>
+        </div>
       </div>
       {% endblock %}
   </main>

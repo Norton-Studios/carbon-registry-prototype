@@ -134,6 +134,14 @@ function extractGridRefs(text) {
   return matches || [];
 }
 
+function formatNumberWithCommas(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function parseNumber(str) {
+  return parseInt((str || "0").replace(/,/g, ""), 10);
+}
+
 module.exports = {
   generateFilters,
   filterProjects,
@@ -143,5 +151,7 @@ module.exports = {
   getProjectViewModel,
   extractPdfText,
   generateObjectId,
-  extractGridRefs
+  extractGridRefs,
+  formatNumberWithCommas,
+  parseNumber
 };
