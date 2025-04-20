@@ -1,3 +1,5 @@
+{% from "components/confirmation-message.html" import confirmationMessage %}
+
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Admin dashboard{% endblock %}
@@ -94,17 +96,10 @@
 
       {% else %}
 
-      <div class="ds_confirmation-message" aria-live="polite">
-        <svg class="ds_confirmation-message__icon  ds_icon  ds_icon--24" aria-hidden="true" role="img">
-            <use href="/assets/images/icons/icons.stack.svg#check_circle"></use>
-        </svg>
-        <h3 class="ds_confirmation-message__title">
-            Accounts are up-to-date
-        </h3>
-        <div class="ds_confirmation-message__body">
-            <p>There are no new accounts to be reviewed.</p>
-        </div>
-      </div>
+      {{ confirmationMessage({
+        heading: "Accounts are up-to-date",
+        body: "There are no new accounts to be reviewed."
+      }) }}
 
       {% endif %}
 
@@ -160,17 +155,10 @@
       </div>
       {% else %}
 
-      <div class="ds_confirmation-message" aria-live="polite">
-        <svg class="ds_confirmation-message__icon  ds_icon  ds_icon--24" aria-hidden="true" role="img">
-            <use href="/assets/images/icons/icons.stack.svg#check_circle"></use>
-        </svg>
-        <h3 class="ds_confirmation-message__title">
-            Projects are up-to-date
-        </h3>
-        <div class="ds_confirmation-message__body">
-            <p>There are no new projects to be reviewed.</p>
-        </div>
-      </div>
+      {{ confirmationMessage({
+        heading: "Projects are up-to-date",
+        body: "There are no new projects to be reviewed."
+      }) }}
 
       {% endif %}
     </div>

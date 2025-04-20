@@ -3,14 +3,15 @@ const accounts = require('../assets/data/accounts.json');
 const projects = require('../assets/data/projects.json');
 
 function loadAccount(req, res, next) {
-  const account = res.locals.account || req.session.account;
+  const id = req.params.id;
+  const foundAccount = accounts.find(account => account.id === id);
 
-  if (req.session.userType == "developer") {
+  if (req.session.userType === "developer") {
     res.locals.account = accounts[0];
-  } else if (!account || !account.id) {
+  } else if (!foundAccount) {
     res.locals.account = {};
   } else {
-    res.locals.account = account;
+    res.locals.account = foundAccount;
   }
 
   next();

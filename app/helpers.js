@@ -43,14 +43,6 @@ function filterProjects(projects, sessionData) {
   });
 };
 
-function toTitleCase(str) {
-  return str
-    .toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
 function generateObjectId() {
   const timestamp = Math.floor(Date.now() / 1000).toString(16);
   const random = 'xxxxxxxxxxxxxxxx'.replace(/x/g, () =>
@@ -143,7 +135,6 @@ function extractGridRefs(text) {
 }
 
 module.exports = {
-  toTitleCase,
   generateFilters,
   filterProjects,
   getProjectByName,

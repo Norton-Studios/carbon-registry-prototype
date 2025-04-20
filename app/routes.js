@@ -299,9 +299,11 @@ router.get('/admin/projects', applyProjectFilters, (req, res) => {
 });
 
 router.get('/admin/projects/review/:name', getProject, (req, res) => {
+  const isAdmin = req.session.userType === 'admin';
   res.render('admin/review-project', {
     project: res.locals.project,
-    osApiKey: process.env.OS_API_KEY
+    osApiKey: process.env.OS_API_KEY,
+    ...(isAdmin ? { authenticated: true } : {})
   })
 });
 
