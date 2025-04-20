@@ -1,0 +1,219 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Buffer Account{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Buffer Account</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <div class="ds_tabs" data-module="ds-tabs">
+        <!-- Tabs -->
+        <nav class="ds_tabs__navigation">
+          <ul id="tablist" class="ds_tabs__list">
+            <li class="ds_tabs__tab">
+              <a href="#scottishforestry" class="ds_tabs__tab-link" aria-selected="true">Scottish Forestry</a>
+            </li>
+            <li class="ds_tabs__tab">
+              <a href="#iucn" class="ds_tabs__tab-link" aria-selected="false">IUCN</a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Scottish Forestry Tab -->
+        <div id="scottishforestry" class="ds_tabs__content">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Transaction ID</th>
+              <th scope="col" class="govuk-table__header">Date</th>
+              <th scope="col" class="govuk-table__header">Project</th>
+              <th scope="col" class="govuk-table__header">Credit</th>
+              <th scope="col" class="govuk-table__header">Debit</th>
+              <th scope="col" class="govuk-table__header">Total</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12365</td>
+              <td class="govuk-table__cell">2025-04-20</td>
+              <td class="govuk-table__cell"><a href="/projects/cairngorms-woodland-regeneration">Cairngorms Woodland Regeneration</a></td>
+              <td class="govuk-table__cell">300</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">750</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12364</td>
+              <td class="govuk-table__cell">2025-04-18</td>
+              <td class="govuk-table__cell"><a href="/projects/forth-valley-river-restoration">Forth Valley River Restoration</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">150</td>
+              <td class="govuk-table__cell">600</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12363</td>
+              <td class="govuk-table__cell">2025-04-15</td>
+              <td class="govuk-table__cell"><a href="/projects/tayside-peatland-revival">Tayside Peatland Revival</a></td>
+              <td class="govuk-table__cell">200</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">750</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12362</td>
+              <td class="govuk-table__cell">2025-04-12</td>
+              <td class="govuk-table__cell"><a href="/projects/moffat-hills-rewilding-project">Moffat Hills Rewilding Project</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">100</td>
+              <td class="govuk-table__cell">650</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12361</td>
+              <td class="govuk-table__cell">2025-04-10</td>
+              <td class="govuk-table__cell"><a href="/projects/peatland-restoration">Peatland Restoration</a></td>
+              <td class="govuk-table__cell">400</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">1050</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12360</td>
+              <td class="govuk-table__cell">2025-04-08</td>
+              <td class="govuk-table__cell"><a href="/projects/cairngorms-woodland-regeneration">Cairngorms Woodland Regeneration</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">200</td>
+              <td class="govuk-table__cell">850</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12359</td>
+              <td class="govuk-table__cell">2025-04-05</td>
+              <td class="govuk-table__cell"><a href="/projects/forth-valley-river-restoration">Forth Valley River Restoration</a></td>
+              <td class="govuk-table__cell">150</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">1000</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12358</td>
+              <td class="govuk-table__cell">2025-04-03</td>
+              <td class="govuk-table__cell"><a href="/projects/tayside-peatland-revival">Tayside Peatland Revival</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">100</td>
+              <td class="govuk-table__cell">900</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX12357</td>
+              <td class="govuk-table__cell">2025-04-01</td>
+              <td class="govuk-table__cell"><a href="/projects/moffat-hills-rewilding-project">Moffat Hills Rewilding Project</a></td>
+              <td class="govuk-table__cell">200</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">1100</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- IUCN Tab -->
+        <div id="iucn" class="ds_tabs__content">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Transaction ID</th>
+              <th scope="col" class="govuk-table__header">Date</th>
+              <th scope="col" class="govuk-table__header">Project</th>
+              <th scope="col" class="govuk-table__header">Credit</th>
+              <th scope="col" class="govuk-table__header">Debit</th>
+              <th scope="col" class="govuk-table__header">Total</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22365</td>
+              <td class="govuk-table__cell">2025-04-20</td>
+              <td class="govuk-table__cell"><a href="/projects/peatland-restoration">Peatland Restoration</a></td>
+              <td class="govuk-table__cell">300</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">750</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22364</td>
+              <td class="govuk-table__cell">2025-04-18</td>
+              <td class="govuk-table__cell"><a href="/projects/coastal-wetlands-conservation">Coastal Wetlands Conservation</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">150</td>
+              <td class="govuk-table__cell">600</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22363</td>
+              <td class="govuk-table__cell">2025-04-15</td>
+              <td class="govuk-table__cell"><a href="/projects/highland-forest-initiative">Highland Forest Initiative</a></td>
+              <td class="govuk-table__cell">200</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">750</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22362</td>
+              <td class="govuk-table__cell">2025-04-12</td>
+              <td class="govuk-table__cell"><a href="/projects/scottish-woodland-project">Scottish Woodland Project</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">100</td>
+              <td class="govuk-table__cell">650</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22361</td>
+              <td class="govuk-table__cell">2025-04-10</td>
+              <td class="govuk-table__cell"><a href="/projects/peatland-restoration">Peatland Restoration</a></td>
+              <td class="govuk-table__cell">400</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">1050</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22360</td>
+              <td class="govuk-table__cell">2025-04-08</td>
+              <td class="govuk-table__cell"><a href="/projects/coastal-wetlands-conservation">Coastal Wetlands Conservation</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">200</td>
+              <td class="govuk-table__cell">850</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22359</td>
+              <td class="govuk-table__cell">2025-04-05</td>
+              <td class="govuk-table__cell"><a href="/projects/highland-forest-initiative">Highland Forest Initiative</a></td>
+              <td class="govuk-table__cell">150</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">1000</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22358</td>
+              <td class="govuk-table__cell">2025-04-03</td>
+              <td class="govuk-table__cell"><a href="/projects/scottish-woodland-project">Scottish Woodland Project</a></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">100</td>
+              <td class="govuk-table__cell">900</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">TX22357</td>
+              <td class="govuk-table__cell">2025-04-01</td>
+              <td class="govuk-table__cell"><a href="/projects/highland-forest-initiative">Highland Forest Initiative</a></td>
+              <td class="govuk-table__cell">200</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell">1100</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}
