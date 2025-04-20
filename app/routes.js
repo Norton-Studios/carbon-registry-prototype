@@ -317,13 +317,28 @@ router.get('/admin/projects', applyProjectFilters, (req, res) => {
 });
 
 router.get('/admin/projects/review/:name', getProject, (req, res) => {
-  console.log(res.locals.project);
   const isAdmin = req.session.userType === 'admin';
   res.render('admin/review-project', {
     project: res.locals.project,
     osApiKey: process.env.OS_API_KEY,
-    ...(isAdmin ? { authenticated: true } : {})
   })
+});
+
+router.post('/admin/projects/review/:name', getProject, (req, res) => {
+  const action = req.body.action;
+
+  if (action === 'approve') {
+    return res.redirect(`/admin/projects/review/${res.locals.project.details_url}?review-status=approved`);
+  }
+
+  if (action === 'reject') {
+    const reason = req.body.comments;
+    res.locals.project.rejected = true;
+    res.locals.project.rejectionReason = reason;
+    return res.redirect(`/admin/projects/review/${res.locals.project.details_url}?review-status=rejected`);
+  }
+
+  res.redirect('/');
 });
 
 router.get('/admin/accounts/review/:id', loadAccount, async (req, res) => {
