@@ -11,9 +11,9 @@ const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses, toTitleCase } = require('./helpers.js');
-const { 
-  saveAccount, 
-  updateAccount, 
+const {
+  saveAccount,
+  updateAccount,
   loadAccount,
   getAccountsByDeveloper
 } = require('./middlewares/accounts.js');
@@ -375,6 +375,10 @@ router.post('/account/company-registration', (req, res) => {
 
 router.post('/account/payment', (req, res) => {
   res.redirect('/account/account-verified');
+});
+
+router.get('/notifications/:id', (req, res) => {
+  res.render('admin/notification-edit', {});
 });
 
 module.exports = router;
