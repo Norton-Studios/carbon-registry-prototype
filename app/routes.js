@@ -52,7 +52,7 @@ router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperPro
     return next();
   }
   res.locals.myAccounts = res.locals.filteredAccounts;
-  res.locals.myProjects = res.locals.filteredProjects;
+  res.locals.myProjects = res.locals.defaultProjects;
   res.locals.projects;
   res.locals.updatedProject;
 
@@ -98,8 +98,11 @@ router.get('/developer/my-projects/:name/verification', (_, res) => {
   res.render('payment');
 });
 
-router.get('/developer/my-projects', (req, res) => {
+router.get('/developer/my-projects', getAccountsByDeveloper, filterDeveloperProjects, applyProjectFilters, (_, res) => {
   res.render('developer/my-projects', {
+    myAccounts: res.locals.filteredAccounts,
+    myProjects: res.locals.defaultProjects,
+    filters: res.locals.projectFilters,
     projects,
     authenticated: true
   });
@@ -277,7 +280,7 @@ router.get('/', (req, res) => {
         filterDeveloperProjects(req, res, () => {
           res.render('developer/dashboard', {
             projects,
-            myProjects: res.locals.filteredProjects,
+            myProjects: res.locals.defaultProjects,
             myAccounts: res.locals.filteredAccounts
           });
         });

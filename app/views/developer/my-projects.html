@@ -1,61 +1,92 @@
 {% extends "/layouts/main.html" %}
 
-{% block pageTitle %}Dashboard{% endblock %}
+{% block pageTitle %}Projects overview{% endblock %}
 
 {% set bodyClasses = "govuk-frontend-supported" %}
+{% from "components/map.html" import renderMap %}
 
 {% block main %}
 <div class="ds_wrapper">
-  <main id="main-content">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
     {% block mainHeader %}
-    <div class="ds_layout">
-      <div class="ds_layout__header">
-        <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Projects overview</h1>
-        </header>
-      </div>
+    <div class="ds_layout__header">
+      <header class="ds_page-header">
+        <h1 class="ds_page-header__title">Projects</h1>
+      </header>
     </div>
     {% endblock %}
 
+    {% include "/layouts/registry/search-filter.html" %}
+
     {% block mainContent %}
-    <div class="ds_layout__content table-overflow">
-      <table class="ds_table">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Standard</th>
-            <th scope="col">Project Type</th>
-            <th scope="col">Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for project in projects %}
-          <tr
-            onclick="window.location.href='/developer/manage-project/{{ project.details_url }}'"
-            style="cursor: pointer"
-          >
-            <td>{{ project.name }}</td>
-            <td>{{ project.category }}</td>
-            <td>{{ project.standard_name }}</td>
-            <td>{{ project.type }}</td>
-            <td>{{ data['statusEnum'][project.status] }}</td>
-            <td>
-              <button
-                type="button"
-                class="ds_link"
-                onclick="window.location.href='/developer/manage-project/{{ project.details_url }}'"
-              >
-                Manage
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="ds_layout__list">
+      <div class="ds_search-results">
+        <div class="ds_tabs" data-module="ds-tabs">
+          <nav class="ds_tabs__navigation" aria-labelledby="ds_tabs__title">
+            <h2 id="ds_tabs__title" class="ds_tabs__title">Contents</h2>
+            <ul class="ds_tabs__list" id="tablist">
+              <li class="ds_tabs__tab">
+                <a class="ds_tabs__tab-link" href="#projects">Projects</a>
+              </li>
+              <li class="ds_tabs__tab">
+                <a class="ds_tabs__tab-link" href="#mapOverview">Map</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="ds_tabs__content ds_tabs__content--bordered" id="projects">
+            {%  block tabContent %}
+            <div class="table-overflow">
+              <table class="govuk_table">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">Name</th>
+                    <th scope="col" class="govuk-table__header">Category</th>
+                    <th scope="col" class="govuk-table__header">Standard</th>
+                    <th scope="col" class="govuk-table__header">Project Type</th>
+                    <th scope="col" class="govuk-table__header">Status</th>
+                    <th class="govuk-table__header"></th>
+                  </tr>
+                </thead>
+                <tbody id="search-results">
+                  {% for project in projects %}
+                  <tr class="govuk-table__row"
+                    onclick="window.location.href='/projects/{{ project.details_url }}'">
+                    <td class="govuk-table__cell">{{ project.name }}</td>
+                    <td class="govuk-table__cell">{{ project.category }}</td>
+                    <td class="govuk-table__cell">{{ project.standard_name }}</td>
+                    <td class="govuk-table__cell">{{ project.type }}</td>
+                    <td class="govuk-table__cell">
+                      {% if project.pendingApproval and project.status == '1' %}
+                        Pending Approval
+                      {% elseif project.pendingApproval and project.status == '2' %}
+                        Pending Validation
+                      {% elif project.pendingApproval and project.status == '3' %}
+                        Pending Verification
+                      {% else %}
+                      {{ data['statusEnum'][project.status] }}
+                      {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">
+                      <button type="button" class="ds_link"
+                        onclick="window.location.href='/projects/{{ project.details_url }}'">
+                        Manage
+                      </button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% include "layouts/pagination.html" %}
+            </div>
+            {% endblock %}
+          </div>
+          <div class="ds_tabs__content ds_tabs__content--bordered" id="mapOverview">
+            {{ renderMap(osApiKey, projects) }}
+          </div>
+        </div>
     </div>
     {% endblock %}
+
   </main>
 </div>
 {% endblock %}

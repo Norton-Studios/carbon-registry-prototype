@@ -277,13 +277,13 @@
     "account_name": "EcoTay Ltd.",
     "credits": 1100,
     "pendingApproval": true,
-    "comments": [ 
+    "comments": [
       {
         "author": "Amirul Roslan",
         "comment": "Is the country listed correctly? I thought Dundee was in Scotland...",
         "date": "2025-04-05"
       }
-    ], 
+    ],
     "reviews": [
       {
         "date": "2025-04-01",
@@ -316,7 +316,7 @@
     "category": "Rewilding",
     "standard_name": "Scottish Rewilding Code",
     "type": "Rewilding",
-    "status": 7,
+    "status": 1,
     "pius_listed": "Yes",
     "validator": "WildScape",
     "developer": "Hillside Rewilding Ltd.",

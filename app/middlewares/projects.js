@@ -16,8 +16,9 @@ const { getLocationFromGridRef } = require('../../scripts/add-project-locations.
 
 //projects
 function applyProjectFilters(req, res, next) {
-  res.locals.filteredProjects = filterProjects(projects, req.session.data);
-  res.locals.projectFilters = generateFilters(projects);
+  const defaultProjects = res.locals.defaultProjects || projects;
+  res.locals.filteredProjects = filterProjects(defaultProjects, req.session.data);
+  res.locals.projectFilters = generateFilters(defaultProjects, req.session.userType);
   next();
 }
 
@@ -195,7 +196,7 @@ function filterDeveloperProjects(req, res, next) {
       };
     });
 
-  res.locals.filteredProjects = filteredProjects;
+  res.locals.defaultProjects = filteredProjects;
   next();
 };
 
