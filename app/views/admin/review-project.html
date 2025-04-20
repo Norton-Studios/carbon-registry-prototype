@@ -8,7 +8,7 @@
 {# Back link - in place of breadcrumbs #}
 {% block breadcrumbs %}
 <div class="ds_wrapper">
-  <a class="ds_back-link" href="javascript:window.history.back()">Back</a>
+  <a class="ds_back-link" href="/">Back</a>
 </div>
 {% endblock %}
 
@@ -21,6 +21,17 @@
         <header class="ds_page-header">
           <h1 class="ds_page-header__title">{{ data['statusEnum'][project.status] }}: {{ project.name }}</h1>
 
+          {% if data['review-status'] == 'approved' %}
+            <div class="ds_notification-panel" role="alert">
+              <h2 class="ds_notification-panel__title">Draft approved</h2>
+              <p class="ds_notification-panel__content" style="color: white;">This project has been approved and marked as Under Development. An email notification has been sent to the account manager. You may now return to the <a href="/" style="text-decoration: underline;">admin dashboard</a>.</p>
+            </div>
+          {% elif data['review-status'] == 'rejected' %}
+            <div class="ds_notification-panel" style="background-color: #d4351c;" role="alert">
+              <h2 class="ds_notification-panel__title">Draft rejected</h2>
+              <p class="ds_notification-panel__content" style="color: white;">This project draft has been rejected and your comments have been emailed to the account manager. You may now return to the <a href="/" style="text-decoration: underline;">admin dashboard</a>.</p>
+            </div>
+          {% else %}
           <dl class="ds_metadata">
             <div class="ds_metadata__item">
                 <dt class="ds_metadata__key">Draft created</dt>
@@ -41,7 +52,7 @@
             </div>
           </dl>
 
-          <form id="review-form" action="/projects/{{ project.details_url }}/review" method="post">
+          <form id="review-form" action="/admin/projects/review/{{ project.details_url }}" method="post">
             <!-- Primary action buttons -->
             <div id="action-buttons" class="button-group approve-reject">
               <button
@@ -67,7 +78,7 @@
             <!-- Rejection reason panel, hidden by default -->
             <div id="rejection-panel" class="govuk-form-group" hidden>
               <label class="govuk-label" for="rejection-comments">
-                Please give a reason for rejection
+                Please give a reason for rejection and describe what the project developer needs to improve before resubmitting.
               </label>
               <textarea
                 class="govuk-textarea"
@@ -98,6 +109,7 @@
               </div>
             </div>
           </form>
+          {% endif %}
       </div>
       <script>
         document.addEventListener('DOMContentLoaded', function () {
