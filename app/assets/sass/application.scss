@@ -105,3 +105,19 @@ a.ds_button:not(.ds_button--secondary):not(.ds_button--cancel):visited {
 .ds_details {
   margin-top: 0px;
 }
+
+.ds_accordion-item.account-summary.ds_accordion-item--open {
+  border-bottom: none;
+
+  .ds_accordion-item__button {
+    background-color: #d9effc;
+    border-bottom: 1px solid #b3b3b3;
+  }
+}
+
+.ds_accordion-item.account-summary {
+  .ds_accordion-item__button {
+    display: flex;
+    justify-content: space-between;
+  }
+}

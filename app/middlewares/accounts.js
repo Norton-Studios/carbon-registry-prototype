@@ -1,5 +1,6 @@
 const { lookupCompany, generateObjectId, toTitleCase } = require('../helpers');
 const accounts = require('../assets/data/accounts.json');
+const projects = require('../assets/data/projects.json');
 
 function loadAccount(req, res, next) {
   const account = res.locals.account || req.session.account;
@@ -97,9 +98,20 @@ function getTodayFormatted(date = new Date()) {
   return new Date().toISOString().split('T')[0];
 }
 
+function getAccountsByDeveloper(_, res, next) {
+  const accountNames = [...new Set(projects.filter(project => project.developer === "GreenRoots CIC")
+    .map(p => p.account_name))]
+  const accountsObj = accountNames
+    .reduce((acc, name) => [...acc, (accounts.find(acc => acc.account_name == name))], []);
+
+  res.locals.filteredAccounts = accountsObj;
+  next();
+}
+
 module.exports = {
   saveAccount,
   updateAccount,
   loadAccount,
-  loadAllAccounts
+  loadAllAccounts,
+  getAccountsByDeveloper
 }

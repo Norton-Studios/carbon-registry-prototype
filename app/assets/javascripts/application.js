@@ -12,26 +12,29 @@ const protectedRoutes = [
 
 window.GOVUKPrototypeKit.documentReady(() => {
   const menuItems = document.querySelectorAll('.ds_site-navigation__link');
+  const sideMenuItems = document.querySelectorAll('.ds_side-navigation__link');
   const currentPath = window.location.pathname;
 
   const protectedContainer = document.createElement('div');
   protectedContainer.classList.add('protected-links-container');
+
   const publicContainer = document.createElement('div');
   publicContainer.classList.add('public-links-container');
+
+  sideMenuItems.forEach(item => {
+    const itemPath = item.getAttribute('href');
+    const parentLi = item.closest('li');
+    if (!parentLi || !itemPath) return;
+
+    applyToggleState(item, itemPath, currentPath);
+  });
 
   menuItems.forEach(item => {
     const itemPath = item.getAttribute('href');
     const parentLi = item.closest('li');
-    if (!parentLi) return;
+    if (!parentLi || !itemPath) return;
 
-    const isCurrent = itemPath === currentPath;
-    item.classList.toggle('ds_current', isCurrent);
-
-    if (isCurrent) {
-      item.setAttribute('aria-current', 'page');
-    } else {
-      item.removeAttribute('aria-current');
-    }
+    applyToggleState(item, itemPath, currentPath);
 
     const isProtected = protectedRoutes.includes(itemPath);
     const container = isProtected ? protectedContainer : publicContainer;
@@ -54,3 +57,14 @@ window.GOVUKPrototypeKit.documentReady(() => {
     }
   });
 });
+
+function applyToggleState(item, itemPath, currentPath) {
+  const isCurrent = itemPath === currentPath;
+  item.classList.toggle('ds_current', isCurrent);
+
+  if (isCurrent) {
+    item.setAttribute('aria-current', 'page');
+  } else {
+    item.removeAttribute('aria-current');
+  }
+}

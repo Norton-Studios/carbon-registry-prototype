@@ -50,7 +50,7 @@ function osgrToEN(osgr) {
   const l2 = letterMap.indexOf(secondLetter);
 
   if (l1 === -1 || l2 === -1) {
-    throw new Error(`Invalid grid letters: ${let1}${let2}`);
+    throw new Error(`Invalid grid letters: ${firstLetter}${secondLetter}`);
   }
   const offset = {
     'e': 1000 * 1000,

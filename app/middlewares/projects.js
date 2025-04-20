@@ -19,17 +19,6 @@ function applyProjectFilters(req, res, next) {
   next();
 }
 
-function getMyProjects(req, res, next) {
-  if (req.session.userType !== 'developer') {
-    return res.redirect('/');
-  }
-
-  res.locals.projects = filterProjects(projects, {
-    filterKeys: req.session.data.filterKeys,
-  });
-  next();
-}
-
 function getProject(req, res, next) {
   const projectName = req.params.name;
   const project = getProjectByName(projects, projectName);
@@ -182,7 +171,6 @@ async function getProjectSiteDetails(req, res, next) {
 module.exports = {
   applyProjectFilters,
   resetProjectFields,
-  getMyProjects,
   getProject,
   updateProjectResponses,
   projectResponseValidate,
