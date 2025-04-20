@@ -5,7 +5,7 @@
     <div class="ds_select-wrapper  ds_input--fluid-one-third">
         <select class="ds_select" id="component" name="component">
             <option value="">All</option>
-            {% for account in accounts %}
+            {% for account in myAccounts %}
               <option value="{{ account.id }}">{{ account.account_name }}</option>
             {% endfor %}
         </select>
@@ -30,6 +30,9 @@
       </li>
       <li class="ds_side-navigation__item">
         <a href="/developer/manage-units/retire" class="ds_side-navigation__link">Retirements</a>
+      </li>
+      <li class="ds_side-navigation__item">
+        <a href="/developer/manage-units/account-statements" class="ds_side-navigation__link">Account Statements</a>
       </li>
     </ul>
   </nav>
