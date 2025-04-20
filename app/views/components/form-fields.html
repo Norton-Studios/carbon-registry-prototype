@@ -1,0 +1,57 @@
+{% macro renderField(field, value) %}
+  <div class="form-group">
+    <label class="ds_label" for="{{ field.id }}">{{ field.label }}</label>
+
+    {% if field.fieldType == "textarea" %}
+      <textarea class="ds_input" rows="3" id="{{ field.id }}" name="{{ field.label | lower | replace(" ", "_") }}">{{ value or '' }}</textarea>
+
+    {% elseif field.fieldType == "dropdown" %}
+      <div class="ds_select-wrapper ds_input--fluid-two-third">
+        <select class="ds_select" id="{{ field.label | lower | replace(" ", "_") }}" name="{{ field.label | lower | replace(" ", "_") }}">
+          {% for item in field.options %}
+            <option value="{{ item.value }}" {% if value == item.value %}selected{% endif %}>{{ item.label }}</option>
+          {% endfor %}
+        </select>
+        <span class="ds_select-arrow" aria-hidden="true"></span>
+      </div>
+
+    {% elseif field.fieldType == "radio" %}
+      <div class="ds_field-group">
+        {% for item in field.options %}
+          <div class="ds_radio">
+            <input class="ds_radio__input"
+              id="{{ field.id }}-{{ item.value | lower | replace(" ", "-") }}"
+              name="{{ field.label | lower | replace(" ", "_") }}"
+              type="radio"
+              value="{{ item.value }}"
+              {% if value == item.value %}checked{% endif %}>
+            <label class="ds_radio__label" for="{{ field.id }}-{{ item.value | lower | replace(" ", "-") }}">
+              {{ item.label }}
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+
+    {% elseif field.fieldType == "date" %}
+      <div data-module="ds-datepicker" class="ds_datepicker">
+        <p class="ds_hint-text">Use dd/mm/yyyy format. For example, 31/01/2023.</p>
+        <div class="ds_input__wrapper">
+          <input
+            id="{{ field.label | lower | replace(" ", "_") }}"
+            name="{{ field.label | lower | replace(" ", "_") }}"
+            type="text"
+            class="ds_input ds_input--fixed-10"
+            value="{{ value or field.value or '' }}">
+        </div>
+      </div>
+
+    {% else %}
+      <input class="ds_input ds_input--fluid-one-third"
+        {% if field.readonly %}readonly{% endif %}
+        type="text"
+        id="{{ field.id }}"
+        name="{{ field.label | lower | replace(" ", "_") }}"
+        value="{{ value or field.value or '' }}">
+    {% endif %}
+  </div>
+{% endmacro %}
