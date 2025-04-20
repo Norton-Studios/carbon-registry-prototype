@@ -3,7 +3,7 @@
 
 {% extends "/layouts/main.html" %}
 
-{% block pageTitle %}Units overview{% endblock %}
+{% block pageTitle %}Assignments{% endblock %}
 
 {% block main %}
 <div class="ds_wrapper">
@@ -19,35 +19,53 @@
       {% include "/developer/manage-units/side-navigation.html" %}
 
       {% block mainContent %}
-      <div class="ds_layout__list">
-        <h2 class="ds_section__title">Project details</h2>
-        <ol class="ds_summary-list">
-          {% set projectFields = [
-            { key: "Category", value: project.category, id: "field-category" },
-            { key: "Type", value: project.type, id: "field-type" },
-            { key: "Standard", value: project.standard_name, id: "field-standard" },
-            { key: "Status", value: data['statusEnum'][project.status], id: "field-status" },
-            { key: "PIUs Listed", value: project.pius_listed, id: "field-pius" },
-            { key: "Validator", value: project.validator, id: "field-validator" },
-            { key: "Developer", value: project.developer, id: "field-developer" },
-            { key: "Country", value: project.country, id: "field-country" },
-            { key: "Address", value: project.address, id: "field-address" }
-          ] %}
+      <div class="ds_layout__list table-overflow">
+        <h2 class="ds_section__title">Assignments summary</h2>
+        <table class="ds_table">
+          <thead>
+            <tr>
+              <th scope="col">PIU's assigned</th>
+              <th scope="col">Verified units assigned</th>
+              <th scope="col">Pending Assignments</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2,376,780</td>
+              <td>12,100</td>
+              <td>52,450</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 class="ds_section__title">Assignments history</h2>
+        <table class="govuk_table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Credit block</th>
+              <th scope="col" class="govuk-table__header">PIU's</th>
+              <th scope="col" class="govuk-table__header">Verfied units</th>
+              <th scope="col" class="govuk-table__header">Assigned To</th>
+              <th scope="col" class="govuk-table__header">Date</th>
+              <th scope="col" class="govuk-table__header"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ project.name }}</td>
+              <td class="govuk-table__cell">{{ project.piu_units }}</td>
+              <td class="govuk-table__cell">{{ project.verified_units }}</td>
+              <td class="govuk-table__cell">{{ myProjects[myProjects.length - loop.index].name }}</td>
+              <td class="govuk-table__cell">{{ loop.index + 2 }}/{{ loop.index + 3 % 12 }}/2025</td>
+              <td class="govuk-table__cell" style="text-align: right;">
+                <a class="ds_link" href='/public/account-statements/{{ "January 2025" | urlencode }}.pdf' target="_blank">View receipt</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
 
-          {% for field in projectFields %}
-            <li class="ds_summary-list__item ds_small">
-              <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
-              <span class="ds_summary-list__value">
-                <q class="ds_summary-list__answer">{{ field.value }}</q>
-              </span>
-              {% if authenticated %}
-                <div class="ds_summary-list__actions">
-                  <button type="button" class="ds_link" aria-describedby="{{ field.id }}">Change</button>
-                </div>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ol>
+        {% include "/layouts/pagination" %}
       </div>
       {% endblock %}
   </main>

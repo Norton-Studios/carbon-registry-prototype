@@ -47,13 +47,16 @@ router.post('/developer/manage-units/update-listing', updateUnits, (req, res) =>
   res.redirect(`/developer/manage-units`)
 });
 
-router.get('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (_, res) => {
-  res.render('/developer/manage-units', {
-    myAccounts: res.locals.filteredAccounts,
-    myProjects: res.locals.filteredProjects,
-    projects: res.locals.projects
-  })
-})
+router.use('/developer', getAccountsByDeveloper, filterDeveloperProjects, (req, res, next) => {
+  if (req.path === '/manage-units/update-listing/:name') {
+    return next();
+  }
+  res.locals.myAccounts = res.locals.filteredAccounts;
+  res.locals.myProjects = res.locals.filteredProjects;
+  res.locals.projects = res.locals.projects;
+
+  next();
+});
 
 router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
   res.redirect('/developer/create-project/answer-summary');
