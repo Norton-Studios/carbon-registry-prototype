@@ -123,6 +123,7 @@
                   <th scope="col" class="govuk-table__header">Standard</th>
                   <th scope="col" class="govuk-table__header">Project type</th>
                   <th scope="col" class="govuk-table__header">Date created</th>
+                  <th scope="col" class="govuk-table__header">Status</th>
                   <th scope="col" class="govuk-table__header"></th>
                 </tr>
               </thead>
@@ -137,6 +138,17 @@
                   <td class="govuk-table__cell">{{ project.standard_name }}</td>
                   <td class="govuk-table__cell">{{ project.type }}</td>
                   <td class="govuk-table__cell">{{ project.dateCreated }}</td>
+                  <td class="govuk-table__cell">
+                    {% if project.status == '1' %}
+                      Pending approval
+                    {% elif project.status == '2' %}
+                      Pending validation
+                    {% elif project.status == '3' %}
+                      Pending verification
+                    {% else %}
+                      {{ data.statusEnum[project.status] }}
+                    {% endif %}
+                  </td>
                   <td class="govuk-table__cell">
                     <button
                       type="button"

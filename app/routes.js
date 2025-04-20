@@ -299,6 +299,7 @@ router.get('/admin/projects', applyProjectFilters, (req, res) => {
 });
 
 router.get('/admin/projects/review/:name', getProject, (req, res) => {
+  console.log(res.locals.project);
   const isAdmin = req.session.userType === 'admin';
   res.render('admin/review-project', {
     project: res.locals.project,

@@ -51,16 +51,27 @@
                 </thead>
                 <tbody id="search-results">
                   {% for project in projects | customSelectAttr('status', [2, 3, 4, 5]) %}
-                  <tr class="govuk-table__row">
+                  <tr class="govuk-table__row"
+                    onclick="window.location.href='/projects/{{ project.details_url }}'">
                     <td class="govuk-table__cell">{{ project.name }}</td>
                     <td class="govuk-table__cell">{{ project.category }}</td>
                     <td class="govuk-table__cell">{{ project.standard_name }}</td>
                     <td class="govuk-table__cell">{{ project.type }}</td>
-                    <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
+                    <td class="govuk-table__cell">
+                      {% if project.pendingApproval and project.status == '1' %}
+                        Pending Approval
+                      {% elif project.pendingApproval and project.status == '2' %}
+                        Pending Validation
+                      {% elif project.pendingApproval and project.status == '3' %}
+                        Pending Verification
+                      {% else %}
+                      {{ data['statusEnum'][project.status] }}
+                      {% endif %}
+                    </td>
                     <td class="govuk-table__cell">
                       <button type="button" class="ds_link"
                         onclick="window.location.href='/projects/{{ project.details_url }}'">
-                        Edit
+                        Assess
                       </button>
                     </td>
                   </tr>
