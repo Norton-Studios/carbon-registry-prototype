@@ -18,46 +18,114 @@
     {% endblock %}
 
     {% block mainContent %}
-    <div class="ds_layout__content table-overflow">
-      {% if accounts %}
-      <table class="ds_table">
-        <thead>
-          <tr>
-            <th scope="col">Organisation</th>
-            <th scope="col">Classification</th>
-            <th scope="col">Account Manager</th>
-            <th scope="col">Country</th>
-            <th scope="col">Date</th>
-            <th scope="col">Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for account in accounts %}
-          <tr
-            onclick="window.location.href='/account/{{ account.id }}'"
-            style="cursor: pointer"
-          >
-            <td>{{ account.account_name }}</td>
-            <td>{{ account.classification }}</td>
-            <td>{{ account.manager }}</td>
-            <td>{{ account.country }}</td>
-            <td>{{ account.date }}</td>
-            <td>{{ "Pending" if account.pending else "Verified" }}</td>
-            <td>
-              <button
-                type="button"
-                class="ds_link"
-                onclick="window.location.href='/account/{{ account.id }}'"
+    <div class="ds_layout__content">
+      <div class="ds_tabs" data-module="ds-tabs">
+        <!-- Tabs -->
+        <nav class="ds_tabs__navigation">
+          <ul id="tablist" class="ds_tabs__list">
+            <li class="ds_tabs__tab">
+              <a href="#organisations" class="ds_tabs__tab-link" aria-selected="true">Organisations</a>
+            </li>
+            <li class="ds_tabs__tab">
+              <a href="#users" class="ds_tabs__tab-link" aria-selected="false">Users</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- Organisations -->
+        <div id="organisations" class="ds_tabs__content">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Organisation</th>
+                <th scope="col" class="govuk-table__header">Classification</th>
+                <th scope="col" class="govuk-table__header">Country</th>
+                <th scope="col" class="govuk-table__header">Date</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for organisation in organisations %}
+              <tr class="govuk-table__row"
+                onclick="window.location.href='/organisation/{{ organisation.id }}'"
+                style="cursor: pointer"
               >
-                Manage
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% endif %}
+                <td class="govuk-table__cell">{{ organisation.account_name }}</td>
+                <td class="govuk-table__cell">{{ organisation.classification }}</td>
+                <td class="govuk-table__cell">{{ organisation.country }}</td>
+                <td class="govuk-table__cell">{{ organisation.date }}</td>
+                <td class="govuk-table__cell">{{ "Pending" if organisation.pending else "Verified" }}</td>
+                <td class="govuk-table__cell">
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='/organisation/{{ organisation.id }}'"
+                  >
+                    Suspend
+                  </button>
+                </td>
+                <td class="govuk-table__cell">
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='/organisation/{{ organisation.id }}'"
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- Users -->
+        <div id="users" class="ds_tabs__content">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Name</th>
+                <th scope="col" class="govuk-table__header">Email</th>
+                <th scope="col" class="govuk-table__header">Organisation</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr class="govuk-table__row"
+                onclick="window.location.href='/user/{{ user.id }}'"
+                style="cursor: pointer"
+              >
+                <td class="govuk-table__cell">{{ user.firstName }} {{ user.lastName }}</td>
+                <td class="govuk-table__cell">{{ user.email }}</td>
+                <td class="govuk-table__cell">{{ user.account }}</td>
+                <td class="govuk-table__cell">{{ user.status }}</td>
+                <td class="govuk-table__cell">
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='/user/{{ user.id }}'"
+                  >
+                    Suspend
+                  </button>
+                </td>
+                <td class="govuk-table__cell">
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='/user/{{ user.id }}'"
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
       
       {% block sequentialNavigation %}
       <nav class="ds_pagination" aria-label="Search result pages">

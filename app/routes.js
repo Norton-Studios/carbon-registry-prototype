@@ -6,11 +6,12 @@
 const dotenv = require('dotenv');
 const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
+const users = require('./assets/data/users.json');
 const projects = require('./assets/data/projects.json');
 const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
-const { lookupCompany, updateRegistrationResponses, toTitleCase } = require('./helpers.js');
+const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
 const { 
   saveAccount, 
   updateAccount, 
@@ -247,10 +248,6 @@ router.get('/', (req, res) => {
         .sort((a, b) => new Date(a.dateCreated) - new Date(b.dateCreated));
       const pendingAccounts = accounts
         .filter(account => account.pendingApproval)
-        .map(account => ({
-          ...account,
-          status: toTitleCase(account.status)
-        }))
         .sort((a, b) => new Date(a.date) - new Date(b.date));
       res.render('admin/dashboard', {
         pendingProjects,
@@ -288,7 +285,8 @@ router.use('/admin', ensureAdmin);
 
 router.get('/admin/accounts', (req, res) => {
   res.render('admin/accounts', {
-    accounts: res.locals.accounts || accounts
+    organisations: res.locals.accounts || accounts,
+    users
   })
 });
 
