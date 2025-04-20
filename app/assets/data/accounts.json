@@ -6,7 +6,7 @@
     "manager": "Robert Green",
     "country": "Scotland",
     "date": "2025-04-20",
-    "status": "verified",
+    "status": "unverified",
     "pendingApproval": true
   },
   {
@@ -29,7 +29,7 @@
     "website": "https://www.accenture.com",
     "date": "2025-04-17",
     "crn": "BR007606",
-    "status": "verified",
+    "status": "unverified",
     "pendingApproval": true
   },
   {

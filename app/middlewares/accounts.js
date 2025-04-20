@@ -38,11 +38,6 @@ function saveAccount(req, res, next) {
   next();
 }
 
-function loadAllAccounts(req, res, next) {
-  res.locals.accounts = req.session.accounts || accounts;
-  next();
-}
-
 // Account-specific helpers
 
 function updateAccount(updates = {}) {
@@ -100,6 +95,5 @@ function getTodayFormatted(date = new Date()) {
 module.exports = {
   saveAccount,
   updateAccount,
-  loadAccount,
-  loadAllAccounts
+  loadAccount
 }

@@ -10,14 +10,8 @@ const projects = require('./assets/data/projects.json');
 const accounts = require('./assets/data/accounts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
-const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
-const {
-  validateAccount,
-  saveAccount,
-  updateAccount,
-  loadAccount,
-  loadAllAccounts
-} = require('./middlewares/accounts.js');
+const { lookupCompany, updateRegistrationResponses, toTitleCase } = require('./helpers.js');
+const { saveAccount, updateAccount, loadAccount } = require('./middlewares/accounts.js');
 const {
   applyProjectFilters,
   resetProjectFields,
@@ -235,17 +229,19 @@ router.get('/register/success', loadAccount, (req, res) => {
 router.get('/', (req, res) => {
   switch (req.session.userType) {
     case 'admin':
-      loadAllAccounts(req, res, () => {
-        const pendingProjects = projects
-          .filter(project => project.pendingApproval)
-          .sort((a, b) => new Date(a.date) - new Date(b.date));
-        const pendingAccounts = accounts
-          .filter(account => account.pendingApproval)
-          .sort((a, b) => new Date(a.date) - new Date(b.date));
-        res.render('admin/dashboard', {
-          pendingProjects,
-          pendingAccounts
-        });
+      const pendingProjects = projects
+        .filter(project => project.pendingApproval)
+        .sort((a, b) => new Date(a.dateCreated) - new Date(b.dateCreated));
+      const pendingAccounts = accounts
+        .filter(account => account.pendingApproval)
+        .map(account => ({
+          ...account,
+          status: toTitleCase(account.status)
+        }))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+      res.render('admin/dashboard', {
+        pendingProjects,
+        pendingAccounts
       });
       break;
 
