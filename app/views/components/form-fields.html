@@ -1,6 +1,9 @@
 {% macro renderField(field, value) %}
   <div class="form-group">
     <label class="ds_label" for="{{ field.id }}">{{ field.label }}</label>
+    {% if field.helpText %}
+    <p class="ds_hint-text">{{ field.helpText }}</p>
+    {% endif %}
 
     {% if field.fieldType == "textarea" %}
       <textarea class="ds_input" rows="3" id="{{ field.id }}" name="{{ field.label | lower | replace(" ", "_") }}">{{ value or '' }}</textarea>

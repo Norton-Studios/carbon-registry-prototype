@@ -1,5 +1,5 @@
-{% macro banner(state, title, message, assetPath) %}
-  {% if state and state | searchString('success') %}
+{% macro banner(banner) %}
+  {% if banner.status and banner.status | searchString('success') %}
     {% set borderColor = '#428542' %}
     {% set icon = 'check_circle' %}
   {% else %}
@@ -10,13 +10,13 @@
   <div class="ds_layout__content">
     <div class="ds_confirmation-message" aria-live="polite" {% if borderColor %}style="border-color:{{ borderColor }}"{% endif %}>
       <svg class="ds_confirmation-message__icon ds_icon ds_icon--24" aria-hidden="true" role="img" {% if borderColor %}style="color:{{ borderColor }}"{% endif %}>
-        <use href="{{ assetPath }}/images/icons/icons.stack.svg#{{ icon }}"></use>
+        <use href="{{ banner.assetPath }}/images/icons/icons.stack.svg#{{ icon }}"></use>
       </svg>
       <h3 class="ds_confirmation-message__title">
-        {{ title }}
+        {{ banner.title }}
       </h3>
       <div class="ds_confirmation-message__body">
-        <p>{{ message | safe }}</p>
+        <p>{{ banner.message | safe }}</p>
       </div>
     </div>
   </div>

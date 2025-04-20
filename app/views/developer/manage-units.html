@@ -22,9 +22,12 @@
       {% block mainContent %}
       <div class="ds_layout__list side_navigation">
         {% if updatedProject %}
-          {% set title = "Update success" %}
-          {% set message = "Listed units updated in " ~ updatedProject.name %}
-          {{ banner('success', title, message, assetPath) }}
+          {{ banner({
+            status: 'success',
+            title: "Update success",
+            message: "Listed units updated in " ~ updatedProject.name,
+            assetPath: assetPath
+          }) }}
         {% endif %}
         <div class="ds_layout__content table-overflow">
           <h2>Account summary</h2>

@@ -17,9 +17,12 @@
   <main id="main-content">
     {% block mainContent %}
     {% if formError %}
-      {% set bannerTitle = 'Error' %}
-      {% set bannerMessage = formError.message %}
-      {{ banner(bannerState, bannerTitle, bannerMessage, assetPath) }}
+      {{ banner({
+        status: 'error',
+        title: 'Error',
+        message: formError.message,
+        assetPath: assetPath
+      }) }}
     {% endif %}
     <div class="ds_layout__content">
       <form action="/developer/upload?fieldId=1" method="post" enctype="multipart/form-data">

@@ -1,4 +1,4 @@
-{% from "components/confirmation-message.html" import confirmationMessage %}
+{% from "components/banner-notification.html" import banner %}
 
 {% extends "/layouts/main.html" %}
 
@@ -96,9 +96,11 @@
 
       {% else %}
 
-      {{ confirmationMessage({
-        heading: "Accounts are up-to-date",
-        body: "There are no new accounts to be reviewed."
+      {{ banner({
+        status: 'success',
+        title: "Accounts are up-to-date",
+        message: "There are no new accounts to be reviewed.",
+        assetPath: assetPath
       }) }}
 
       {% endif %}
