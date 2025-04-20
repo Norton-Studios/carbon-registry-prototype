@@ -7,7 +7,9 @@ const {
   getProjectByName,
   extractPdfText,
   extractGridRefs,
-  getProjectViewModel
+  getProjectViewModel,
+  formatNumberWithCommas,
+  parseNumber
 } = require('../helpers');
 
 const { getLocationFromGridRef } = require('../../scripts/add-project-locations.js');
@@ -168,6 +170,61 @@ async function getProjectSiteDetails(req, res, next) {
   }
 }
 
+function filterDeveloperProjects(req, res, next) {
+  let localProjects = res.locals.projects || projects;
+
+  if (req.session.data.updatedProject) {
+    const updated = req.session.data.updatedProject;
+
+    localProjects = localProjects.map(project => {
+      return project.id === updated.id ? { ...project, ...updated } : project;
+    });
+
+    delete req.session.data.updatedProject;
+  }
+
+  const accountNames = new Set(res.locals.filteredAccounts?.map(a => a.account_name));
+  const filteredProjects = localProjects
+    .filter(p => accountNames.has(p.account_name))
+    .map(p => {
+      return {
+        ...p,
+        listed: p.listed || req.query.markListed == p.id
+      };
+    });
+
+  res.locals.filteredProjects = filteredProjects;
+  next();
+};
+
+function updateUnits(req, res, next) {
+  const { pius_listed, verified_listed, id } = req.body;
+
+  const current = projects.find(p => p.id == id) || {};
+  const updatedProject = {...current}
+
+  if (current.piu_units && current.piu_units !== "0") {
+    const inc = parseNumber(pius_listed);
+    updatedProject.pius_listed = formatNumberWithCommas(inc);
+  }
+
+  if (current.verified_units && current.verified_units !== "0") {
+    const inc = parseNumber(verified_listed);
+    updatedProject.verified_listed = formatNumberWithCommas(inc);
+  }
+
+  res.locals.project = updatedProject;
+
+  // Clean up session data
+  if (req.body) {
+    const keys = Object.keys(req.body);
+    for (const key of keys) {
+      delete req.session.data[key];
+    }
+  }
+  next();
+}
+
 module.exports = {
   applyProjectFilters,
   resetProjectFields,
@@ -175,5 +232,7 @@ module.exports = {
   updateProjectResponses,
   projectResponseValidate,
   getFormGroupStatus,
-  getProjectSiteDetails
+  getProjectSiteDetails,
+  filterDeveloperProjects,
+  updateUnits
 }

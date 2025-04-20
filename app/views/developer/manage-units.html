@@ -63,21 +63,13 @@
               {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ project.piu_units }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units }}</td>
                 <td class="govuk-table__cell">
-                  {% if project.status == 3 %}
-                    {{ loop.index * 12 }},{{ loop.index * 100 }}
-                  {% endif %}
-                </td>
-                <td class="govuk-table__cell">
-                  {% if project.status == 4 %}
-                    {{ loop.index + 1 }},{{ loop.index * 123 }},{{ loop.index * 100 }}
-                  {% else %}
-                    0
-                  {% endif %}
-                </td>
-                <td class="govuk-table__cell">
-                  {% if loop.index % 2 == 0 %}
-                    {{ 100 * loop.index }}
+                  {% if project.piu_units and project.pius_listed !== "0" %}
+                    {{ project.pius_listed }}
+                  {% elseif project.verified_units and project.verified_listed !== "0" %}
+                    {{ project.verified_listed }}
                   {% else %}
                     <strong>Not listed</strong>
                   {% endif %}
@@ -85,16 +77,12 @@
                 <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
                 <td class="govuk-table__cell" style="text-align: right;">
                   <button type="button" class="ds_link"
-                    onclick="window.location.href='projects/{{ project.details_url }}'">
-                    View
+                    onclick="window.location.href='/projects/{{ project.details_url }}'">
+                    Manage
                   </button> |
                   <button type="button" class="ds_link"
                     onclick="window.location.href='projects/{{ project.details_url }}'">
-                    Assign
-                  </button> |
-                  <button type="button" class="ds_link"
-                    onclick="window.location.href='projects/{{ project.details_url }}'">
-                    Retire
+                    Transfer
                   </button>
                 </td>
               </tr>
