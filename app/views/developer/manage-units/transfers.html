@@ -1,9 +1,16 @@
 {% from "components/file.html" import fileDownload %}
 {% from "components/map.html" import renderMap %}
+{% from "components/quick-actions.html" import quickActions %}
 
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Transfers{% endblock %}
+
+{% set quickActionItems = [
+  {title: "New transfer" ,summary: "", href: ""},
+  {title: "Approve transfers" ,summary: "", href: ""},
+  {title: "Export all" ,summary: "", href: ""}
+] %}
 
 {% block main %}
 <div class="ds_wrapper">
@@ -20,6 +27,8 @@
 
       {% block mainContent %}
       <div class="ds_layout__list table-overflow">
+        <h2 class="ds_section__title">Quick actions</h2>
+        {{ quickActions(quickActionItems) }}
         <h2 class="ds_section__title">Transfers summary</h2>
         <table class="ds_table">
           <thead>

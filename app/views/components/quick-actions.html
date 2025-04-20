@@ -1,0 +1,18 @@
+{% macro quickActions(items) %}
+<nav aria-label="Quick actions" style="margin-left: 4px">
+  <ul class="ds_category-list ds_category-list--grid">
+    {% for item in items %}
+    <li class="ds_category-item">
+      <h2 class="ds_category-item__title">
+        <a href="{{ item.href }}" class="ds_category-item__link">
+          {{ item.title }}
+        </a>
+      </h2>
+      <p class="ds_category-item__summary">
+        {{ item.summary }}
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endmacro %}
