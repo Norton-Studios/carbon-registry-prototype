@@ -160,8 +160,9 @@ async function getProjectSiteDetails(req, res, next) {
       }
 
       responses = { ...responses, ...siteDetails, pdfFile: true };
-    } else if (ext.toLowerCase() === '.xlsx') {
+    } else if (ext.toLowerCase() === '.xlsx' || ext.toLowerCase() === '.csv') {
       responses = { ...responses, csvFile: true };
+      req.session.data.project = { ...existingProject, responses };
       return res.redirect('/developer/create-project?bannerState=documentSuccess');
     }
 

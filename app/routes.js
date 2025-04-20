@@ -35,18 +35,6 @@ dotenv.config();
 
 router.use(applyUserType);
 
-
-router.get('/developer/manage-units/update-listing/:name', getProject, (_, res) => {
-  res.render('developer/manage-units/update-listing', {
-    project: res.locals.project
-  })
-});
-
-router.post('/developer/manage-units/update-listing', updateUnits, (req, res) => {
-  req.session.data.updatedProject = res.locals.project;
-  res.redirect(`/developer/manage-units`)
-});
-
 router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (req, res, next) => {
   if (req.path === '/update-listing/:name') {
     return next();
@@ -59,15 +47,29 @@ router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperPro
   next();
 });
 
-router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
-  res.redirect('/developer/create-project/answer-summary');
+router.use('/developer', (req, res, next) => {
+  const sessionData = req.session.data || {};
+  ['bannerState', 'formError'].forEach(key => {
+    res.locals[key] = sessionData[key];
+    delete sessionData[key];
+  });
+
+  next();
 });
 
-router.get('/developer/create-project/document-upload', (req, res) => {
-  const {formError } = req.session.data || {};
-  if (formError) delete req.session.data.formError;
+router.get('/developer/manage-units/update-listing/:name', getProject, (_, res) => {
+  res.render('developer/manage-units/update-listing', {
+    project: res.locals.project
+  })
+});
 
-  res.render('/developer/create-project/document-upload', { formError })
+router.post('/developer/manage-units/update-listing', updateUnits, (req, res) => {
+  req.session.data.updatedProject = res.locals.project;
+  res.redirect(`/developer/manage-units`)
+});
+
+router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
+  res.redirect('/developer/create-project/answer-summary?bannerState=documentSuccess');
 });
 
 router.post('/developer/create-project/form', updateProjectResponses, getFormGroupStatus, projectResponseValidate, (_, res) => {
@@ -82,13 +84,6 @@ router.get('/developer/create-project/form', (req, res) => {
   }
   res.render('developer/create-project/form');
 });
-
-router.get('/developer/create-project', (req, res) => {
-  const { bannerState } = req.session.data || {};
-  if (bannerState) delete req.session.data.bannerState;
-
-  res.render('/developer/create-project', { bannerState })
-})
 
 router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, (_, res) => {
   res.render('developer/create-project');
