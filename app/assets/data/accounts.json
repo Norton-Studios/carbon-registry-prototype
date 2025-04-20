@@ -1,13 +1,24 @@
 [
   {
+    "id": "68014eeaead19794dee61088",
+    "account_name": "Green CIC",
+    "classification": "Project Developer",
+    "manager": "Robert Green",
+    "country": "Scotland",
+    "date": "2025-04-20",
+    "status": "verified",
+    "pendingApproval": true
+  },
+  {
     "id": "68014eeaead19794dee64489",
-    "account_name": "Abersenny Ltd",
+    "account_name": "EcoPeat Co.",
     "classification": "Project Developer",
     "manager": "John Smith",
     "country": "United Kingdom",
     "website": "https://www.abersenny.com",
     "date": "2025-04-10",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eeaf2e79a77f54877bf",
@@ -29,7 +40,8 @@
     "country": "Scotland",
     "website": "https://www.achnacarry.com/",
     "date": "2025-04-11",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eeaa80715c40abaed0a",
@@ -39,37 +51,41 @@
     "country": "Brazil",
     "website": "https://www.ac.gov.br",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eea83f24779d3460ac2",
-    "account_name": "ACT Financial Solutions B.V.",
+    "account_name": "EcoLoch Ltd.",
     "classification": "Trader",
     "manager": "Mohammad Ibrahim",
     "country": "United Kingdom",
     "website": "https://www.actcommodities.com/",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eea4da1d2a79aa07e58",
-    "account_name": "verified Woodlands",
+    "account_name": "GreenRoots CIC",
     "classification": "Project Developer",
     "manager": "Satish Singh",
     "country": "United Kingdom",
     "website": "",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eea08c6bb0ab943581d",
-    "account_name": "ACWA Power Maroc",
+    "account_name": "Blue Earth Ltd.",
     "classification": "Project Developer",
     "manager": "Faezil Magreb",
     "country": "Morocco",
     "website": "https://www.acwapower.com",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eea04bad355d5146a8a",
@@ -79,7 +95,8 @@
     "country": "Mexico",
     "website": "https://www.conafor.gob.mx",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eead7874b1c4099ac6c",
@@ -89,7 +106,8 @@
     "country": "United Kingdom",
     "website": "https://addisons-surveyors.co.uk/",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eea8ca22d76cbfa1446",
@@ -99,7 +117,8 @@
     "country": "England",
     "website": "https://www.millfarmglamping.co.uk",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eea98e634e18ff2bfa2",
@@ -109,7 +128,8 @@
     "country": "United Kingdom",
     "website": "https://www.aetherenergy.co.uk",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   },
   {
     "id": "68014eea8e9eb18b8013f350",
@@ -119,6 +139,7 @@
     "country": "United Kingdom",
     "website": "https://www.aethersys.com",
     "date": "2025-04-15",
-    "status": "verified"
+    "status": "verified",
+    "pendingApproval": false
   }
 ]

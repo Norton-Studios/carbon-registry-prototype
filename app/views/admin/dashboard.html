@@ -39,9 +39,9 @@
           </tr>
         </tbody>
       </table>
-      {% if pendingAccounts > 0 %}
+      {% if pendingAccounts|length >= 1 %}
       <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item">
+        <div class="ds_accordion-item account-summary">
           <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-1" aria-labelledby="panel-1-heading">
           <div class="ds_accordion-item__header">
             <h2 id="panel-1-heading" class="ds_accordion-item__title">
@@ -50,32 +50,32 @@
             <span class="ds_accordion-item__indicator"></span>
             <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
           </div>
-          <div class="ds_accordion-item__body">
-            <table class="ds_table">
-              <thead>
-                <tr>
-                  <th scope="col">Organisation</th>
-                  <th scope="col">Classification</th>
-                  <th scope="col">Account Manager</th>
-                  <th scope="col">Country</th>
-                  <th scope="col">Last Updated</th>
-                  <th scope="col">Status</th>
-                  <th></th>
+          <div class="ds_accordion-item__body table-overflow">
+            <table class="govuk_table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Organisation</th>
+                  <th scope="col" class="govuk-table__header">Classification</th>
+                  <th scope="col" class="govuk-table__header">Account Manager</th>
+                  <th scope="col" class="govuk-table__header">Country</th>
+                  <th scope="col" class="govuk-table__header">Last Updated</th>
+                  <th scope="col" class="govuk-table__header">Status</th>
+                  <th scope="col" class="govuk-table__header"></th>
                 </tr>
               </thead>
               <tbody>
                 {% for account in pendingAccounts %}
-                <tr
+                <tr class="govuk-table__row"
                   onclick="window.location.href='/account/{{ account.id }}'"
                   style="cursor: pointer"
                 >
-                  <td>{{ account.account_name }}</td>
-                  <td>{{ account.classification }}</td>
-                  <td>{{ account.manager }}</td>
-                  <td>{{ account.country }}</td>
-                  <td>{{ account.date }}</td>
-                  <td>{{ account.status }}</td>
-                  <td>
+                  <td class="govuk-table__cell">{{ account.account_name }}</td>
+                  <td class="govuk-table__cell">{{ account.classification }}</td>
+                  <td class="govuk-table__cell">{{ account.manager }}</td>
+                  <td class="govuk-table__cell">{{ account.country }}</td>
+                  <td class="govuk-table__cell">{{ account.date }}</td>
+                  <td class="govuk-table__cell">{{ account.status }}</td>
+                  <td class="govuk-table__cell">
                     <button
                       type="button"
                       class="ds_link"
@@ -93,7 +93,7 @@
       </div>
 
       {% else %}
-    
+
       <div class="ds_confirmation-message" aria-live="polite">
         <svg class="ds_confirmation-message__icon  ds_icon  ds_icon--24" aria-hidden="true" role="img">
             <use href="/assets/images/icons/icons.stack.svg#check_circle"></use>
@@ -108,53 +108,54 @@
 
       {% endif %}
 
-      {% if pendingProjects %}
-      <div class="ds_accordion-item">
-        <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-2" aria-labelledby="panel-2-heading">
-        <div class="ds_accordion-item__header">
-          <h2 id="panel-2-heading" class="ds_accordion-item__title">
-            Projects pending review ({{ pendingProjects | length }})
-          </h2>
-          <span class="ds_accordion-item__indicator"></span>
-          <label class="ds_accordion-item__label" for="panel-2"><span class="visually-hidden">Show all</span></label>
-        </div>
-        <div class="ds_accordion-item__body">
-          <table class="ds_table">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Standard</th>
-                <th scope="col">Project Type</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for project in pendingProjects %}
-              <tr
-                onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
-                style="cursor: pointer"
-              >
-                <td>{{ project.name }}</td>
-                <td>{{ project.category }}</td>
-                <td>{{ project.standard_name }}</td>
-                <td>{{ project.type }}</td>
-                <td>
-                  <button
-                    type="button"
-                    class="ds_link"
-                    onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
-                  >
-                    Review
-                  </button>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+      {% if pendingProjects|length >= 1  %}
+      <div class="ds_accordion" data-module="ds-accordion">
+        <div class="ds_accordion-item account-summary">
+          <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-2" aria-labelledby="panel-2-heading">
+          <div class="ds_accordion-item__header">
+            <h2 id="panel-2-heading" class="ds_accordion-item__title">
+              Projects pending review ({{ pendingProjects | length }})
+            </h2>
+            <span class="ds_accordion-item__indicator"></span>
+            <label class="ds_accordion-item__label" for="panel-2"><span class="visually-hidden">Show all</span></label>
+          </div>
+          <div class="ds_accordion-item__body table-overflow">
+            <table class="govuk_table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Name</th>
+                  <th scope="col" class="govuk-table__header">Category</th>
+                  <th scope="col" class="govuk-table__header">Standard</th>
+                  <th scope="col" class="govuk-table__header">Project Type</th>
+                  <th scope="col" class="govuk-table__header"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for project in pendingProjects %}
+                <tr class="govuk-table__row"
+                  onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
+                  style="cursor: pointer"
+                >
+                  <td class="govuk-table__cell">{{ project.name }}</td>
+                  <td class="govuk-table__cell">{{ project.category }}</td>
+                  <td class="govuk-table__cell">{{ project.standard_name }}</td>
+                  <td class="govuk-table__cell">{{ project.type }}</td>
+                  <td class="govuk-table__cell">
+                    <button
+                      type="button"
+                      class="ds_link"
+                      onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
+                    >
+                      Review
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
       {% else %}
 
       <div class="ds_confirmation-message" aria-live="polite">
@@ -171,9 +172,8 @@
 
       {% endif %}
     </div>
-      
-    </div>
-    {% endblock %}
+
+  {% endblock %}
   </main>
 </div>
 {% endblock %}

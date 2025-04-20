@@ -33,7 +33,7 @@
         <tbody>
           {% for project in projects %}
           <tr
-            onclick="window.location.href='projects/{{ project.details_url }}'"
+            onclick="window.location.href='/developer/manage-project/{{ project.details_url }}'"
             style="cursor: pointer"
           >
             <td>{{ project.name }}</td>
@@ -45,7 +45,7 @@
               <button
                 type="button"
                 class="ds_link"
-                onclick="window.location.href='projects/{{ project.details_url }}'"
+                onclick="window.location.href='/developer/manage-project/{{ project.details_url }}'"
               >
                 Manage
               </button>

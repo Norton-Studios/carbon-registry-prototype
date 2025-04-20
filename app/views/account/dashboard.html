@@ -12,27 +12,36 @@
 
     {% block mainHeader %}
     <div class="ds_layout__header">
-      <header class="ds_page-header">
-        <h1 class="ds_page-header__title">{{ account.name }}</h1>
+      <header class="ds_page-header" style="display: flex">
+        <h1 class="ds_page-header__title">{{ account.account_name if account.account_name }}</h1>
+        <strong class="ds_tag ds_tag--green" aria-hidden="true" style="margin: 15px;">Verified</strong>
       </header>
     </div>
     {% endblock %}
 
     {% block mainContent %}
     <div class="ds_layout__content">
-      <form action="/register/confirm-details" method="post">
-        <div class="ds_question">
-          {{ summaryList(account) }}
-          <h2>Account users:</h2>
-          {{ summaryList(account.users) if account.users }}
-
-          <div class="button-group">
-            <button class="ds_button  ds_button--has-icon">
-              Next
-              <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
-            </button>
-          </div>
-        </div>
+      <form action="/account" method="post">
+        <ul class="ds_summary-list">
+          <li class="ds_summary-list__item">
+            <span class="ds_summary-list__key">Classification</span>
+            <span class="ds_summary-list__value" id="q{{ loop.index }}">
+              <q class="ds_summary-list__answer">{{ account.classification }}</q>
+            </span>
+          </li>
+          <li class="ds_summary-list__item">
+            <span class="ds_summary-list__key">Account Manager</span>
+            <span class="ds_summary-list__value" id="q{{ loop.index }}">
+              <q class="ds_summary-list__answer">{{ account.manager }}</q>
+            </span>
+          </li>
+          <li class="ds_summary-list__item">
+            <span class="ds_summary-list__key">Country</span>
+            <span class="ds_summary-list__value" id="q{{ loop.index }}">
+              <q class="ds_summary-list__answer">{{ account.country }}</q>
+            </span>
+          </li>
+        </ul>
       </form>
     </div>
     {% endblock %}

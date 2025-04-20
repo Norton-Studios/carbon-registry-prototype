@@ -1,10 +1,13 @@
 const { lookupCompany, generateObjectId, toTitleCase } = require('../helpers');
 const accounts = require('../assets/data/accounts.json');
+const projects = require('../assets/data/projects.json');
 
 function loadAccount(req, res, next) {
   const account = res.locals.account || req.session.account;
 
-  if (!account || !account.id) {
+  if (req.session.userType == "developer") {
+    res.locals.account = accounts[0];
+  } else if (!account || !account.id) {
     res.locals.account = {};
   } else {
     res.locals.account = account;
@@ -42,41 +45,6 @@ function loadAllAccounts(req, res, next) {
 }
 
 // Account-specific helpers
-
-async function validateAccount(account, apiKey) {
-  let organisation = {}; 
-  let users = {}; 
-  let payment = {}; 
-  let company = await lookupCompany(account.crn, apiKey);
-
-  const validations = [
-    {
-      condition: !company,
-      key: 'companyNotFound',
-      message: 'Not found on Companies House.'
-    },
-    {
-      condition: company && !company.company_status,
-      key: 'invalidStatus',
-      message: () => `${company.title} is ${company.company_status}`
-    },
-    {
-      condition: company && account.account_name !== company.title,
-      key: 'nameMismatch',
-      message: () =>
-        `${account.account_name} does not match the Companies House registered name: ${company.title}`
-    }
-  ];
-
-  validations.forEach(rule => {
-    if (rule.condition) {
-      organisation[rule.key] =
-        typeof rule.message === 'function' ? rule.message() : rule.message;
-    }
-  });
-
-  return {organisation, users, payment};
-}
 
 function updateAccount(updates = {}) {
   return (req, res, next) => {
@@ -130,10 +98,20 @@ function getTodayFormatted(date = new Date()) {
   return new Date().toISOString().split('T')[0];
 }
 
+function getAccountsByDeveloper(_, res, next) {
+  const accountNames = [...new Set(projects.filter(project => project.developer === "GreenRoots CIC")
+    .map(p => p.account_name))]
+  const accountsObj = accountNames
+    .reduce((acc, name) => [...acc, (accounts.find(acc => acc.account_name == name))], []);
+
+  res.locals.filteredAccounts = accountsObj;
+  next();
+}
+
 module.exports = {
   saveAccount,
   updateAccount,
   loadAccount,
   loadAllAccounts,
-  validateAccount
+  getAccountsByDeveloper
 }
