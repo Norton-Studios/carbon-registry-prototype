@@ -1,0 +1,23 @@
+{% macro banner(state, title, message, assetPath) %}
+  {% if state and state | searchString('success') %}
+    {% set borderColor = '#428542' %}
+    {% set icon = 'check_circle' %}
+  {% else %}
+    {% set borderColor = '#d32205' %}
+    {% set icon = 'cancel' %}
+  {% endif %}
+
+  <div class="ds_layout__content">
+    <div class="ds_confirmation-message" aria-live="polite" style="border-color:{{ borderColor }}">
+      <svg class="ds_confirmation-message__icon ds_icon ds_icon--24" aria-hidden="true" role="img" style="color:{{ borderColor }}">
+        <use href="{{ assetPath }}/images/icons/icons.stack.svg#{{ icon }}"></use>
+      </svg>
+      <h3 class="ds_confirmation-message__title">
+        {{ title }}
+      </h3>
+      <div class="ds_confirmation-message__body">
+        <p>{{ message | safe }}</p>
+      </div>
+    </div>
+  </div>
+{% endmacro %}

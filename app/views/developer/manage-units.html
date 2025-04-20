@@ -1,5 +1,6 @@
 {% from "components/file.html" import fileDownload %}
 {% from "components/map.html" import renderMap %}
+{% from "components/banner-notification.html" import banner %}
 
 {% extends "/layouts/main.html" %}
 
@@ -20,6 +21,11 @@
 
       {% block mainContent %}
       <div class="ds_layout__list side_navigation">
+        {% if updatedProject %}
+          {% set title = "Update success" %}
+          {% set message = "Listed units updated in " ~ updatedProject.name %}
+          {{ banner('success', title, message, assetPath) }}
+        {% endif %}
         <div class="ds_layout__content table-overflow">
           <h2>Account summary</h2>
           <table class="ds_table">

@@ -24,3 +24,7 @@ addFilter('merge', function (a, b) {
   if (!Array.isArray(b)) b = [];
   return a.concat(b);
 });
+addFilter('searchString', function (string, search) {
+  const normalize = (str) => str.toLowerCase().replace(/\s+/g, '');
+  return normalize(string).includes(normalize(search));
+})

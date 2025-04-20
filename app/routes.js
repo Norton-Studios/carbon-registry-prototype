@@ -47,13 +47,14 @@ router.post('/developer/manage-units/update-listing', updateUnits, (req, res) =>
   res.redirect(`/developer/manage-units`)
 });
 
-router.use('/developer', getAccountsByDeveloper, filterDeveloperProjects, (req, res, next) => {
-  if (req.path === '/manage-units/update-listing/:name') {
+router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (req, res, next) => {
+  if (req.path === '/update-listing/:name') {
     return next();
   }
   res.locals.myAccounts = res.locals.filteredAccounts;
   res.locals.myProjects = res.locals.filteredProjects;
-  res.locals.projects = res.locals.projects;
+  res.locals.projects;
+  res.locals.updatedProject;
 
   next();
 });
@@ -63,15 +64,10 @@ router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDeta
 });
 
 router.get('/developer/create-project/document-upload', (req, res) => {
-  const {formError, bannerState} = req.session.data || {};
+  const {formError } = req.session.data || {};
   if (formError) delete req.session.data.formError;
-  if (bannerState) delete req.session.data.bannerState;
 
-  if (bannerState) {
-    res.render('/developer/create-project', { bannerState })
-  } else {
-    res.render('/developer/create-project/document-upload', { formError: formError ?? null })
-  }
+  res.render('/developer/create-project/document-upload', { formError })
 });
 
 router.post('/developer/create-project/form', updateProjectResponses, getFormGroupStatus, projectResponseValidate, (_, res) => {
@@ -86,6 +82,13 @@ router.get('/developer/create-project/form', (req, res) => {
   }
   res.render('developer/create-project/form');
 });
+
+router.get('/developer/create-project', (req, res) => {
+  const { bannerState } = req.session.data || {};
+  if (bannerState) delete req.session.data.bannerState;
+
+  res.render('/developer/create-project', { bannerState })
+})
 
 router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, (_, res) => {
   res.render('developer/create-project');
