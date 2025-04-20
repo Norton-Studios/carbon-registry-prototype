@@ -1,0 +1,52 @@
+{% from "components/file.html" import fileDownload %}
+{% from "components/map.html" import renderMap %}
+
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Units overview{% endblock %}
+
+{% set months = [
+  "January 2025",
+  "February 2025",
+  "March 2025",
+  "April 2025",
+  "May 2025",
+  "June 2025",
+  "July 2025"
+] %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
+      {% block mainHeader %}
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title"></h1>
+        </header>
+      </div>
+      {% endblock %}
+
+      {% include "/developer/manage-units/side-navigation.html" %}
+
+      {% block mainContent %}
+      <div class="ds_layout__list">
+        <h2 class="ds_section__title">Account statements</h2>
+        <div class="table-overflow">
+          <table class="govuk_table">
+            <tbody>
+              {% for month in months %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ month }}</td>
+                <td class="govuk-table__cell" style="text-align: right;">
+                  <a class="ds_link" href='/public/account-statements/{{ months | first | urlencode }}.pdf' download>Download</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endblock %}
+  </main>
+</div>
+{% endblock %}
