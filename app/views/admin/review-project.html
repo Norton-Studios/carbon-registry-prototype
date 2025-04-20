@@ -20,115 +20,115 @@
       <div class="ds_layout__header">
         <header class="ds_page-header">
           <h1 class="ds_page-header__title">{{ data['statusEnum'][project.status] }}: {{ project.name }}</h1>
-
+    
           {% if data['review-status'] == 'approved' %}
-            <div class="ds_notification-panel" role="alert">
+            <div class="ds_notification-panel" role="alert" aria-live="polite">
               <h2 class="ds_notification-panel__title">Draft approved</h2>
               <p class="ds_notification-panel__content" style="color: white;">This project has been approved and marked as Under Development. An email notification has been sent to the account manager. You may now return to the <a href="/" style="text-decoration: underline;">admin dashboard</a>.</p>
             </div>
           {% elif data['review-status'] == 'rejected' %}
-            <div class="ds_notification-panel" style="background-color: #d4351c;" role="alert">
+            <div class="ds_notification-panel" style="background-color: #d4351c;" role="alert" aria-live="polite">
               <h2 class="ds_notification-panel__title">Draft rejected</h2>
               <p class="ds_notification-panel__content" style="color: white;">This project draft has been rejected and your comments have been emailed to the account manager. You may now return to the <a href="/" style="text-decoration: underline;">admin dashboard</a>.</p>
             </div>
           {% else %}
-          <dl class="ds_metadata">
-            <div class="ds_metadata__item">
+            <dl class="ds_metadata">
+              <div class="ds_metadata__item">
                 <dt class="ds_metadata__key">Draft created</dt>
                 <dd class="ds_metadata__value">28 March 2025</dd>
-            </div>
-  
-            <div class="ds_metadata__item">
+              </div>
+    
+              <div class="ds_metadata__item">
                 <dt class="ds_metadata__key">Submitted for approval</dt>
                 <dd class="ds_metadata__value">21 April 2025</dd>
-            </div>
-  
-            <div class="ds_metadata__item">
+              </div>
+    
+              <div class="ds_metadata__item">
                 <dt class="ds_metadata__key">Number of previous reviews</dt>
                 <span>
                   <dd class="ds_metadata__value">{{ project.reviews|length}}</dd>
                   <a href="#review-history">(show all)</a>
                 </span>
-            </div>
-          </dl>
-
-          <form id="review-form" action="/admin/projects/review/{{ project.details_url }}" method="post">
-            <!-- Primary action buttons -->
-            <div id="action-buttons" class="button-group approve-reject">
-              <button
-                type="submit"
-                name="action"
-                value="approve"
-                class="govuk-button"
-                data-module="govuk-button"
-              >
-                Approve as Under Development
-              </button>
-          
-              <button
-                type="button"
-                id="reject-button"
-                class="govuk-button govuk-button--warning"
-                data-module="govuk-button"
-              >
-                Reject
-              </button>
-            </div>
-          
-            <!-- Rejection reason panel, hidden by default -->
-            <div id="rejection-panel" class="govuk-form-group" hidden>
-              <label class="govuk-label" for="rejection-comments">
-                Please give a reason for rejection and describe what the project developer needs to improve before resubmitting.
-              </label>
-              <textarea
-                class="govuk-textarea"
-                id="rejection-comments"
-                name="comments"
-                rows="4"
-                required
-              ></textarea>
-          
-              <div class="button-group">
-                <!-- This actually submits the form as a rejection -->
+              </div>
+            </dl>
+    
+            <form id="review-form" action="/admin/projects/review/{{ project.details_url }}" method="post">
+              <div id="action-buttons" class="button-group approve-reject">
                 <button
                   type="submit"
                   name="action"
-                  value="reject"
-                  class="govuk-button govuk-button--warning"
+                  value="approve"
+                  class="govuk-button"
+                  data-module="govuk-button"
                 >
-                  Submit rejection
+                  Approve as Under Development
                 </button>
-                <!-- Cancel goes back to buttons state -->
+            
                 <button
                   type="button"
-                  id="cancel-reject"
-                  class="govuk-button govuk-button--secondary"
+                  id="reject-button"
+                  class="govuk-button govuk-button--warning"
+                  data-module="govuk-button"
                 >
-                  Cancel
+                  Reject
                 </button>
               </div>
-            </div>
-          </form>
+    
+              <div id="rejection-panel" class="govuk-form-group" hidden>
+                <label class="govuk-label" for="rejection-comments">
+                  Reason for rejection
+                </label>
+                <textarea 
+                  class="govuk-textarea" 
+                  id="rejection-comments" 
+                  name="comments" 
+                  rows="4" 
+                  placeholder="Please give a reason for rejection and describe what the project developer needs to improve before resubmitting."
+                ></textarea>
+    
+                <div class="button-group">
+                  <button
+                    type="submit"
+                    name="action"
+                    value="reject"
+                    class="govuk-button govuk-button--warning"
+                  >
+                    Submit rejection
+                  </button>
+                  <button
+                    type="button"
+                    id="cancel-reject"
+                    class="govuk-button govuk-button--secondary"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
           {% endif %}
+        </header>
       </div>
+    
       <script>
         document.addEventListener('DOMContentLoaded', function () {
-          const btnReject      = document.getElementById('reject-button');
-          const panelReject    = document.getElementById('rejection-panel');
-          const btnCancel      = document.getElementById('cancel-reject');
-          const actionButtons  = document.getElementById('action-buttons');
-          const textarea       = document.getElementById('rejection-comments');
-
+          const btnReject = document.getElementById('reject-button');
+          const panelReject = document.getElementById('rejection-panel');
+          const btnCancel = document.getElementById('cancel-reject');
+          const actionButtons = document.getElementById('action-buttons');
+          const textarea = document.getElementById('rejection-comments');
+    
           btnReject.addEventListener('click', () => {
             actionButtons.hidden = true;
-            panelReject.hidden   = false;
-            textarea.focus();
+            panelReject.hidden = false; // Show the rejection panel
+            textarea.focus(); // Focus on the textarea
+            textarea.required = true; // Make textarea required for form submission
           });
-
+    
           btnCancel.addEventListener('click', () => {
-            panelReject.hidden   = true;
-            actionButtons.hidden = false;
-            textarea.value       = '';  // clear any typed text
+            panelReject.hidden = true; // Hide the rejection panel
+            actionButtons.hidden = false; // Show action buttons again
+            textarea.required = false; // Remove required validation
+            textarea.value = ''; // Clear any entered text
           });
         });
       </script>

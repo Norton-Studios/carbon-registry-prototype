@@ -332,9 +332,6 @@ router.post('/admin/projects/review/:name', getProject, (req, res) => {
   }
 
   if (action === 'reject') {
-    const reason = req.body.comments;
-    res.locals.project.rejected = true;
-    res.locals.project.rejectionReason = reason;
     return res.redirect(`/admin/projects/review/${res.locals.project.details_url}?review-status=rejected`);
   }
 
