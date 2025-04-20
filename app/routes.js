@@ -377,4 +377,8 @@ router.post('/account/payment', (req, res) => {
   res.redirect('/account/account-verified');
 });
 
+router.get('/notifications/:id', (req, res) => {
+  res.render('admin/notification-edit', {});
+});
+
 module.exports = router;

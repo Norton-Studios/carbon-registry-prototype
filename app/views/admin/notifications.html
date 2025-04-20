@@ -1,0 +1,144 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Buffer Account{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Notifications</h1>
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content table-overflow">
+      <div class="ds_tabs" data-module="ds-tabs">
+        <!-- Tabs -->
+        <nav class="ds_tabs__navigation">
+          <ul id="tablist" class="ds_tabs__list">
+            <li class="ds_tabs__tab">
+              <a href="#scottishforestry" class="ds_tabs__tab-link" aria-selected="true">Scottish Forestry</a>
+            </li>
+            <li class="ds_tabs__tab">
+              <a href="#iucn" class="ds_tabs__tab-link" aria-selected="false">IUCN</a>
+            </li>
+          </ul>
+        </nav>
+        {% set milestones = [
+        "Account Approved", "Account Rejected", "KYC Check Complete", "Account Suspended",
+        "Project Submitted", "Project Approved", "Project Rejected", "Documents Requested",
+        "Validation Reminder", "Validation Approved", "Validation Rejected", "Pending Credits Issued",
+        "Invoice Issued", "Payment Received", "Verification Reminder", "Verification Approved",
+        "Verification Rejected", "Verified Credits Issued", "Credits Converted", "Credits Not Delivered",
+        "Transfer Requested", "Transfer Approved", "Transfer Rejected", "Transfer Completed",
+        "Transfer Reversed", "Credits Retired", "Certificate Issued", "Credits Cancelled",
+        "Credits On Hold", "Milestone Extension Requested", "Milestone Extension Approved",
+        "Milestone Extension Rejected", "Milestones Updated", "Project Cancelled",
+        "Ownership Change Requested", "Ownership Change Approved", "Ownership Change Rejected",
+        "Project Group Requested", "Project Group Approved", "Project Group Rejected",
+        "Group Updated", "Permissions Updated", "General Announcement", "Action Reminder",
+        "Buffer Allocation", "Buffer Cancellation"
+        ] %}
+
+        {% set uuids = [
+          "550e8400-e29b-41d4-a716-446655440000",
+          "6f9619ff-8b86-d011-b42d-00cf4fc964ff",
+          "1b4e28ba-2fa1-11d2-883f-0016d3cca427",
+          "4c4a5e8a-2d3b-4a8e-9b2d-1c2f4e3a5b6c",
+          "9f8b7c6d-4e3a-5b2d-1c2f-4a8e2d3b6c4a",
+          "7e57d004-2b97-0e7a-b45f-5387367791cd",
+          "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "123e4567-e89b-12d3-a456-426614174000",
+          "987fbc97-4bed-5078-9f07-9141ba07c9f3",
+          "9c858901-8a57-4791-81fe-4c455b099bc9",
+          "16fd2706-8baf-433b-82eb-8c7fada847da",
+          "2c1f9e2d-3b6c-4a8e-9b2d-1c2f4e3a5b6c",
+          "1e4e28ba-2fa1-11d2-883f-0016d3cca427",
+          "4c4a5e8a-2d3b-4a8e-9b2d-1c2f4e3a5b6c",
+          "7e57d004-2b97-0e7a-b45f-5387367791cd",
+          "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "123e4567-e89b-12d3-a456-426614174000",
+          "987fbc97-4bed-5078-9f07-9141ba07c9f3",
+          "9c858901-8a57-4791-81fe-4c455b099bc9",
+          "16fd2706-8baf-433b-82eb-8c7fada847da",
+          "2c1f9e2d-3b6c-4a8e-9b2d-1c2f4e3a5b6c",
+          "1e4e28ba-2fa1-11d2-883f-0016d3cca427",
+          "4c4a5e8a-2d3b-4a8e-9b2d-1c2f4e3a5b6c",
+          "7e57d004-2b97-0e7a-b45f-5387367791cd",
+          "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "123e4567-e89b-12d3-a456-426614174000",
+          "987fbc97-4bed-5078-9f07-9141ba07c9f3",
+          "9c858901-8a57-4791-81fe-4c455b099bc9",
+          "16fd2706-8baf-433b-82eb-8c7fada847da",
+          "2c1f9e2d-3b6c-4a8e-9b2d-1c2f4e3a5b6c",
+          "1e4e28ba-2fa1-11d2-883f-0016d3cca427",
+          "4c4a5e8a-2d3b-4a8e-9b2d-1c2f4e3a5b6c",
+          "7e57d004-2b97-0e7a-b45f-5387367791cd",
+          "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "123e4567-e89b-12d3-a456-426614174000",
+          "987fbc97-4bed-5078-9f07-9141ba07c9f3",
+          "9c858901-8a57-4791-81fe-4c455b099bc9",
+          "16fd2706-8baf-433b-82eb-8c7fada847da",
+          "2c1f9e2d-3b6c-4a8e-9b2d-1c2f4e3a5b6c",
+          "1e4e28ba-2fa1-11d2-883f-0016d3cca427",
+          "4c4a5e8a-2d3b-4a8e-9b2d-1c2f4e3a5b6c",
+          "7e57d004-2b97-0e7a-b45f-5387367791cd",
+          "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "123e4567-e89b-12d3-a456-426614174000",
+          "987fbc97-4bed-5078-9f07-9141ba07c9f3",
+          "9c858901-8a57-4791-81fe-4c455b099bc9"
+        ] %}
+
+        <!-- Scottish Forestry Tab -->
+        <div id="scottishforestry" class="ds_tabs__content">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Milestone</th>
+              <th scope="col" class="govuk-table__header">Template</th>
+              <th scope="col" class="govuk-table__header">Edit</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            {% for milestone in milestones %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ milestone }}</td>
+              <td class="govuk-table__cell">{{ uuids[loop.index0] }}</td>
+              <td class="govuk-table__cell">
+                <a href="/notifications/{{ uuids[loop.index0] }}" class="ds_link">Edit</a>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- IUCN Tab -->
+        <div id="iucn" class="ds_tabs__content">
+          <table class="govuk_table">
+            <tbody class="govuk-table__body">
+            {% for milestone in milestones %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ milestone }}</td>
+              <td class="govuk-table__cell">{{ uuids[loop.index0] }}</td>
+              <td class="govuk-table__cell">
+                <a href="/notifications/{{ uuids[loop.index0] }}" class="ds_link">Edit</a>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

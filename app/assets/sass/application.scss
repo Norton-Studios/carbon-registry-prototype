@@ -35,6 +35,10 @@ a:visited {
   text-decoration: none; /* Remove underline */
 }
 
+a.ds_link:visited {
+  @extend .ds_link;
+}
+
 a.ds_button:not(.ds_button--cancel), a.ds_button:not(.ds_button--cancel):visited {
   color: #f8f8f8;
 }
