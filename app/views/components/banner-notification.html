@@ -8,8 +8,8 @@
   {% endif %}
 
   <div class="ds_layout__content">
-    <div class="ds_confirmation-message" aria-live="polite" style="border-color:{{ borderColor }}">
-      <svg class="ds_confirmation-message__icon ds_icon ds_icon--24" aria-hidden="true" role="img" style="color:{{ borderColor }}">
+    <div class="ds_confirmation-message" aria-live="polite" {% if borderColor %}style="border-color:{{ borderColor }}"{% endif %}>
+      <svg class="ds_confirmation-message__icon ds_icon ds_icon--24" aria-hidden="true" role="img" {% if borderColor %}style="color:{{ borderColor }}"{% endif %}>
         <use href="{{ assetPath }}/images/icons/icons.stack.svg#{{ icon }}"></use>
       </svg>
       <h3 class="ds_confirmation-message__title">

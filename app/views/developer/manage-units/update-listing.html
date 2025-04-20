@@ -1,3 +1,4 @@
+{% from "components/form-fields.html" import renderField %}
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Create Project{% endblock %}
@@ -31,17 +32,7 @@
             </div>
             {% set currentGroup = field.formGroup %}
             {% endif %}
-            <div class="form-group">
-              <label class="ds_label" for="{{ field.id }}">{{ field.label }}</label>
-                <p class="ds_hint-text">{{ field.helpText }}</p>
-
-                <input class="ds_input ds_input--fluid-one-third"
-                  {% if field.readonly %}readonly{% endif %}
-                  type="text"
-                  id="{{ field.id }}"
-                  name="{{ field.label | lower | replace(" ", "_") }}"
-                  value="{{ data['project']['responses'][field.label | lower | replace(" ", "_")] or field.value or '' }}">
-              </div>
+            {{ renderField(field, field.value) }}
           {% endfor %}
 
           <div class="button-group">
