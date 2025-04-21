@@ -1,5 +1,6 @@
 const path = require('path');
 const projects = require('../assets/data/projects.json');
+const projectDrafts = require('../assets/data/project-drafts.json');
 const formGroups = require('../assets/data/formGroups.json')
 const {
   generateFilters,
@@ -24,6 +25,17 @@ function applyProjectFilters(req, res, next) {
 function getProject(req, res, next) {
   const projectName = req.params.name;
   const project = getProjectByName(projects, projectName);
+  if (!project) {
+    return res.status(404).redirect('/error-page-not-found');
+  }
+
+  res.locals.project = getProjectViewModel(project);
+  next();
+}
+
+function getProjectDraft(req, res, next) {
+  const projectName = req.params.name;
+  const project = projectDrafts.find(draft => draft.project_name.toLowerCase().replace(/\s+/g, '-') === projectName);
   if (!project) {
     return res.status(404).redirect('/error-page-not-found');
   }
@@ -231,6 +243,7 @@ module.exports = {
   applyProjectFilters,
   resetProjectFields,
   getProject,
+  getProjectDraft,
   updateProjectResponses,
   projectResponseValidate,
   getFormGroupStatus,

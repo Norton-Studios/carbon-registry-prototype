@@ -3,6 +3,7 @@
     "account_name": "GreenRoots CIC",
     "project_name": "Reforest the Highlands",
     "project_description": "A community-led initiative to plant native woodland and restore biodiversity in the Scottish Highlands.",
+    "date": "20-04-2025",
     "category": "Afforestation",
     "standard": "UK Woodland Carbon Code",
     "project_type": "Afforestation",
@@ -21,16 +22,35 @@
     "country": "Scotland",
     "state/province/county": "Highland",
     "zip/postal_code": "IV2 3AE",
-    "latitude": "57.4778",
-    "longitude": "-4.2247",
+    "location": {
+      "latitude": 57.4778,
+      "longitude": -4.2247
+    },
     "address": "Glen Affric Forest, Highland, Scotland",
     "nearest_town": "Inverness",
-    "grid_reference": "NH 291 962"
+    "grid_reference": "NH 291 962",
+    "reviews": [
+      {
+        "date": "2025-04-01",
+        "approved": false,
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
+      },
+      {
+        "date": "2025-04-03",
+        "approved": false,
+        "comments": "Carbon calculations are wrong."
+      }
+    ],
+    "documents": [
+      "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
+      "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
+    ]
   },
   {
     "account_name": "GreenRoots CIC",
     "project_name": "Peatland Revival West",
     "project_description": "Restoration of degraded peatland to enhance carbon retention and biodiversity in western Wales.",
+    "date": "21-04-2025",
     "category": "Rewetting",
     "standard": "UK Peatland Code",
     "project_type": "Rewetting",
@@ -49,16 +69,35 @@
     "country": "Wales",
     "state/province/county": "Ceredigion",
     "zip/postal_code": "SA48 7BB",
-    "latitude": "52.2211",
-    "longitude": "-4.0055",
+    "location": {
+      "latitude": 52.2211,
+      "longitude": -4.0055
+    },
     "address": "Peatland Commons, Ceredigion",
     "nearest_town": "Lampeter",
-    "grid_reference": "SN 585 480"
+    "grid_reference": "SN 585 480",
+    "reviews": [
+      {
+        "date": "2025-04-01",
+        "approved": false,
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
+      },
+      {
+        "date": "2025-04-03",
+        "approved": false,
+        "comments": "Carbon calculations are wrong."
+      }
+    ],
+    "documents": [
+      "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
+      "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
+    ]
   },
   {
     "account_name": "GreenRoots CIC",
     "project_name": "Urban Greening Glasgow",
     "project_description": "A project to increase urban canopy coverage and improve air quality across Glasgow city.",
+    "date": "22-04-2025",
     "category": "Restoration",
     "standard": "UK Woodland Carbon Code",
     "project_type": "Restoration",
@@ -77,16 +116,35 @@
     "country": "Scotland",
     "state/province/county": "Glasgow City",
     "zip/postal_code": "G12 8QQ",
-    "latitude": "55.8721",
-    "longitude": "-4.2894",
+    "location": {
+      "latitude": 55.8721,
+      "longitude": -4.2894
+    },
     "address": "Kelvin Grove, Glasgow",
     "nearest_town": "Glasgow",
-    "grid_reference": "NS 567 668"
+    "grid_reference": "NS 567 668",
+    "reviews": [
+      {
+        "date": "2025-04-01",
+        "approved": false,
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
+      },
+      {
+        "date": "2025-04-03",
+        "approved": false,
+        "comments": "Carbon calculations are wrong."
+      }
+    ],
+    "documents": [
+      "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
+      "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
+    ]
   },
   {
     "account_name": "WildHorizon",
     "project_name": "Northumberland Moorlands",
     "project_description": "Large-scale habitat restoration and afforestation project in Northumberland's uplands.",
+    "date": "23-04-2025",
     "category": "Afforestation",
     "standard": "UK Woodland Carbon Code",
     "project_type": "Afforestation",
@@ -105,16 +163,35 @@
     "country": "England",
     "state/province/county": "Northumberland",
     "zip/postal_code": "NE48 2TN",
-    "latitude": "55.1773",
-    "longitude": "-2.4532",
+    "location": {
+      "latitude": 55.1773,
+      "longitude": -2.4532
+    },
     "address": "Kielder Forest, Northumberland",
     "nearest_town": "Hexham",
-    "grid_reference": "NY 628 882"
+    "grid_reference": "NY 628 882",
+    "reviews": [
+      {
+        "date": "2025-04-01",
+        "approved": false,
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
+      },
+      {
+        "date": "2025-04-03",
+        "approved": false,
+        "comments": "Carbon calculations are wrong."
+      }
+    ],
+    "documents": [
+      "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
+      "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
+    ]
   },
   {
     "account_name": "NatureFirst",
     "project_name": "Bogland Revival NI",
     "project_description": "Peatland rewetting in Northern Ireland to conserve biodiversity and enhance carbon storage.",
+    "date": "24-04-2025",
     "category": "Rewetting",
     "standard": "UK Peatland Code",
     "project_type": "Rewetting",
@@ -133,10 +210,28 @@
     "country": "Northern Ireland",
     "state/province/county": "Fermanagh",
     "zip/postal_code": "BT74 6HL",
-    "latitude": "54.3476",
-    "longitude": "-7.6417",
+    "location": {
+      "latitude": 54.3476,
+      "longitude": -7.6417
+    },
     "address": "Bogside Nature Reserve, Fermanagh",
     "nearest_town": "Enniskillen",
-    "grid_reference": "H 207 543"
+    "grid_reference": "H 207 543",
+    "reviews": [
+      {
+        "date": "2025-04-01",
+        "approved": false,
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
+      },
+      {
+        "date": "2025-04-03",
+        "approved": false,
+        "comments": "Carbon calculations are wrong."
+      }
+    ],
+    "documents": [
+      "10_Acre_Wood_-_WCC_Calc_-_01.11.24(1).xlsx",
+      "10_Acre_Wood_-_WCC_Map_-_30.10.24-1.pdf"
+    ]
   }
 ]

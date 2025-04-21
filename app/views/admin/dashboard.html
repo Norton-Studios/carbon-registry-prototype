@@ -119,41 +119,32 @@
               <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                   <th scope="col" class="govuk-table__header">Name</th>
-                  <th scope="col" class="govuk-table__header">Category</th>
+                  <th scope="col" class="govuk-table__header">Account</th>
                   <th scope="col" class="govuk-table__header">Standard</th>
                   <th scope="col" class="govuk-table__header">Project type</th>
-                  <th scope="col" class="govuk-table__header">Date created</th>
+                  <th scope="col" class="govuk-table__header">Date submitted</th>
                   <th scope="col" class="govuk-table__header">Status</th>
                   <th scope="col" class="govuk-table__header"></th>
                 </tr>
               </thead>
               <tbody>
                 {% for project in pendingProjects | sortByDateAsc %}
+                {% set slug = project.project_name | slugify %}
                 <tr class="govuk-table__row"
-                  onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
+                  onclick="window.location.href='/admin/projects/review/{{ slug }}'"
                   style="cursor: pointer"
                 >
-                  <td class="govuk-table__cell">{{ project.name }}</td>
-                  <td class="govuk-table__cell">{{ project.category }}</td>
-                  <td class="govuk-table__cell">{{ project.standard_name }}</td>
-                  <td class="govuk-table__cell">{{ project.type }}</td>
-                  <td class="govuk-table__cell">{{ project.dateCreated }}</td>
-                  <td class="govuk-table__cell">
-                    {% if project.status == '1' %}
-                      Pending approval
-                    {% elif project.status == '2' %}
-                      Pending validation
-                    {% elif project.status == '3' %}
-                      Pending verification
-                    {% else %}
-                      {{ data.statusEnum[project.status] }}
-                    {% endif %}
-                  </td>
+                  <td class="govuk-table__cell">{{ project.project_name }}</td>
+                  <td class="govuk-table__cell">{{ project.account_name }}</td>
+                  <td class="govuk-table__cell">{{ "WCC" if project.standard == "UK Woodland Carbon Code" else "PC" }}</td>
+                  <td class="govuk-table__cell">{{ project.project_type }}</td>
+                  <td class="govuk-table__cell">{{ project.date }}</td>
+                  <td class="govuk-table__cell">Pending approval</td>
                   <td class="govuk-table__cell">
                     <button
                       type="button"
                       class="ds_link"
-                      onclick="window.location.href='/admin/projects/review/{{ project.details_url }}'"
+                      onclick="window.location.href='/admin/projects/review/{{ slug }}'"
                     >
                       Review
                     </button>

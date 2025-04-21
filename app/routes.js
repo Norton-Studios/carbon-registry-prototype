@@ -6,9 +6,10 @@
 const dotenv = require('dotenv');
 const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
+const accounts = require('./assets/data/accounts.json');
 const users = require('./assets/data/users.json');
 const projects = require('./assets/data/projects.json');
-const accounts = require('./assets/data/accounts.json');
+const projectDrafts = require('./assets/data/project-drafts.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
@@ -22,6 +23,7 @@ const {
   applyProjectFilters,
   resetProjectFields,
   getProject,
+  getProjectDraft,
   updateProjectResponses,
   projectResponseValidate,
   getFormGroupStatus,
@@ -262,12 +264,10 @@ router.get('/register/success', loadAccount, (req, res) => {
 router.get('/', (req, res) => {
   switch (req.session.userType) {
     case 'admin':
-      const pendingProjects = projects
-        .filter(project => project.pendingApproval)
       const pendingAccounts = accounts
         .filter(account => account.pendingApproval)
       res.render('admin/dashboard', {
-        pendingProjects,
+        pendingProjects: projectDrafts,
         pendingAccounts
       });
       break;
@@ -316,15 +316,14 @@ router.get('/admin/projects', applyProjectFilters, (req, res) => {
   })
 });
 
-router.get('/admin/projects/review/:name', getProject, (req, res) => {
-  const isAdmin = req.session.userType === 'admin';
-  res.render('admin/review-project', {
+router.get('/admin/projects/review/:name', getProjectDraft, getProjectDraft, (req, res) => {
+  res.render('admin/review-draft', {
     project: res.locals.project,
     osApiKey: process.env.OS_API_KEY,
   })
 });
 
-router.post('/admin/projects/review/:name', getProject, (req, res) => {
+router.post('/admin/projects/review/:name', getProjectDraft, (req, res) => {
   const action = req.body.action;
 
   if (action === 'approve') {
