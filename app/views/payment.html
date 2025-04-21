@@ -43,7 +43,7 @@
     <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Invoice for PIU issuance</h1>
+          <h1 class="ds_page-header__title">Invoice Summary – PIU's</h1>
         </header>
       </div>
     </div>
@@ -54,18 +54,15 @@
     <div class="ds_layout__content">
       <ol class="ds_summary-list">
         {% set billItems = [
-        { key: "Registration Fee", value: "£500", id: "invoice-registration" },
-        { key: "Project Validation Review", value: "£750", id: "invoice-validation" },
-        { key: "Standard Compliance Check", value: "£300", id: "invoice-compliance" },
-        { key: "Geospatial Analysis Fee", value: "£250", id: "invoice-geo" },
-        { key: "Public Registry Listing", value: "£100", id: "invoice-listing" },
-        { key: "Document Processing & Archiving", value: "£150", id: "invoice-docs" },
-        { key: "Digital Certificate Issuance", value: "£50", id: "invoice-certificate" },
-        { key: "Administrative Handling", value: "£75", id: "invoice-admin" },
-        { key: "Subtotal", value: "£2,175", id: "invoice-subtotal" },
-        { key: "VAT (20%)", value: "£435", id: "invoice-vat" },
-        { key: "Total Amount Due", value: "£2,610", id: "invoice-total" }
+        { key: "Pending Issuance Units (PIU's)", value: "10,000 units", id: "invoice-registration" },
+        { key: "Buffer Account Deduction", value: "-2,000 units", id: "invoice-validation" },
+        { key: "Total Units to be Issued	", value: "8,000 units", id: "invoice-compliance" }
         ]%}
+        {% set total = [
+          { key: "Issuance Fee (per PIU)", value: "£0.15", id: "invoice-compliance" },
+          { key: "Issuance Fee Calculation", value: "10,000 * £0.15", id: "invoice-compliance" },
+          { key: "Total Due", value: "£1,500", id: "invoice-total" }
+        ] %}
 
         {% for field in billItems %}
         <li class="ds_summary-list__item">
@@ -75,6 +72,21 @@
               <h2>{{ field.value }}</h2>
             {% else %}
               <q class="ds_summary-list__answer">{{ field.value }}</q>
+            {% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ol>
+
+      <ol class="ds_summary-list">
+        {% for field in total %}
+        <li class="ds_summary-list__item">
+          <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+          <span class="ds_summary-list__value">
+            {% if loop.last and field.id == "invoice-total" %}
+              <h2>{{ field.value }}</h2>
+            {% else %}
+              <strong class="ds_summary-list__answer">{{ field.value }}</strong>
             {% endif %}
           </span>
         </li>
