@@ -1,3 +1,4 @@
+{% from "components/side-navigation.html" import sideNavigation %}
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Developer Dashboard{% endblock %}
@@ -6,169 +7,107 @@
 
 {% block main %}
 <div class="ds_wrapper">
-  <main id="main-content">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
     {% block mainHeader %}
       <div class="ds_layout__header">
         <header class="ds_page-header">
-
-          {% if data['validationSubmited'] and not data['paymentSuccess']%}
-          <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-            <div class="govuk-notification-banner__header">
-              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                Validation successful – payment may be due
-              </h2>
-            </div>
-            <div class="govuk-notification-banner__content">
-              <p class="govuk-notification-banner__heading">
-                {{ (projects | first).name }} has been validated. Check the invoice for payments due.
-                <a class="govuk-notification-banner__link" href="/developer/my-projects/{{ (projects | first).details_url }}/verification">View invoice</a>
-              </p>
-            </div>
-          </div>
-          {% endif %}
         </header>
       </div>
     {% endblock %}
 
+    {% set navItems = [
+      { href: "/", label: "Milestones" },
+      { href: "/#tasks", label: "Tasks" },
+      { href: "/developer/manage-units", label: "Credit summary" },
+      { href: "/developer/manage-units/transfers", label: "Transfers" },
+      { href: "/developer/manage-units/account-statements", label: "Account Statements" }
+    ] %}
+
+    <div class="ds_layout__sidebar">
+    {{ sideNavigation(navItems) }}
+    </div>
+
     {% block mainContent %}
-    <div class="ds_layout__content  table-overflow">
-      <h1>Overview</h1>
-      <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" checked id="panel-1" aria-labelledby="panel-1-heading">
-          <div class="ds_accordion-item__header">
-            <h2 id="panel-1-heading" class="ds_accordion-item__title">
-              Milestones
-            </h2>
-            <span class="ds_accordion-item__indicator"></span>
-            <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
-          </div>
-          <div class="ds_accordion-item__body table-overflow">
-              <table class="govuk_table">
-                <thead class="govuk-table__head">
-                  <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Project</th>
-                    <th scope="col" class="govuk-table__header">Status</th>
-                    <th scope="col" class="govuk-table__header">Due date</th>
-                    <th scope="col" class="govuk-table__header">Action needed</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for project in myProjects | customSelectAttr('status', 2) %}
-                  <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">{{ project.name }}</td>
-                    <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
-                    <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
-                    <td class="govuk-table__cell"><a class="ds_link" href="/developer/validate-project/{{ project.details_url}}?fieldId=1">Submit for validation</a></td>
-                  </tr>
-                  {% endfor %}
-                  {% for project in myProjects | customSelectAttr('status', 3) %}
-                  <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">{{ project.name }}</td>
-                    <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
-                    <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
-                    <td class="govuk-table__cell"><a class="ds_link" href="">Submit issuances</a></td>
-                  </tr>
-                  {% endfor %}
-                  {% for project in myProjects | customSelectAttr('status', 4) %}
-                  <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">{{ project.name }}</td>
-                    <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
-                    <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
-                    <td class="govuk-table__cell"><a class="ds_link" href="">List units for RFI</a></td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-          </div>
+    <div class="ds_layout__list side_navigation">
+      {% if data['validationSubmited'] and not data['paymentSuccess']%}
+      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Validation successful – payment may be due
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-notification-banner__heading">
+            {{ (projects | first).name }} has been validated. Check the invoice for payments due.
+            <a class="govuk-notification-banner__link" href="/developer/my-projects/{{ (projects | first).details_url }}/verification">View invoice</a>
+          </p>
         </div>
       </div>
-      <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" checked id="panel-1" aria-labelledby="panel-1-heading">
-          <div class="ds_accordion-item__header">
-            <h2 id="panel-1-heading" class="ds_accordion-item__title">
-              Recent transfers
-            </h2>
-            <span class="ds_accordion-item__indicator"></span>
-            <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
-          </div>
-          <div class="ds_accordion-item__body table-overflow">
-              <table class="govuk_table">
-                <thead class="govuk-table__head">
-                  <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Name</th>
-                    <th scope="col" class="govuk-table__header">Category</th>
-                    <th scope="col" class="govuk-table__header">Standard</th>
-                    <th scope="col" class="govuk-table__header">Project Type</th>
-                    <th scope="col" class="govuk-table__header">Units Sold</th>
-                    <th class="govuk-table__header"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for project in myProjects | customSelectAttr('status', 4) %}
-                  <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">{{ project.name }}</td>
-                    <td class="govuk-table__cell">{{ project.category }}</td>
-                    <td class="govuk-table__cell">{{ project.standard_name }}</td>
-                    <td class="govuk-table__cell">{{ project.type }}</td>
-                    <td class="govuk-table__cell">{{ project.status * 100 }}</td>
-                    <td class="govuk-table__cell">
-                      <button type="button" class="ds_link"
-                        onclick="window.location.href='projects/{{ project.details_url }}'">
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-          </div>
-        </div>
+      {% endif %}
+      <h2>Milestones</h2>
+      <div class="table-overflow">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Project</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header">Due date</th>
+                <th scope="col" class="govuk-table__header">Action needed</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in myProjects | customSelectAttr('status', 2) %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
+                <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
+                <td class="govuk-table__cell"><a class="ds_link" href="/developer/validate-project/{{ project.details_url}}?fieldId=1">Submit for validation</a></td>
+              </tr>
+              {% endfor %}
+              {% for project in myProjects | customSelectAttr('status', 3) %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
+                <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
+                <td class="govuk-table__cell"><a class="ds_link" href="">Submit issuances</a></td>
+              </tr>
+              {% endfor %}
+              {% for project in myProjects | customSelectAttr('status', 4) %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
+                <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
+                <td class="govuk-table__cell"><a class="ds_link" href="">Submit issuances</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <a class="ds_link" href="/developer/manage-units">View all</a>
       </div>
-      <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-1" aria-labelledby="panel-1-heading">
-          <div class="ds_accordion-item__header">
-            <h2 id="panel-1-heading" class="ds_accordion-item__title">
-              Projects - Under development
-            </h2>
-            <span class="ds_accordion-item__indicator"></span>
-            <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
-          </div>
-          <div class="ds_accordion-item__body table-overflow">
-            <table class="govuk_table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th scope="col" class="govuk-table__header">Name</th>
-                  <th scope="col" class="govuk-table__header">Category</th>
-                  <th scope="col" class="govuk-table__header">Standard</th>
-                  <th scope="col" class="govuk-table__header">Project Type</th>
-                  <th scope="col" class="govuk-table__header">Date submitted</th>
-                  <th class="govuk-table__header"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for project in myProjects  | customSelectAttr('status', 2) %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">{{ project.name }}</td>
-                  <td class="govuk-table__cell">{{ project.category }}</td>
-                  <td class="govuk-table__cell">{{ project.standard_name }}</td>
-                  <td class="govuk-table__cell">{{ project.type }}</td>
-                  <td class="govuk-table__cell">{{ project.status}}/{{project.status + loop.index }}/2023</td>
-                  <td class="govuk-table__cell">
-                    <button type="button" class="ds_link"
-                      onclick="window.location.href='projects/{{ project.details_url }}'">
-                      View
-                    </button>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <h2 id="tasks">Tasks</h2>
+      <ul class="ds_task-list">
+        {% for project in projects | customSelectAttr('status', [3, 4]) %}
+        <li class="ds_task-list__task" id="task1">
+            <div class="ds_task-list__task-details">
+                <h3 class="ds_task-list__task-heading">
+                    <a class="ds_task-list__task-link" href="#">{{ project.name }} <span class="visually-hidden">(Completed)</span></a>
+                </h3>
+                <p class="ds_hint-text  ds_task-list__task-summary">
+                  {% if project.status == 3 %}
+                    Project validation submitted: 25 January 2025
+                  {% else %}
+                    Submit project for validation by: 25 July 2025
+                  {% endif %}
+                </p>
+            </div>
+            {% if project.status == 3 %}
+              <strong class="ds_tag  ds_tag--green" aria-hidden="true">Completed</strong>
+            {% else %}
+              <strong>Incomplete</strong>
+            {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
     {% endblock %}
   </main>
 </div>
