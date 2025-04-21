@@ -3,8 +3,9 @@
 // https://prototype-kit.service.gov.uk/docs/filters
 //
 
-const govukPrototypeKit = require('govuk-prototype-kit')
-const addFilter = govukPrototypeKit.views.addFilter
+const govukPrototypeKit = require('govuk-prototype-kit');
+
+const addFilter = govukPrototypeKit.views.addFilter;
 
 // Add your filters here
 addFilter('customSelectAttr', function (array, key, value) {
@@ -37,3 +38,15 @@ addFilter('searchString', function (string, search) {
   const normalize = (str) => str.toLowerCase().replace(/\s+/g, '');
   return normalize(string).includes(normalize(search));
 })
+
+addFilter('slugify', function (string) {
+  return string
+    .toString()
+    .trim()
+    .replace(/([a-z])([A-Z])/g, '$1-$2')        // camelCase to kebab-case
+    .replace(/[\s_]+/g, '-')                     // spaces and underscores to dash
+    .replace(/[^a-zA-Z0-9\-]/g, '')              // remove all non-alphanumeric except dashes
+    .replace(/\-{2,}/g, '-')                     // collapse multiple dashes
+    .replace(/^-+|-+$/g, '')                     // trim starting/ending dashes
+    .toLowerCase();
+});
