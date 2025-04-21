@@ -10,7 +10,11 @@
 
       {% if userType == 'developer' and data['paymentSuccess'] %}
         {% set title = "Payment successful" %}
-        {% set message = "Project is now submitted for validation" %}
+        {% set message = "Project status has been updated to 'Validated'" %}
+        {% set action = "Return to the <a class='ds_default-link' href='/'>dashboard</a>." %}
+      {% elseif userType == 'developer' and data['validationSubmited'] %}
+        {% set title = "Submission successful" %}
+        {% set message = "The project is now being reviewed by the Validator" %}
         {% set action = "Return to the <a class='ds_default-link' href='/'>dashboard</a>." %}
       {% elseif  userType == 'developer' and data['projectResponseValidated'] %}
        {% set title = "Form Submitted" %}

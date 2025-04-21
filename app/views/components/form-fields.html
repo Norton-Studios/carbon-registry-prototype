@@ -49,7 +49,7 @@
       </div>
 
     {% else %}
-      <input class="ds_input ds_input--fluid-one-third"
+      <input class="ds_input ds_input--fluid-one-third {% if field.length %}{{ field.length }}{% endif %}"
         {% if field.readonly %}readonly{% endif %}
         type="text"
         id="{{ field.id }}"

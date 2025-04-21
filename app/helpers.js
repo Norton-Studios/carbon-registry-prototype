@@ -19,7 +19,7 @@ function generateFilters(projects, userType = 'guest') {
 }
 
 function getProjectByName(projects, projectName) {
-  return projects.find(project => project.name.toLowerCase().replace(/\s+/g, '-') === projectName.toLowerCase());
+  return projects.find(project => project.name.toLowerCase().replace(/\s+/g, '-') === projectName?.toLowerCase());
 }
 
 function filterProjects(projects, sessionData) {

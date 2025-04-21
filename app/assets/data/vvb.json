@@ -1,0 +1,50 @@
+[
+  {
+    "name": "SGS United Kingdom Ltd",
+    "services": ["Validation", "Verification"],
+    "accreditation": ["ISO 14065", "ISO 14064-3", "ISO 17029"],
+    "notes": "Accredited by UKAS for WCC and PC projects",
+    "website": "https://www.sgs.co.uk/",
+    "email": "uk@sgs.com"
+  },
+  {
+    "name": "Scottish Food Quality Certification (SFQC)",
+    "services": ["Validation", "Verification"],
+    "accreditation": ["ISO 14065", "ISO 14064-3", "ISO 17029"],
+    "notes": "Offers VVB services under the WCC, widely used in Scotland",
+    "website": "https://sfqc.co.uk/",
+    "email": "info@sfqc.co.uk"
+  },
+  {
+    "name": "Soil Association Certification",
+    "services": ["Validation", "Verification"],
+    "accreditation": ["ISO 14065", "ISO 14064-3", "ISO 17029"],
+    "notes": "Well-established in organic and carbon scheme verification",
+    "website": "https://www.soilassociation.org/",
+    "email": "certification@soilassociation.org"
+  },
+  {
+    "name": "Organic Farmers & Growers (OF&G)",
+    "services": ["Verification"],
+    "accreditation": ["ISO 14065", "ISO 14064-3", "ISO 17029"],
+    "notes": "Accredited by UKAS for limited scope under WCC",
+    "website": "https://ofgorganic.org/",
+    "email": "info@ofgorganic.org"
+  },
+  {
+    "name": "NQA Certification Ltd",
+    "services": ["Validation", "Verification"],
+    "accreditation": ["ISO 14065", "ISO 17029"],
+    "notes": "Known for broader ISO certification including environment-related standards",
+    "website": "https://www.nqa.com/",
+    "email": "info@nqa.com"
+  },
+  {
+    "name": "British Standards Institution (BSI)",
+    "services": ["Validation", "Verification"],
+    "accreditation": ["ISO 14065", "ISO 14064-3"],
+    "notes": "Provides validation and verification services globally, including for UK-based schemes",
+    "website": "https://www.bsigroup.com/",
+    "email": "info@bsigroup.com"
+  }
+]

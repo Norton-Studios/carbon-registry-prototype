@@ -9,6 +9,7 @@ const router = govukPrototypeKit.requests.setupRouter();
 const users = require('./assets/data/users.json');
 const projects = require('./assets/data/projects.json');
 const accounts = require('./assets/data/accounts.json');
+const validators = require('./assets/data/vvb.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
@@ -54,7 +55,18 @@ router.use('/developer', (req, res, next) => {
   next();
 });
 
-router.get('/developer/manage-units/update-units/:name', getProject, (_, res) => {
+router.use('/developer/validate-project/:name', getProject, (req, res) => {
+  const { validationSubmited } = req.body || {};
+  if (validationSubmited) {
+    delete req.session.data.paymentSuccess;
+    res.redirect('/register/success');
+    return;
+  }
+  res.locals.validators = validators;
+  res.render('/developer/validate-project');
+});
+
+router.use('/developer/manage-units/update-units/:name', getProject, (_, res) => {
   res.render('developer/manage-units/update-units', {
     project: res.locals.project
   })
