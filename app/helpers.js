@@ -1,8 +1,8 @@
 const fs = require('fs');
 const pdfParse = require('pdf-parse');
 
-function generateFilters(projects) {
-  return {
+function generateFilters(projects, userType = 'guest') {
+  const filters = {
     Country: [...new Set(projects.map(project => project.country).sort((a, b) => a.localeCompare(b)))],
     Status: [...new Set(projects.map(project => String(project.status))
       .filter((status) => ['2', '3', '4', '5'].includes(status))
@@ -11,11 +11,15 @@ function generateFilters(projects) {
     Category: [...new Set(projects.map(project => project.category).sort((a, b) => a.localeCompare(b)))],
     "Account Name": [...new Set(projects.map(project => project.account_name).sort((a, b) => a.localeCompare(b)))],
     Credits: projects.some(project => project.credits) ? ["Available"] : []
-  };
+  }
+  if (userType === 'developer') {
+    delete filters['Account Name']
+  }
+  return filters;
 }
 
 function getProjectByName(projects, projectName) {
-  return projects.find(project => project.name.toLowerCase().replace(/\s+/g, '-') === projectName.toLowerCase());
+  return projects.find(project => project.name.toLowerCase().replace(/\s+/g, '-') === projectName?.toLowerCase());
 }
 
 function filterProjects(projects, sessionData) {
@@ -142,6 +146,14 @@ function parseNumber(str) {
   return parseInt((str || "0").replace(/,/g, ""), 10);
 }
 
+function toTitleCase(str) {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 module.exports = {
   generateFilters,
   filterProjects,
@@ -153,5 +165,6 @@ module.exports = {
   generateObjectId,
   extractGridRefs,
   formatNumberWithCommas,
-  parseNumber
+  parseNumber,
+  toTitleCase,
 };

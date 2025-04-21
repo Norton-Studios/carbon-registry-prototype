@@ -25,9 +25,12 @@
     {% endblock %}
 
     {% if bannerState and bannerState == 'documentSuccess' %}
-    {% set bannerTitle = 'Document upload successful' %}
-    {% set bannerMessage = "Continue with your application <a class='ds_default-link' href='/developer/create-project/form?fieldId=" ~ idQuery[1] ~ "'>here</a>."%}
-    {{ banner('success', bannerTitle, bannerMessage, assetPath) }}
+      {{ banner({
+        status: 'success',
+        title: 'Document upload successful',
+        message: 'Continue with your application <a class="ds_default-link" href="/developer/create-project/form?fieldId=1">here</a>.',
+        assetPath: assetPath
+      }) }}
     {% endif %}
 
     {% macro getProjectStatus(value) %}

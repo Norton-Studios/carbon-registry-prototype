@@ -1,0 +1,75 @@
+{% from "components/form-fields.html" import renderField %}
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Validate Project{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="javascript:window.history.back()">Back</a>
+</div>
+{% endblock %}
+
+{% set fields = [
+  { id: 1, label: "Account name", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: "GreenRoots CIC", formGroupId: 1, formGroup: "Review your project information" },
+  { id: 1, label: "Project id", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: project.id, formGroupId: 1, formGroup: "Review your project information" },
+  { id: 1, label: "Project name", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: project.name, formGroupId: 1, formGroup: "Review your project information" },
+  { id: 2, label: "Project description", fieldType: "textarea", length: "ds_input--fluid-half", readonly: true, value: project.description, formGroupId: 1, formGroup: "Review your project information" },
+  { id: 3, label: "Select a validator", fieldType: "dropdown",
+    options: validators | mapToOptions('name'),
+    helpText: "Accredited by the UK Accreditation Service according to ISO 14065, ISO 14064-3 and ISO 17029.",
+    readonly: false, formGroupId: 2, formGroup: "Who is your validator(VVB)?" }
+] %}
+
+{% set currentFieldId = data['fieldId'] | int %}
+{% set fields = fields | customSelectAttr("id", currentFieldId) %}
+
+{% if currentFieldId == 3 %}
+  {% set name = "validationSubmited" %}
+  {% set value = "true" %}
+  {% set buttonText = "Submit project for validation" %}
+{% else %}
+  {% set name = "fieldId" %}
+  {% set value = currentFieldId + 1 %}
+  {% set buttonText = "Next steps" %}
+{% endif %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <fieldset>
+        <form action="/developer/validate-project/{{ project.details_url }}" method="post">
+          {% for field in fields %}
+          {% if field.formGroup != currentGroup %}
+              <div class="ds_page-header">
+                <h1 class="ds_page-header__title">
+                  {{ field.formGroup }}
+                </h1>
+              </div>
+              {% set currentGroup = field.formGroup %}
+            {% endif %}
+            {{ renderField(field, field.value) }}
+          {% endfor %}
+
+          <div class="button-group">
+            <button
+              type="submit"
+              name="{{ name }}"
+              value="{{ value }}"
+              class="ds_button ds_button--has-icon">
+              {{ buttonText }}
+              <svg class="ds_icon" aria-hidden="true" role="img">
+                <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}

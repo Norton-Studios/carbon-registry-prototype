@@ -1,4 +1,4 @@
-{% from "components/confirmation-message.html" import confirmationMessage %}
+{% from "components/banner-notification.html" import banner %}
 
 {% extends "/layouts/main.html" %}
 
@@ -44,7 +44,7 @@
       {% if pendingAccounts|length >= 1 %}
       <div class="ds_accordion" data-module="ds-accordion">
         <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-1" aria-labelledby="panel-1-heading">
+          <input type="checkbox" class="visually-hidden ds_accordion-item__control" checked id="panel-1" aria-labelledby="panel-1-heading">
           <div class="ds_accordion-item__header">
             <h2 id="panel-1-heading" class="ds_accordion-item__title">
               Accounts pending review ({{ pendingAccounts | length }})
@@ -96,9 +96,11 @@
 
       {% else %}
 
-      {{ confirmationMessage({
-        heading: "Accounts are up-to-date",
-        body: "There are no new accounts to be reviewed."
+      {{ banner({
+        status: 'success',
+        title: "Accounts are up-to-date",
+        message: "There are no new accounts to be reviewed.",
+        assetPath: assetPath
       }) }}
 
       {% endif %}
@@ -106,7 +108,7 @@
       {% if pendingProjects|length >= 1  %}
       <div class="ds_accordion" data-module="ds-accordion">
         <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-2" aria-labelledby="panel-2-heading">
+          <input type="checkbox" class="visually-hidden ds_accordion-item__control" checked id="panel-2" aria-labelledby="panel-2-heading">
           <div class="ds_accordion-item__header">
             <h2 id="panel-2-heading" class="ds_accordion-item__title">
               Projects pending review ({{ pendingProjects | length }})

@@ -17,8 +17,9 @@ const { getLocationFromGridRef } = require('../../scripts/add-project-locations.
 
 //projects
 function applyProjectFilters(req, res, next) {
-  res.locals.filteredProjects = filterProjects(projects, req.session.data);
-  res.locals.projectFilters = generateFilters(projects);
+  const defaultProjects = res.locals.defaultProjects || projects;
+  res.locals.filteredProjects = filterProjects(defaultProjects, req.session.data);
+  res.locals.projectFilters = generateFilters(defaultProjects, req.session.userType);
   next();
 }
 
@@ -171,8 +172,11 @@ async function getProjectSiteDetails(req, res, next) {
       }
 
       responses = { ...responses, ...siteDetails, pdfFile: true };
-    } else if (ext.toLowerCase() === '.xlsx') {
+    } else if (ext.toLowerCase() === '.xlsx' || ext.toLowerCase() === '.csv') {
+
+      // add it here...
       responses = { ...responses, csvFile: true };
+      req.session.data.project = { ...existingProject, responses };
       return res.redirect('/developer/create-project?bannerState=documentSuccess');
     }
 
@@ -207,15 +211,22 @@ function filterDeveloperProjects(req, res, next) {
       };
     });
 
-  res.locals.filteredProjects = filteredProjects;
+  res.locals.defaultProjects = filteredProjects;
   next();
 };
 
 function updateUnits(req, res, next) {
-  const { pius_listed, verified_listed, id } = req.body;
+  const { pius_listed, verified_listed, id, project_name } = req.body;
 
-  const current = projects.find(p => p.id == id) || {};
-  const updatedProject = {...current}
+  let updatedProject, current;
+
+  if (project_name) {
+    current = projects.find(p => p.name === project_name) || {};
+    updatedProject = {...current}
+  } else {
+    current = projects.find(p => p.id == id) || {};
+    updatedProject = {...current}
+  }
 
   if (current.piu_units && current.piu_units !== "0") {
     const inc = parseNumber(pius_listed);

@@ -1,7 +1,7 @@
 {% from "components/form-fields.html" import renderField %}
 {% extends "/layouts/main.html" %}
 
-{% block pageTitle %}Create Project{% endblock %}
+{% block pageTitle %}Update units{% endblock %}
 
 {% set bodyClasses = "govuk-frontend-supported" %}
 
@@ -12,9 +12,24 @@
 {% endblock %}
 
 {% set fields = [
-  { id: 1, label: "PIUs listed", fieldType: "text", value: project.pius_listed, helpText: "Current units available: " ~ project.piu_units, formGroupId: 1, formGroup: "Update your units to be listed" },
+  { id: 1, label: "Project name", fieldType: "dropdown",
+    options: myProjects | mapToOptions('name'), value: data['manage-units']['listing']['name'],
+    formGroupId: 2, formGroup: "Select a credit block to list"
+  },
+  { id: 2, label: "PIUs listed", fieldType: "text", value: project.pius_listed, helpText: "Current units available: " ~ project.piu_units, formGroupId: 1, formGroup: "Update your units to be listed" },
   { id: 2, label: "Verified listed", fieldType: "text", value: project.verified_listed, readonly: false, helpText: "Current units available: " ~ project.verified_units, formGroupId: 1, formGroup: "Update your units to be listed" }
 ] %}
+
+{% set currentFieldId = data['fieldId'] | int %}
+{% set fields = fields | customSelectAttr("id", currentFieldId) %}
+
+{% if currentFieldId == 2 %}
+  {% set name = "id" %}
+  {% set value = project.id %}
+{% else %}
+  {% set name = "fieldId" %}
+  {% set value = currentFieldId + 1 %}
+{% endif %}
 
 {% block main %}
 <div class="ds_wrapper">
@@ -22,15 +37,15 @@
     {% block mainContent %}
     <div class="ds_layout__content">
       <fieldset>
-        <form action="/developer/manage-units/update-listing" method="post">
+        <form action="/developer/manage-units/update-units" method="post">
           {% for field in fields %}
-            {% if field.formGroup != currentGroup %}
-            <div class="ds_page-header">
-              <h1 class="ds_page-header__title">
-                {{ field.formGroup }}
-              </h1>
-            </div>
-            {% set currentGroup = field.formGroup %}
+          {% if field.formGroup != currentGroup %}
+              <div class="ds_page-header">
+                <h1 class="ds_page-header__title">
+                  {{ field.formGroup }}
+                </h1>
+              </div>
+              {% set currentGroup = field.formGroup %}
             {% endif %}
             {{ renderField(field, field.value) }}
           {% endfor %}
@@ -38,8 +53,8 @@
           <div class="button-group">
             <button
               type="submit"
-              name="id"
-              value="{{ project.id }}"
+              name="{{ name }}"
+              value="{{ value }}"
               class="ds_button ds_button--has-icon">
               Update listed units
               <svg class="ds_icon" aria-hidden="true" role="img">

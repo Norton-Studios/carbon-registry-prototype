@@ -1,3 +1,4 @@
+{% from "components/banner-notification.html" import banner %}
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Answer Summary{% endblock %}
@@ -29,10 +30,20 @@
 <div class="ds_wrapper">
   <main id="main-content">
     {% block mainContent %}
-      {% if bannerState == 'documentSuccess' or formError %}
-      {% set bannerStateLocal = bannerState %}
-      {% set formErrorLocal = formError %}
-      {% include "../banner-notification-partial.html" %}
+    {% if formError %}
+      {{ banner({
+        status: 'error',
+        title: 'Error',
+        message: formError.message,
+        assetPath: assetPath
+      }) }}
+    {% elseif bannerState and bannerState == 'documentSuccess' %}
+      {{ banner({
+        status: 'success',
+        title: 'Document upload successful',
+        message: "Continue with your application <a class='ds_default-link' href='/developer/create-project/form?fieldId=1'>here</a>.",
+        assetPath: assetPath
+      }) }}
     {% endif %}
     <div class="ds_layout__content">
       <h2>Your answers</h2>

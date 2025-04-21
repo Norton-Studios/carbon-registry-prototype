@@ -20,9 +20,9 @@
 
 {% set unitSummary = [
   { label: "PIU's", value: project.piu_units },
-  { label: "PIUs listed", value: project.pius_listed, changeUrl: "/developer/manage-units/update-listing/" ~ project.details_url },
+  { label: "RFI PIU's listed", value: project.pius_listed, changeUrl: "/developer/manage-units/update-units/" ~ project.details_url ~"?fieldId=2" },
   { label: "Verified units", value: project.verified_units },
-  { label: "Verified units listed", value: project.verified_listed, changeUrl: "/developer/manage-units/update-listing/" ~ project.details_url },
+  { label: "RFI verified units listed", value: project.verified_listed, changeUrl: "/developer/manage-units/update-units/" ~ project.details_url ~"fieldId=2" },
   { label: "Retired units", value: project.retired_units }
 ] %}
 

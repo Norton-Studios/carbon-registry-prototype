@@ -10,6 +10,7 @@ const accounts = require('./assets/data/accounts.json');
 const users = require('./assets/data/users.json');
 const projects = require('./assets/data/projects.json');
 const projectDrafts = require('./assets/data/project-drafts.json');
+const validators = require('./assets/data/vvb.json');
 const multer = require('multer');
 const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
@@ -37,39 +38,54 @@ dotenv.config();
 
 router.use(applyUserType);
 
-
-router.get('/developer/manage-units/update-listing/:name', getProject, (_, res) => {
-  res.render('developer/manage-units/update-listing', {
-    project: res.locals.project
-  })
-});
-
-router.post('/developer/manage-units/update-listing', updateUnits, (req, res) => {
-  req.session.data.updatedProject = res.locals.project;
-  res.redirect(`/developer/manage-units`)
-});
-
-router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (req, res, next) => {
-  if (req.path === '/update-listing/:name') {
-    return next();
-  }
+router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (_, res, next) => {
   res.locals.myAccounts = res.locals.filteredAccounts;
-  res.locals.myProjects = res.locals.filteredProjects;
+  res.locals.myProjects = res.locals.defaultProjects;
   res.locals.projects;
   res.locals.updatedProject;
 
   next();
 });
 
-router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
-  res.redirect('/developer/create-project/answer-summary');
+router.use('/developer', (req, res, next) => {
+  const sessionData = req.session.data || {};
+  ['bannerState', 'formError'].forEach(key => {
+    res.locals[key] = sessionData[key];
+    delete sessionData[key];
+  });
+
+  next();
 });
 
-router.get('/developer/create-project/document-upload', (req, res) => {
-  const {formError } = req.session.data || {};
-  if (formError) delete req.session.data.formError;
+router.use('/developer/validate-project/:name', getProject, (req, res) => {
+  const { validationSubmited } = req.body || {};
+  if (validationSubmited) {
+    delete req.session.data.paymentSuccess;
+    res.redirect('/register/success');
+    return;
+  }
+  res.locals.validators = validators;
+  res.render('/developer/validate-project');
+});
 
-  res.render('/developer/create-project/document-upload', { formError })
+router.use('/developer/manage-units/update-units/:name', getProject, (_, res) => {
+  res.render('developer/manage-units/update-units', {
+    project: res.locals.project
+  })
+});
+
+router.post('/developer/manage-units/update-units', updateUnits, (req, res) => {
+  const { fieldId } = req.body || {};
+  if (fieldId) {
+    res.render('/developer/manage-units/update-units');
+    return;
+  }
+  req.session.data.updatedProject = res.locals.project;
+  res.redirect(`/developer/manage-units`)
+});
+
+router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
+  res.redirect('/developer/create-project/answer-summary?bannerState=documentSuccess');
 });
 
 router.post('/developer/create-project/form', updateProjectResponses, getFormGroupStatus, projectResponseValidate, (_, res) => {
@@ -85,13 +101,6 @@ router.get('/developer/create-project/form', (req, res) => {
   res.render('developer/create-project/form');
 });
 
-router.get('/developer/create-project', (req, res) => {
-  const { bannerState } = req.session.data || {};
-  if (bannerState) delete req.session.data.bannerState;
-
-  res.render('/developer/create-project', { bannerState })
-})
-
 router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, (_, res) => {
   res.render('developer/create-project');
 });
@@ -100,8 +109,11 @@ router.get('/developer/my-projects/:name/verification', (_, res) => {
   res.render('payment');
 });
 
-router.get('/developer/my-projects', (req, res) => {
+router.get('/developer/my-projects', getAccountsByDeveloper, filterDeveloperProjects, applyProjectFilters, (_, res) => {
   res.render('developer/my-projects', {
+    myAccounts: res.locals.filteredAccounts,
+    myProjects: res.locals.defaultProjects,
+    filters: res.locals.projectFilters,
     projects,
     authenticated: true
   });
@@ -277,7 +289,7 @@ router.get('/', (req, res) => {
         filterDeveloperProjects(req, res, () => {
           res.render('developer/dashboard', {
             projects,
-            myProjects: res.locals.filteredProjects,
+            myProjects: res.locals.defaultProjects,
             myAccounts: res.locals.filteredAccounts
           });
         });
@@ -381,23 +393,23 @@ router.get('/account', loadAccount, (req, res) => {
   });
 });
 
-router.get('/account/:id', loadAccount, (req, res) => {
-  res.render('/account/dashboard', {
-    account: res.locals.account
-  });
-});
-
 router.get('/account/verification', (req, res) => {
   res.render('account/verification', {
     account: res.locals.account
   });
 });
 
-router.get('/account/account-verified', updateAccount({ pendingApproval: true }), (req, res) => {
-  res.render('account/verification', {
-    account: res.locals.account
-  })
-})
+router.get('/account/account-verified', (req, res) => {
+  res.render('account/account-verified', {});
+});
+
+router.get('/account/company-registration', (req, res) => {
+  res.render('account/company-registration', {});
+});
+
+router.get('/account/payment', (req, res) => {
+  res.render('account/payment', {});
+});
 
 router.post('/account/company-registration', (req, res) => {
   res.redirect('/account/verification');
@@ -405,6 +417,12 @@ router.post('/account/company-registration', (req, res) => {
 
 router.post('/account/payment', (req, res) => {
   res.redirect('/account/account-verified');
+});
+
+router.get('/account/:id', loadAccount, (req, res) => {
+  res.render('/account/dashboard', {
+    account: res.locals.account
+  });
 });
 
 router.get('/notifications/:id', (req, res) => {
