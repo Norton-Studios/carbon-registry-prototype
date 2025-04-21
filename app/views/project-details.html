@@ -26,6 +26,14 @@
   { label: "Retired units", value: project.retired_units }
 ] %}
 
+{% set traderSummary = [
+  { label: "PIU's", value: project.piu_units },
+  { label: "RFI PIU's listed", value: project.pius_listed },
+  { label: "Verified units", value: project.verified_units },
+  { label: "RFI verified units listed", value: project.verified_listed },
+  { label: "Retired units", value: project.retired_units }
+] %}
+
 {# Back link - in place of breadcrumbs #}
 {% block breadcrumbs %}
 <div class="ds_wrapper">
@@ -53,8 +61,10 @@
             <p class="ds_page-header__description">
               {{ project.category }} - {{ project.type }}
             </p>
+            <p>{{ project.description }}</p>
           </header>
-          <p>{{ project.description }}</p>
+          <button class="ds_button" type="button">Request for infomation</button>
+          <button class="ds_button ds_button--secondary" type="button">Submit a bid</button>
         {% endif %}
       </div>
     </div>
@@ -66,6 +76,9 @@
       {% if authenticated and userType == "developer" %}
         <h2>Units summary</h2>
         {{ summaryList(unitSummary) }}
+      {% elseif userType == "trader" %}
+        <h2>Units summary</h2>
+        {{ summaryList(traderSummary) }}
       {% endif %}
       <h2 class="ds_section__title">Project details</h2>
       <ol class="ds_summary-list">

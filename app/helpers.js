@@ -37,7 +37,7 @@ function filterProjects(projects, sessionData) {
       if (key === 'searchString' && sessionData.searchBy) {
         matchesSearch = normalize(String(project[sessionData.searchBy])).includes(normalize(val));
       } else if (key === 'credits' && Array.isArray(val) && val.length > 0) {
-        matchesFilters = Boolean(project.credits);
+        matchesFilters = parseNumber(project.pius_listed) > 0 || parseNumber(project.verified_listed) > 0;
       } else if (Array.isArray(val) && val.length > 0) {
         matchesFilters = val.includes(String(project[key] ?? ''))
       }

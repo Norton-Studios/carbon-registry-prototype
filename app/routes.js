@@ -122,11 +122,13 @@ router.get('/developer/my-projects', getAccountsByDeveloper, filterDeveloperProj
 router.get('/projects/:name', getProject, (req, res) => {
   const isAdmin = req.session.userType === 'admin';
   const isDev = req.session.userType === 'developer';
+  const isTrader = req.session.userType === 'trader';
 
   res.render('project-details', {
     project: res.locals.project,
     osApiKey: process.env.OS_API_KEY,
-    ...(isAdmin || isDev ? { authenticated: true } : {})
+    ...(isAdmin || isDev ? { authenticated: true } : {}),
+    ...(isTrader ? { trader: true } : {})
   });
 });
 
