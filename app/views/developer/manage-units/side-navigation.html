@@ -1,3 +1,5 @@
+{% from "components/side-navigation.html" import sideNavigation %}
+
 {% block mainSidebar %}
 <div class="ds_layout__sidebar">
   <div>
@@ -12,29 +14,15 @@
         <span class="ds_select-arrow" aria-hidden="true"></span>
     </div>
   </div>
-  <nav aria-label="Sections" class="ds_side-navigation" data-module="ds-side-navigation">
-    <input type="checkbox" class="fully-hidden  js-toggle-side-navigation" id="show-side-navigation"
-      aria-controls="side-navigation-root">
-    <label class="ds_side-navigation__expand  ds_link" for="show-side-navigation"><span class="visually-hidden">Show
-        all</span> Pages in this section <span class="ds_side-navigation__expand-indicator"></span></label>
 
-    <ul class="ds_side-navigation__list" id="side-navigation-root">
-      <li class="ds_side-navigation__item">
-        <a href="/developer/manage-units" class="ds_side-navigation__link">Overview</a>
-      </li>
-      <li class="ds_side-navigation__item">
-        <a href="/developer/manage-units/assignments" class="ds_side-navigation__link">Assignments</a>
-      </li>
-      <li class="ds_side-navigation__item">
-        <a href="/developer/manage-units/transfers" class="ds_side-navigation__link">Transfers</a>
-      </li>
-      <li class="ds_side-navigation__item">
-        <a href="/developer/manage-units/retire" class="ds_side-navigation__link">Retirements</a>
-      </li>
-      <li class="ds_side-navigation__item">
-        <a href="/developer/manage-units/account-statements" class="ds_side-navigation__link">Account Statements</a>
-      </li>
-    </ul>
-  </nav>
+  {% set navItems = [
+    { href: "/developer/manage-units", label: "Overview" },
+    { href: "/developer/manage-units/assignments", label: "Assignments" },
+    { href: "/developer/manage-units/transfers", label: "Transfers" },
+    { href: "/developer/manage-units/retire", label: "Retirements" },
+    { href: "/developer/manage-units/account-statements", label: "Account Statements" }
+  ] %}
+
+  {{ sideNavigation(navItems) }}
 </div>
 {% endblock %}

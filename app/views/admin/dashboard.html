@@ -1,4 +1,5 @@
 {% from "components/banner-notification.html" import banner %}
+{% from "components/side-navigation.html" import sideNavigation %}
 
 {% extends "/layouts/main.html" %}
 
@@ -9,19 +10,27 @@
 {% block main %}
 
 <div class="ds_wrapper">
-  <main id="main-content">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
     {% block mainHeader %}
-    <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Admin dashboard</h1>
         </header>
       </div>
-    </div>
     {% endblock %}
 
+    {% set navItems = [
+      { href: "/", label: "Credits overview" },
+      { href: "/#review-account", label: "Review accounts (" ~ pendingAccounts | length ~ ")" },
+      { href: "/#review-project", label: "Review projects (" ~ pendingProjects | length ~ ")" }
+    ] %}
+
+    <div class="ds_layout__sidebar">
+    {{ sideNavigation(navItems) }}
+    </div>
+
     {% block mainContent %}
-    <div class="ds_layout__content table-overflow">
+    <div class="ds_layout__list side_navigation">
+    <div class="table-overflow">
       <h2>Credits</h2>
       <table class="ds_table">
         <thead>
@@ -42,59 +51,47 @@
         </tbody>
       </table>
       {% if pendingAccounts|length >= 1 %}
-      <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" checked id="panel-1" aria-labelledby="panel-1-heading">
-          <div class="ds_accordion-item__header">
-            <h2 id="panel-1-heading" class="ds_accordion-item__title">
-              Accounts pending review ({{ pendingAccounts | length }})
-            </h2>
-            <span class="ds_accordion-item__indicator"></span>
-            <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
-          </div>
-          <div class="ds_accordion-item__body table-overflow">
-            <table class="govuk_table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th scope="col" class="govuk-table__header">Organisation</th>
-                  <th scope="col" class="govuk-table__header">Classification</th>
-                  <th scope="col" class="govuk-table__header">Account Manager</th>
-                  <th scope="col" class="govuk-table__header">Country</th>
-                  <th scope="col" class="govuk-table__header">Last updated</th>
-                  <th scope="col" class="govuk-table__header">Status</th>
-                  <th scope="col" class="govuk-table__header"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for account in pendingAccounts | sortByDateAsc %}
-                {% set date = account.date | reverseDate %}
-                <tr class="govuk-table__row"
-                  onclick="window.location.href='/account/{{ account.id }}'"
-                  style="cursor: pointer"
-                >
-                  <td class="govuk-table__cell">{{ account.account_name }}</td>
-                  <td class="govuk-table__cell">{{ account.classification }}</td>
-                  <td class="govuk-table__cell">{{ account.manager }}</td>
-                  <td class="govuk-table__cell">{{ account.country }}</td>
-                  <td class="govuk-table__cell">{{ date }}</td>
-                  <td class="govuk-table__cell">{{ "Unverified" if account.status else "Verified" }}</td>
-                  <td class="govuk-table__cell">
-                    <button
-                      type="button"
-                      class="ds_link"
-                      onclick="window.location.href='/account/{{ account.id }}'"
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <h2 id="review-account">Review accounts</h2>
+      <div class="table-overflow">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Organisation</th>
+                <th scope="col" class="govuk-table__header">Classification</th>
+                <th scope="col" class="govuk-table__header">Account Manager</th>
+                <th scope="col" class="govuk-table__header">Country</th>
+                <th scope="col" class="govuk-table__header">Last updated</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for account in pendingAccounts | sortByDateAsc %}
+              {% set date = account.date | reverseDate %}
+              <tr class="govuk-table__row"
+                onclick="window.location.href='/account/{{ account.id }}'"
+                style="cursor: pointer"
+              >
+                <td class="govuk-table__cell">{{ account.account_name }}</td>
+                <td class="govuk-table__cell">{{ account.classification }}</td>
+                <td class="govuk-table__cell">{{ account.manager }}</td>
+                <td class="govuk-table__cell">{{ account.country }}</td>
+                <td class="govuk-table__cell">{{ date }}</td>
+                <td class="govuk-table__cell">{{ "Unverified" if account.status else "Verified" }}</td>
+                <td class="govuk-table__cell">
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='/account/{{ account.id }}'"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
       </div>
-
       {% else %}
 
       {{ banner({
@@ -107,58 +104,47 @@
       {% endif %}
 
       {% if pendingProjects|length >= 1  %}
-      <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" checked id="panel-2" aria-labelledby="panel-2-heading">
-          <div class="ds_accordion-item__header">
-            <h2 id="panel-2-heading" class="ds_accordion-item__title">
-              Projects pending review ({{ pendingProjects | length }})
-            </h2>
-            <span class="ds_accordion-item__indicator"></span>
-            <label class="ds_accordion-item__label" for="panel-2"><span class="visually-hidden">Show all</span></label>
-          </div>
-          <div class="ds_accordion-item__body table-overflow">
-            <table class="govuk_table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th scope="col" class="govuk-table__header">Name</th>
-                  <th scope="col" class="govuk-table__header">Account</th>
-                  <th scope="col" class="govuk-table__header">Standard</th>
-                  <th scope="col" class="govuk-table__header">Category</th>
-                  <th scope="col" class="govuk-table__header">Date submitted</th>
-                  <th scope="col" class="govuk-table__header">Status</th>
-                  <th scope="col" class="govuk-table__header"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for project in pendingProjects | sortByDateAsc %}
-                {% set slug = project.project_name | slugify %}
-                <tr class="govuk-table__row"
-                  onclick="window.location.href='/admin/projects/review/{{ slug }}'"
-                  style="cursor: pointer"
-                >
-                  <td class="govuk-table__cell">{{ project.project_name }}</td>
-                  <td class="govuk-table__cell">{{ project.account_name }}</td>
-                  <td class="govuk-table__cell">{{ "WCC" if project.standard == "UK Woodland Carbon Code" else "PC" }}</td>
-                  <td class="govuk-table__cell">{{ project.category }}</td>
-                  <td class="govuk-table__cell">{{ project.date }}</td>
-                  <td class="govuk-table__cell">Pending approval</td>
-                  <td class="govuk-table__cell">
-                    <button
-                      type="button"
-                      class="ds_link"
-                      onclick="window.location.href='/admin/projects/review/{{ slug }}'"
-                    >
-                      Review
-                    </button>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+        <h2 id="review-project">Review projects</h2>
+        <div class="table-overflow">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Name</th>
+                <th scope="col" class="govuk-table__header">Account</th>
+                <th scope="col" class="govuk-table__header">Standard</th>
+                <th scope="col" class="govuk-table__header">Category</th>
+                <th scope="col" class="govuk-table__header">Date submitted</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in pendingProjects | sortByDateAsc %}
+              {% set slug = project.project_name | slugify %}
+              <tr class="govuk-table__row"
+                onclick="window.location.href='/admin/projects/review/{{ slug }}'"
+                style="cursor: pointer"
+              >
+                <td class="govuk-table__cell">{{ project.project_name }}</td>
+                <td class="govuk-table__cell">{{ project.account_name }}</td>
+                <td class="govuk-table__cell">{{ "WCC" if project.standard == "UK Woodland Carbon Code" else "PC" }}</td>
+                <td class="govuk-table__cell">{{ project.category }}</td>
+                <td class="govuk-table__cell">{{ project.date }}</td>
+                <td class="govuk-table__cell">Pending approval</td>
+                <td class="govuk-table__cell">
+                  <button
+                    type="button"
+                    class="ds_link"
+                    onclick="window.location.href='/admin/projects/review/{{ slug }}'"
+                  >
+                    Review
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-      </div>
       {% else %}
 
       {{ confirmationMessage({
