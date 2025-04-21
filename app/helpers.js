@@ -146,6 +146,14 @@ function parseNumber(str) {
   return parseInt((str || "0").replace(/,/g, ""), 10);
 }
 
+function toTitleCase(str) {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 module.exports = {
   generateFilters,
   filterProjects,
@@ -157,5 +165,6 @@ module.exports = {
   generateObjectId,
   extractGridRefs,
   formatNumberWithCommas,
-  parseNumber
+  parseNumber,
+  toTitleCase,
 };
