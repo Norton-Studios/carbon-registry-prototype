@@ -36,4 +36,8 @@ addFilter('sortByDateAsc', function(arr) {
 addFilter('searchString', function (string, search) {
   const normalize = (str) => str.toLowerCase().replace(/\s+/g, '');
   return normalize(string).includes(normalize(search));
-})
+});
+
+addFilter('mapToOptions', function (arr, key) {
+  return arr.map(i => ({ label: i[key], value: i[key]}));
+});

@@ -35,10 +35,7 @@ dotenv.config();
 
 router.use(applyUserType);
 
-router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (req, res, next) => {
-  if (req.path === '/update-listing/:name') {
-    return next();
-  }
+router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (_, res, next) => {
   res.locals.myAccounts = res.locals.filteredAccounts;
   res.locals.myProjects = res.locals.defaultProjects;
   res.locals.projects;
@@ -57,13 +54,18 @@ router.use('/developer', (req, res, next) => {
   next();
 });
 
-router.get('/developer/manage-units/update-listing/:name', getProject, (_, res) => {
-  res.render('developer/manage-units/update-listing', {
+router.get('/developer/manage-units/update-units/:name', getProject, (_, res) => {
+  res.render('developer/manage-units/update-units', {
     project: res.locals.project
   })
 });
 
-router.post('/developer/manage-units/update-listing', updateUnits, (req, res) => {
+router.post('/developer/manage-units/update-units', updateUnits, (req, res) => {
+  const { fieldId } = req.body || {};
+  if (fieldId) {
+    res.render('/developer/manage-units/update-units');
+    return;
+  }
   req.session.data.updatedProject = res.locals.project;
   res.redirect(`/developer/manage-units`)
 });

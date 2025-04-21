@@ -1,10 +1,17 @@
 {% from "components/file.html" import fileDownload %}
 {% from "components/map.html" import renderMap %}
 {% from "components/banner-notification.html" import banner %}
+{% from "components/quick-actions.html" import quickActions %}
 
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Units overview{% endblock %}
+
+{% set quickActionItems = [
+  {title: "Add new RFI listing" ,summary: "Add a new listing on the RFI marketplace", href: "/developer/manage-units/update-units?fieldId=1"},
+  {title: "View pending requests" ,summary: "View/approve pending RFI requests from interested buyers", href: ""},
+  {title: "Transfer to internal account" ,summary: "", href: ""}
+] %}
 
 {% block main %}
 <div class="ds_wrapper">
@@ -30,6 +37,8 @@
           }) }}
         {% endif %}
         <div class="ds_layout__content table-overflow">
+          <h2 class="ds_section__title">Quick actions</h2>
+          {{ quickActions(quickActionItems) }}
           <h2>Account summary</h2>
           <table class="ds_table">
             <thead>
@@ -66,6 +75,7 @@
                 <th scope="col" class="govuk-table__header">Verified units</th>
                 <th scope="col" class="govuk-table__header">Units listed</th>
                 <th scope="col" class="govuk-table__header">Retired units</th>
+                <th scope="col" class="govuk-table__header">Status</th>
                 <th scope="col" class="govuk-table__header"></th>
               </tr>
             </thead>
@@ -86,6 +96,7 @@
                   {% endif %}
                 </td>
                 <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units !== '0' and 'Active' or 'Pending transfer'}}</td>
                 <td class="govuk-table__cell" style="text-align: right;">
                   <button type="button" class="ds_link"
                     onclick="window.location.href='/projects/{{ project.details_url }}'">
@@ -111,6 +122,7 @@
                 <th scope="col" class="govuk-table__header">Verified units</th>
                 <th scope="col" class="govuk-table__header">Units listed</th>
                 <th scope="col" class="govuk-table__header">Retired units</th>
+                <th scope="col" class="govuk-table__header">Status</th>
                 <th scope="col" class="govuk-table__header"></th>
               </tr>
             </thead>
@@ -131,6 +143,7 @@
                   {% endif %}
                 </td>
                 <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units !== '0' and 'Active' or 'Pending transfer'}}</td>
                 <td class="govuk-table__cell" style="text-align: right;">
                   <button type="button" class="ds_link"
                     onclick="window.location.href='/projects/{{ project.details_url }}'">

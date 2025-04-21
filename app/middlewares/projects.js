@@ -202,10 +202,17 @@ function filterDeveloperProjects(req, res, next) {
 };
 
 function updateUnits(req, res, next) {
-  const { pius_listed, verified_listed, id } = req.body;
+  const { pius_listed, verified_listed, id, project_name } = req.body;
 
-  const current = projects.find(p => p.id == id) || {};
-  const updatedProject = {...current}
+  let updatedProject, current;
+
+  if (project_name) {
+    current = projects.find(p => p.name === project_name) || {};
+    updatedProject = {...current}
+  } else {
+    current = projects.find(p => p.id == id) || {};
+    updatedProject = {...current}
+  }
 
   if (current.piu_units && current.piu_units !== "0") {
     const inc = parseNumber(pius_listed);
