@@ -83,92 +83,30 @@
           </div>
         </div>
       </div>
-      <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" checked id="panel-1" aria-labelledby="panel-1-heading">
-          <div class="ds_accordion-item__header">
-            <h2 id="panel-1-heading" class="ds_accordion-item__title">
-              Recent transfers
-            </h2>
-            <span class="ds_accordion-item__indicator"></span>
-            <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
+      <h2 id="tasks">Tasks</h2>
+      <ul class="ds_task-list">
+        {% for project in projects | customSelectAttr('status', [3, 4]) %}
+        <li class="ds_task-list__task" id="task1">
+            <div class="ds_task-list__task-details">
+                <h3 class="ds_task-list__task-heading">
+                    <a class="ds_task-list__task-link" href="#">{{ project.name }} <span class="visually-hidden">(Completed)</span></a>
+                </h3>
+                <p class="ds_hint-text  ds_task-list__task-summary">
+                  {% if project.status == 3 %}
+                    Project validation submitted: 25 January 2025
+                  {% else %}
+                    Submit project for validation by: 25 July 2025
+                  {% endif %}
+                </p>
           </div>
-          <div class="ds_accordion-item__body table-overflow">
-              <table class="govuk_table">
-                <thead class="govuk-table__head">
-                  <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Name</th>
-                    <th scope="col" class="govuk-table__header">Category</th>
-                    <th scope="col" class="govuk-table__header">Standard</th>
-                    <th scope="col" class="govuk-table__header">Project Type</th>
-                    <th scope="col" class="govuk-table__header">Units Sold</th>
-                    <th class="govuk-table__header"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for project in myProjects | customSelectAttr('status', 4) %}
-                  <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">{{ project.name }}</td>
-                    <td class="govuk-table__cell">{{ project.category }}</td>
-                    <td class="govuk-table__cell">{{ project.standard_name }}</td>
-                    <td class="govuk-table__cell">{{ project.type }}</td>
-                    <td class="govuk-table__cell">{{ project.status * 100 }}</td>
-                    <td class="govuk-table__cell">
-                      <button type="button" class="ds_link"
-                        onclick="window.location.href='projects/{{ project.details_url }}'">
-                        View
-                      </button>
-                    </td>
-                  </tr>
+            {% if project.status == 3 %}
+              <strong class="ds_tag  ds_tag--green" aria-hidden="true">Completed</strong>
+            {% else %}
+              <strong>Incomplete</strong>
+            {% endif %}
+        </li>
                   {% endfor %}
-                </tbody>
-              </table>
-          </div>
-        </div>
-      </div>
-      <div class="ds_accordion" data-module="ds-accordion">
-        <div class="ds_accordion-item account-summary">
-          <input type="checkbox" class="visually-hidden ds_accordion-item__control" id="panel-1" aria-labelledby="panel-1-heading">
-          <div class="ds_accordion-item__header">
-            <h2 id="panel-1-heading" class="ds_accordion-item__title">
-              Projects - Under development
-            </h2>
-            <span class="ds_accordion-item__indicator"></span>
-            <label class="ds_accordion-item__label" for="panel-1"><span class="visually-hidden">Show all</span></label>
-          </div>
-          <div class="ds_accordion-item__body table-overflow">
-            <table class="govuk_table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th scope="col" class="govuk-table__header">Name</th>
-                  <th scope="col" class="govuk-table__header">Category</th>
-                  <th scope="col" class="govuk-table__header">Standard</th>
-                  <th scope="col" class="govuk-table__header">Project Type</th>
-                  <th scope="col" class="govuk-table__header">Date submitted</th>
-                  <th class="govuk-table__header"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for project in myProjects  | customSelectAttr('status', 2) %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">{{ project.name }}</td>
-                  <td class="govuk-table__cell">{{ project.category }}</td>
-                  <td class="govuk-table__cell">{{ project.standard_name }}</td>
-                  <td class="govuk-table__cell">{{ project.type }}</td>
-                  <td class="govuk-table__cell">{{ project.status}}/{{project.status + loop.index }}/2023</td>
-                  <td class="govuk-table__cell">
-                    <button type="button" class="ds_link"
-                      onclick="window.location.href='projects/{{ project.details_url }}'">
-                      View
-                    </button>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      </ul>
     {% endblock %}
   </main>
 </div>
