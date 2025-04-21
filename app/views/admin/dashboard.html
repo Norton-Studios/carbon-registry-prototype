@@ -60,13 +60,14 @@
                   <th scope="col" class="govuk-table__header">Classification</th>
                   <th scope="col" class="govuk-table__header">Account Manager</th>
                   <th scope="col" class="govuk-table__header">Country</th>
-                  <th scope="col" class="govuk-table__header">Last Updated</th>
+                  <th scope="col" class="govuk-table__header">Last updated</th>
                   <th scope="col" class="govuk-table__header">Status</th>
                   <th scope="col" class="govuk-table__header"></th>
                 </tr>
               </thead>
               <tbody>
                 {% for account in pendingAccounts | sortByDateAsc %}
+                {% set date = account.date | reverseDate %}
                 <tr class="govuk-table__row"
                   onclick="window.location.href='/account/{{ account.id }}'"
                   style="cursor: pointer"
@@ -75,7 +76,7 @@
                   <td class="govuk-table__cell">{{ account.classification }}</td>
                   <td class="govuk-table__cell">{{ account.manager }}</td>
                   <td class="govuk-table__cell">{{ account.country }}</td>
-                  <td class="govuk-table__cell">{{ account.date }}</td>
+                  <td class="govuk-table__cell">{{ date }}</td>
                   <td class="govuk-table__cell">{{ "Unverified" if account.status else "Verified" }}</td>
                   <td class="govuk-table__cell">
                     <button
@@ -123,7 +124,7 @@
                   <th scope="col" class="govuk-table__header">Name</th>
                   <th scope="col" class="govuk-table__header">Account</th>
                   <th scope="col" class="govuk-table__header">Standard</th>
-                  <th scope="col" class="govuk-table__header">Project type</th>
+                  <th scope="col" class="govuk-table__header">Category</th>
                   <th scope="col" class="govuk-table__header">Date submitted</th>
                   <th scope="col" class="govuk-table__header">Status</th>
                   <th scope="col" class="govuk-table__header"></th>
@@ -139,7 +140,7 @@
                   <td class="govuk-table__cell">{{ project.project_name }}</td>
                   <td class="govuk-table__cell">{{ project.account_name }}</td>
                   <td class="govuk-table__cell">{{ "WCC" if project.standard == "UK Woodland Carbon Code" else "PC" }}</td>
-                  <td class="govuk-table__cell">{{ project.project_type }}</td>
+                  <td class="govuk-table__cell">{{ project.category }}</td>
                   <td class="govuk-table__cell">{{ project.date }}</td>
                   <td class="govuk-table__cell">Pending approval</td>
                   <td class="govuk-table__cell">

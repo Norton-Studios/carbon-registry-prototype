@@ -42,6 +42,17 @@ addFilter('searchString', function (string, search) {
 addFilter('mapToOptions', function (arr, key) {
   return arr.map(i => ({ label: i[key], value: i[key]}));
 });
+
+addFilter('reverseDate', function (dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return '';
+  
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+
+  const [year, month, day] = parts;
+  return `${day}-${month}-${year}`;
+});
+
 addFilter('slugify', function (string) {
   return string
     .toString()
