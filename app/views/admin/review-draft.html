@@ -1,0 +1,448 @@
+{% from "components/file.html" import fileDownload %}
+{% from "components/map.html" import renderMap %}
+
+{% extends "/layouts/main.html" %}
+
+{% if project.standard == "UK Peatland Code" %}
+
+  {% set area = [
+    {
+      key: "Total area (ha)",
+      value: project['total_area_(ha)'],
+      id: "total_area_(ha)"
+    },
+    {
+      key: "Actively eroding blanket bog (hagg/gully)",
+      value: project['actively_eroding_blanket_bog_(hagg/gully)'],
+      id: "actively_eroding_blanket_bog_(hagg/gully)"
+    },
+    {
+      key: "Actively eroding blanket bog (hagg/gully)",
+      value: project.actively_eroding_blanket_bog_(flat/bare),
+      id: "actively_eroding_blanket_bog_(flat/bare)"
+    },
+    {
+      key: "Drained blanket bog (artificial)",
+      value: project.drained_blanket_bog_(artificial),
+      id: "drained_blanket_bog_(artificial)"
+    },
+    {
+      key: "Drained blanket bog (hagg/gully)",
+      value: project.drained_blanket_bog_,
+      id: "drained_blanket_bog_(hagg/gully)"
+    },
+    {
+      key: "Modified blanket bog",
+      value: project.modified_blanket_bog,
+      id: "modified_blanket_bog"
+    },
+    {
+      key: "Near natural blanket bog",
+      value: project.near_natural_blanket_bog,
+      id: "near_natural_blanket_bog"
+    },
+    {
+      key: "Actively eroding raised bog",
+      value: project.actively_eroding_raised_bog_(hagg/gully),
+      id: "actively_eroding_raised_bog_(hagg/gully)"
+    },
+    {
+      key: "Actively eroding raised bog (flat/bare)",
+      value: project.actively_eroding_raised_bog_(flat/bare),
+      id: "actively_eroding_raised_bog_(flat/bare)"
+    },
+    {
+      key: "Drained raised bog (artificial)",
+      value: project.drained_raised_bog_(artificial),
+      id: "drained_raised_bog_(artificial)"
+    },
+    {
+      key: "Drained raised bog (hagg/gully)",
+      value: project.drained_raised_bog_(hagg/gully),
+      id: "drained_raised_bog_(hagg/gully)"
+    },
+    {
+      key: "Modified raised bog",
+      value: project.modified_raised_bog,
+      id: "modified_raised_bog"
+    },
+    {
+      key: "Near natural raised bog",
+      value: project.near_natural_raised_bog,
+      id: "near_natural_raised_bog"
+    }
+  ] %}
+
+  {% set mitigation = [
+    {
+      key: "Total predicted",
+      value: project['total_predicted_emission_reductions_over_project_lifetime_(tco2e)'],
+      id: "total_predicted_emission_reductions_over_project_lifetime_(tco2e)"
+    },
+    {
+      key: "Predicted claimable",
+      value: project['predicted_claimable_emission_reductions_over_project_lifetime_(tco2e)'],
+      id: "predicted_claimable_emission_reductions_over_project_lifetime_(tco2e)"
+    }
+  ] %}
+
+{% else %}
+
+  {% set area = [ 
+    {
+      key: "Total area (ha)",
+      value: project['total_area_(ha)'],
+      id: "total_area_(ha)"
+    },
+    {
+      key: "Conifer (>80%)",
+      value: project['conifer_(>80%)'],
+      id: "conifer_(>80%)"
+    },
+    {
+      key: "Mixed - predominantly conifer (50-80%)",
+      value: project['mixed_predominantly_conifer_(50-80%)'],
+      id: "mixed_predominantly_conifer_(50-80%)"
+    },
+    {
+      key: "Broadleaved (>80%)",
+      value: project['broadleaved_(>80%)'],
+      id: "broadleaved_(>80%)"
+    },
+    {
+      key: "Mixed - predominantly broadleaved (50-80%)",
+      value: project['mixed_predominantly_broadleaved_(50-80%)'],
+      id: "mixed_predominantly_broadleaved_(50-80%)"
+    }
+  ] %}
+
+  {% set sequestration = [
+    { 
+      key: "Predicted claimable (tco2e)",
+      value: project['predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)'],
+      id: "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)"
+    },
+    {
+      key: "Predicted contribution to buffer (tco2e)",
+      value: project['predicted_contribution_to_buffer_over_project_lifetime_(tco2e)'],
+      id: "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)"
+    },
+    { 
+      key: "Total predicted (tco2e)",
+      value: project['total_predicted_carbon_sequestration_over_project_lifetime_(tco2e)'],
+      id: "total_predicted_carbon_sequestration_over_project_lifetime_(tco2e)"
+    }
+  ] %}
+
+{% endif %}
+
+{% set timeline = [
+  {
+    key: "Implementation date",
+    value: project.project_implementation_date,
+    id: "project_implementation_date"
+  },
+  {
+    key: "Start date",
+    value: project.project_start_date,
+    id: "project_start_date"
+  },
+  {
+    key: "End date",
+    value: project.project_end_date,
+    id: "project_end_date"
+  },
+  {
+    key: "Duration",
+    value: project['project_duration_(years)'],
+    id: "project_duration_(years)"
+  }
+] %}
+
+{% set overview = [
+  { key: "Developer", value: project.account_name, id: "field-developer" },
+  { key: "Category", value: project.category, id: "field-category" },
+  { key: "Standard", value: project.standard, id: "field-standard" }
+] %}
+
+{% block pageTitle %}{{ project.name }}{% endblock %}
+
+{# Back link - in place of breadcrumbs #}
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/">Back</a>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainHeader %}
+    <div class="ds_layout">
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title">Draft: {{ project.project_name }}</h1>
+    
+          {% if data['review-status'] == 'approved' %}
+            <div class="ds_notification-panel" role="alert" aria-live="polite">
+              <h2 class="ds_notification-panel__title">Draft approved</h2>
+              <p class="ds_notification-panel__content" style="color: white;">This project has been approved and marked as Under Development. An email notification has been sent to the account manager. You may now return to the <a href="/" style="text-decoration: underline;">admin dashboard</a>.</p>
+            </div>
+          {% elif data['review-status'] == 'rejected' %}
+            <div class="ds_notification-panel" style="background-color:  	#d32205;" role="alert" aria-live="polite">
+              <h2 class="ds_notification-panel__title">Draft rejected</h2>
+              <p class="ds_notification-panel__content" style="color: white;">This project draft has been rejected and your comments have been emailed to the account manager. You may now return to the <a href="/" style="text-decoration: underline;">admin dashboard</a>.</p>
+            </div>
+          {% else %}
+            <dl class="ds_metadata" id="metadata">
+              <div class="ds_metadata__item">
+                <dt class="ds_metadata__key">Draft created</dt>
+                <dd class="ds_metadata__value">28 March 2025</dd>
+              </div>
+    
+              <div class="ds_metadata__item">
+                <dt class="ds_metadata__key">Submitted for approval</dt>
+                <dd class="ds_metadata__value">21 April 2025</dd>
+              </div>
+    
+              <div class="ds_metadata__item">
+                <dt class="ds_metadata__key">Number of previous reviews</dt>
+                <span>
+                  <dd class="ds_metadata__value">{{ project.reviews|length}}</dd>
+                  <a href="#review-history">(show all)</a>
+                </span>
+              </div>
+            </dl>
+    
+            <form id="review-form" action="/admin/projects/review/{{ project.details_url }}" method="post">
+              <div id="action-buttons" class="button-group approve-reject">
+                <button
+                  type="submit"
+                  name="action"
+                  value="approve"
+                  class="govuk-button"
+                  data-module="govuk-button"
+                >
+                  Approve as Under Development
+                </button>
+            
+                <button
+                  type="button"
+                  id="reject-button"
+                  class="govuk-button govuk-button--warning"
+                  data-module="govuk-button"
+                >
+                  Reject
+                </button>
+              </div>
+    
+              <div id="rejection-panel" class="govuk-form-group" hidden>
+                <label class="govuk-label" for="rejection-comments">
+                  <h3>Reason for rejection</h3>
+                </label>
+                <textarea 
+                  class="govuk-textarea" 
+                  id="rejection-comments" 
+                  name="comments" 
+                  rows="4" 
+                  placeholder="Please give a reason for rejection and describe what the project developer needs to improve before resubmitting."
+                ></textarea>
+    
+                <div class="button-group">
+                  <button
+                    type="submit"
+                    name="action"
+                    value="reject"
+                    class="govuk-button govuk-button--warning"
+                  >
+                    Submit rejection
+                  </button>
+                  <button
+                    type="button"
+                    id="cancel-reject"
+                    class="govuk-button govuk-button--secondary"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          {% endif %}
+        </header>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content project-details">
+      <h2 class="ds_section__title">Overview</h2>
+      <p>{{ project.project_description }}</p>
+      <ul class="ds_summary-list">
+        {% for field in overview %}
+          <li class="ds_summary-list__item">
+            <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+            <span class="ds_summary-list__value">
+              <q class="ds_summary-list__answer">{{ field.value }}</q>
+            </span>
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% if project.standard == "UK Woodland Carbon Code" %}
+      <h2 class="ds_section__title">Sequestration</h2>
+      <ul class="ds_summary-list">
+      {% for field in sequestration %}
+        <li class="ds_summary-list__item ds_small">
+          <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+          <span class="ds_summary-list__value">{{ field.value }}</span>
+        </li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if project.standard == "UK Peatland Code" %}
+      <h2 class="ds_section__title">Mitigation</h2>
+      <ul class="ds_summary-list ds_small">
+      {% for field in mitigation %}
+        <li class="ds_summary-list__item">
+          <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+          <span class="ds_summary-list__value">{{ field.value }}</span>
+        </li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+
+      <h2 class="ds_section__title">Area</h2>
+      <ul class="ds_summary-list ds_small">
+      {% for field in area %}
+        <li class="ds_summary-list__item">
+          <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+          <span class="ds_summary-list__value">{{ field.value }}</span>
+        </li>
+      {% endfor %}
+      </ul>
+      
+      </ol>
+      <h2 class="ds_section__title" id="review-history">Review History</h2>
+      {% if project.reviews|length %}
+
+
+      <div class="ds_tabs" data-module="ds-tabs">
+        <!-- Tabs -->
+        <nav class="ds_tabs__navigation">
+          <ul id="tablist" class="ds_tabs__list">
+            {% for review in project.reviews | sortByDateDesc %}
+            <li class="ds_tabs__tab">
+              <a href="#review-{{ loop.index }}" class="ds_tabs__tab-link" aria-selected="{% if not loop.first %}false{% endif %}" >{{ review.date }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+        {% for review in project.reviews | sortByDateDesc %}
+
+        <div id="review-{{ loop.index }}" class="ds_tabs__content">
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Outcome</th>
+                <th scope="col" class="govuk-table__header">Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  {{"Approved" if review.approved else "Rejected"}}
+                </td>
+                <td class="govuk-table__cell">{{review.comments}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {% endfor %}
+      </div>
+    </div>
+    <div class="ds_layout__sidebar">
+      <h2 class="ds_section__title">Proposed timeline</h2>
+      <ul class="ds_summary-list ds_small">
+        <div class="">
+          <dt class="ds_metadata__key">Implementation date</dt>
+          <span>
+            <dd class="ds_metadata__value">{{ project.project_implementation_date }}</dd>
+          </span>    
+        </div>
+
+        <div class="">
+          <dt class="ds_metadata__key">Start date</dt>
+          <span>
+            <dd class="ds_metadata__value">{{ project.project_start_date }}</dd>
+          </span>    
+        </div>
+
+        <div class="">
+          <dt class="ds_metadata__key">End date</dt>
+          <span>
+            <dd class="ds_metadata__value">{{ project.project_end_date }}</dd>
+          </span>
+        </div>
+
+        <div class="">
+          <dt class="ds_metadata__key">Duration</dt>
+          <span>
+            <dd class="ds_metadata__value">{{ project['project_duration_(years)'] }} years</dd>
+          </span>
+        </div>
+        <a style="float: right;" class="ds_link" href="comment">comment</a>
+      </ul>
+      <h2 class="ds_layout__sidebar-title">Documents</h2>
+      <div>
+        {% for document in project.documents %}
+          {{
+          fileDownload(
+            "/public/svg/" ~ document.type ~ ".svg",
+            "/public/document/" ~ document.url,
+            document.name,
+            document.description,
+            document.size
+          )
+          }}
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No previous reviews found for this project.</p>
+      {% endif %}
+      <h2 class="ds_layout__sidebar-title">Location</h2>
+      {{ renderMap(osApiKey, [project]) }}
+    </div>
+    {% endblock %}
+  </main>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const btnReject = document.getElementById('reject-button');
+    const panelReject = document.getElementById('rejection-panel');
+    const btnCancel = document.getElementById('cancel-reject');
+    const actionButtons = document.getElementById('action-buttons');
+    const textarea = document.getElementById('rejection-comments');
+    const metadata = document.getElementById('metadata');
+
+    btnReject.addEventListener('click', () => {
+      metadata.hidden = true;
+      actionButtons.hidden = true;
+      panelReject.hidden = false; // Show the rejection panel
+      textarea.focus(); // Focus on the textarea
+      textarea.required = true; // Make textarea required for form submission
+    });
+
+    btnCancel.addEventListener('click', () => {
+      metadata.hidden = false;
+      panelReject.hidden = true; // Hide the rejection panel
+      actionButtons.hidden = false; // Show action buttons again
+      textarea.required = false; // Remove required validation
+      textarea.value = ''; // Clear any entered text
+    });
+  });
+</script>
+
+{% endblock %}
