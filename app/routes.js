@@ -380,23 +380,23 @@ router.get('/account', loadAccount, (req, res) => {
   });
 });
 
-router.get('/account/:id', loadAccount, (req, res) => {
-  res.render('/account/dashboard', {
-    account: res.locals.account
-  });
-});
-
 router.get('/account/verification', (req, res) => {
   res.render('account/verification', {
     account: res.locals.account
   });
 });
 
-router.get('/account/account-verified', updateAccount({ pendingApproval: true }), (req, res) => {
-  res.render('account/verification', {
-    account: res.locals.account
-  })
-})
+router.get('/account/account-verified', (req, res) => {
+  res.render('account/account-verified', {});
+});
+
+router.get('/account/company-registration', (req, res) => {
+  res.render('account/company-registration', {});
+});
+
+router.get('/account/payment', (req, res) => {
+  res.render('account/payment', {});
+});
 
 router.post('/account/company-registration', (req, res) => {
   res.redirect('/account/verification');
@@ -404,6 +404,12 @@ router.post('/account/company-registration', (req, res) => {
 
 router.post('/account/payment', (req, res) => {
   res.redirect('/account/account-verified');
+});
+
+router.get('/account/:id', loadAccount, (req, res) => {
+  res.render('/account/dashboard', {
+    account: res.locals.account
+  });
 });
 
 router.get('/notifications/:id', (req, res) => {
