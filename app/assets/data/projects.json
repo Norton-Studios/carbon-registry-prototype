@@ -267,7 +267,7 @@
     "category": "Peatland",
     "standard_name": "Peatland Code",
     "type": "Peatland Restoration",
-    "status": 1,
+    "status": 2,
     "pius_listed": "Yes",
     "validator": "PeatRevive",
     "developer": "EcoTay Ltd.",
@@ -276,26 +276,6 @@
     "details_url": "tayside-peatland-revival",
     "account_name": "EcoTay Ltd.",
     "credits": 1100,
-    "pendingApproval": true,
-    "comments": [ 
-      {
-        "author": "Amirul Roslan",
-        "comment": "Is the country listed correctly? I thought Dundee was in Scotland...",
-        "date": "2025-04-05"
-      }
-    ], 
-    "reviews": [
-      {
-        "date": "2025-04-01",
-        "approved": false,
-        "comments": "Site map shows wrong location and the project name does not match Monitoring Report."
-      },
-      {
-        "date": "2025-04-03",
-        "approved": false,
-        "comments": "Carbon calculations are wrong."
-      }
-    ],
     "documents": [
       "Bridge_End_Design_and_Access_GR.pdf",
       "WCC_Bridge_End_Farm_Year5_MonitoringReport_Strat_2_17.5.23.xlsx",
@@ -316,7 +296,7 @@
     "category": "Rewilding",
     "standard_name": "Scottish Rewilding Code",
     "type": "Rewilding",
-    "status": 7,
+    "status": 2,
     "pius_listed": "Yes",
     "validator": "WildScape",
     "developer": "Hillside Rewilding Ltd.",
