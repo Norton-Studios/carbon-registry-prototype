@@ -48,7 +48,7 @@ function getProjectDraft(req, res, next) {
 async function resetProjectFields(req, _, next) {
   if (req.body.reset) {
     req.session.data.project = {};
-    req.session.data.fieldId = '1';
+    req.session.data.fieldId = '2';
   }
   next();
 }
@@ -219,7 +219,6 @@ async function getProjectSiteDetails(req, res, next) {
     }
 
     req.session.data.project = { ...existingProject, responses };
-    console.log(req.session.data.formGroupFields, 'formGroupFields')
     next();
   } catch (err) {
     return res.redirect('/developer/create-project?bannerState=documentSuccess');
@@ -291,7 +290,6 @@ function updateUnits(req, res, next) {
 
 function mapFormGroupFields(req, res, next) {
   if (!req.params.formGroupId) {
-    console.log('formfields delete from req session')
     next();
   }
   const formGroupFields = formGroups

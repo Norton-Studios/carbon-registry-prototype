@@ -6,7 +6,7 @@
 {% set bodyClasses = "govuk-frontend-supported" %}
 
 {% set currentFieldId = data['fieldId'] | int %}
-{% if currentFieldId < 2 %}
+{% if currentFieldId < 3 %}
   {% set backAction = "/developer/create-project" %}
 {% else %}
   {% set backAction = "/developer/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
@@ -37,7 +37,7 @@
       {{ banner({
         status: 'success',
         title: 'Document upload successful',
-        message: "Continue with your application <a class='ds_default-link' href='/developer/create-project/form?fieldId=1'>here</a>.",
+        message: "Continue with your application <a class='ds_default-link' href='/developer/create-project/form?fieldId=2'>here</a>.",
         assetPath: assetPath
       }) }}
     {% endif %}
