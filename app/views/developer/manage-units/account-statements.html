@@ -15,6 +15,13 @@
   "July 2025"
 ] %}
 
+{# Back link - in place of breadcrumbs #}
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="/">Back</a>
+</div>
+{% endblock %}
+
 {% block main %}
 <div class="ds_wrapper">
   <main id="main-content" class="ds_layout ds_layout--search-results--filters">
