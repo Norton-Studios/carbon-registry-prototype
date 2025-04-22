@@ -173,11 +173,49 @@ async function getProjectSiteDetails(req, res, next) {
 
       responses = { ...responses, ...siteDetails, pdfFile: true };
     } else if (ext.toLowerCase() === '.xlsx' || ext.toLowerCase() === '.csv') {
-
-      // add it here...
-      responses = { ...responses, csvFile: true };
-      req.session.data.project = { ...existingProject, responses };
-      return res.redirect('/developer/create-project?bannerState=documentSuccess');
+      if (file.originalname.toLowerCase().includes('peatland')) {
+        ccFields = {
+          "category": "Restoration",
+          "standard": "UK Peatland Code",
+          "project_type": "Restoration",
+          "project_implementation_date": "01/05/2023",
+          "project_start_date": "01/06/2023",
+          "project_end_date": "01/06/2073",
+          "actively_eroding_blanket_bog_(hagg/gully)": "25.4",
+          "actively_eroding_blanket_bog_(flat/bare)": "12.7",
+          "drained_blanket_bog_(artificial)": "8.5",
+          "drained_blanket_bog_(hagg/gully)": "4.3",
+          "modified_blanket_bog": "15.6",
+          "near_natural_blanket_bog": "7.9",
+          "actively_eroding_raised_bog_(hagg/gully)": "6.2",
+          "actively_eroding_raised_bog_(flat/bare)": "3.1",
+          "drained_raised_bog_(artificial)": "5.8",
+          "drained_raised_bog_(hagg/gully)": "2.4",
+          "modified_raised_bog": "11.0",
+          "near_natural_raised_bog": "9.6",
+          "total_predicted_emission_reductions_over_project_lifetime_(tco2e)": "182,000",
+          "predicted_claimable_emission_reductions_over_project_lifetime_(tco2e)": "145,600",
+          "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "36,400"
+        }
+      } else {
+        ccFields = {
+          "category": "Afforestation",
+          "standard": "UK Woodland Carbon Code",
+          "project_type": "Afforestation",
+          "project_implementation_date": "15/04/2023",
+          "project_start_date": "01/05/2023",
+          "project_end_date": "01/05/2123",
+          "conifer_(>80%)": "40.0",
+          "mixed_predominantly_conifer_(50-80%)": "20.0",
+          "broadleaved_(>80%)": "30.0",
+          "mixed_predominantly_broadleaved_(50-80%)": "35.6",
+          "project_duration_(years)": "100",
+          "total_predicted_carbon_sequestration_over_project_lifetime_(tco2e)": "185,000",
+          "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)": "148,000",
+          "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "37,000"
+        }
+      }
+      responses = { ...responses, ...ccFields, csvFile: true };
     }
 
     req.session.data.project = { ...existingProject, responses };
