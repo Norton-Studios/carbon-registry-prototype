@@ -59,7 +59,7 @@
               <span class="ds_summary-list__key">{{ key | replace('_', ' ') | capitalize }}</span>
               <span class="ds_summary-list__value">{{ data['project']['responses'][key] }}</span>
               <div class="ds_summary-list__actions">
-                <a href="/developer/create-project/form?changeFormLabel={{ key }}" class="ds_link" aria-describedby="q2">Change</a>
+                <a href="/developer/create-project/form?changeFormLabel={{ key | urlencode }}" class="ds_link" aria-describedby="q2">Change</a>
               </div>
             </li>
             {% endif %}

@@ -101,7 +101,7 @@
 {% set currentFieldId = data['fieldId'] | int %}
 
 {% if key %}
-  {% set fields = detailsFields | customSelectAttr("label", key | replace('_', ' ')) %}
+  {% set fields = detailsFields | customSelectAttr("label", key | urldecode | replace('_', ' ')) %}
 {% else %}
   {% set fields = detailsFields | customSelectAttr("id", currentFieldId) %}
 {% endif %}

@@ -45,7 +45,7 @@ addFilter('mapToOptions', function (arr, key) {
 
 addFilter('reverseDate', function (dateStr) {
   if (!dateStr || typeof dateStr !== 'string') return '';
-  
+
   const parts = dateStr.split('-');
   if (parts.length !== 3) return dateStr;
 
@@ -64,3 +64,20 @@ addFilter('slugify', function (string) {
     .replace(/^-+|-+$/g, '')                     // trim starting/ending dashes
     .toLowerCase();
 });
+
+addFilter('urldecode', function(str) {
+  return str
+  .replace(/%20/g, ' ')
+  .replace(/%3A/g, ':')
+  .replace(/%2F/g, '/')
+  .replace(/%3F/g, '?')
+  .replace(/%3D/g, '=')
+  .replace(/%26/g, '&')
+  .replace(/%3C/g, '<')
+  .replace(/%3E/g, '>')
+  .replace(/%22/g, '"')
+  .replace(/%23/g, '#')
+  .replace(/%25/g, '%')
+  .replace(/%28/g, '(')
+  .replace(/%29/g, ')');
+})
