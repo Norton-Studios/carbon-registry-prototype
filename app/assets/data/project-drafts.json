@@ -33,12 +33,12 @@
       {
         "date": "2025-04-01",
         "approved": false,
-        "comments": "Site map shows wrong location and the project name does not match name in draft."
+        "comments": "Predictable claimable sequestration is calculated incorrectly. Please review."
       },
       {
         "date": "2025-04-03",
         "approved": false,
-        "comments": "Carbon calculations are wrong."
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
       }
     ],
     "documents": [
@@ -80,12 +80,12 @@
       {
         "date": "2025-04-01",
         "approved": false,
-        "comments": "Site map shows wrong location and the project name does not match name in draft."
+        "comments": "Predictable claimable sequestration is not in line with standard calculations."
       },
       {
         "date": "2025-04-03",
         "approved": false,
-        "comments": "Carbon calculations are wrong."
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
       }
     ],
     "documents": [
@@ -127,12 +127,12 @@
       {
         "date": "2025-04-01",
         "approved": false,
-        "comments": "Site map shows wrong location and the project name does not match name in draft."
+        "comments": "Predictable claimable sequestration is not in line with standard calculations."
       },
       {
         "date": "2025-04-03",
         "approved": false,
-        "comments": "Carbon calculations are wrong."
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
       }
     ],
     "documents": [
@@ -174,12 +174,12 @@
       {
         "date": "2025-04-01",
         "approved": false,
-        "comments": "Site map shows wrong location and the project name does not match name in draft."
+        "comments": "Predictable claimable sequestration is not in line with standard calculations."
       },
       {
         "date": "2025-04-03",
         "approved": false,
-        "comments": "Carbon calculations are wrong."
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
       }
     ],
     "documents": [
@@ -226,7 +226,7 @@
       {
         "date": "2025-04-03",
         "approved": false,
-        "comments": "Carbon calculations are wrong."
+        "comments": "Site map shows wrong location and the project name does not match name in draft."
       }
     ],
     "documents": [
