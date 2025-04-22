@@ -48,7 +48,7 @@ function getProjectDraft(req, res, next) {
 async function resetProjectFields(req, _, next) {
   if (req.body.reset) {
     req.session.data.project = {};
-    req.session.data.fieldId = '1';
+    req.session.data.fieldId = '2';
   }
   next();
 }
