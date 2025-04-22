@@ -17,8 +17,8 @@
         {% set message = "The project is now being reviewed by the Validator" %}
         {% set action = "Return to the <a class='ds_default-link' href='/'>dashboard</a>." %}
       {% elseif  userType == 'developer' and data['projectResponseValidated'] %}
-       {% set title = "Form Submitted" %}
-       {% set message = "Project is sent for review by regulators" %}
+       {% set title = "Draft Submitted" %}
+       {% set message = "Your draft has been sent for review. You will be notified if further changes are required." %}
        {% set action = "Check your <a class='ds_default-link' href='/'>pending drafts</a> or return to the <a class='ds_default-link' href='/'>home page</a>." %}
       {% else %}
         {% set title = "Registration Complete" %}
