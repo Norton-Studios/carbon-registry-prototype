@@ -12,20 +12,17 @@
 {% endblock %}
 
 {% set fields = [
-  { id: 1, label: "Account name", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: "GreenRoots CIC", formGroupId: 1, formGroup: "Review your project information" },
-  { id: 1, label: "Project id", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: project.id, formGroupId: 1, formGroup: "Review your project information" },
-  { id: 1, label: "Project name", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: project.name, formGroupId: 1, formGroup: "Review your project information" },
-  { id: 2, label: "Project description", fieldType: "textarea", length: "ds_input--fluid-half", readonly: true, value: project.description, formGroupId: 1, formGroup: "Review your project information" },
-  { id: 3, label: "Select a validator", fieldType: "dropdown",
+  { id: 1, label: "Select a validator", fieldType: "dropdown",
     options: validators | mapToOptions('name'),
     helpText: "Accredited by the UK Accreditation Service according to ISO 14065, ISO 14064-3 and ISO 17029.",
-    readonly: false, formGroupId: 2, formGroup: "Who is your validator(VVB)?" }
+    readonly: false, formGroupId: 2, formGroup: "Who is your validator(VVB)?" },
+  { id: 2, formGroupId: 2, formGroup: "Confirm validation details"}
 ] %}
 
 {% set currentFieldId = data['fieldId'] | int %}
 {% set fields = fields | customSelectAttr("id", currentFieldId) %}
 
-{% if currentFieldId == 3 %}
+{% if currentFieldId == 2 %}
   {% set name = "validationSubmited" %}
   {% set value = project.name %}
   {% set buttonText = "Submit project for validation" %}
@@ -51,7 +48,29 @@
               </div>
               {% set currentGroup = field.formGroup %}
             {% endif %}
-            {{ renderField(field, field.value) }}
+
+            {% if currentFieldId == 2 %}
+            <ol class="ds_summary-list">
+              {% set projectDetails = [
+              { key: "Account name", value: project.account_name, id: "invoice-registration" },
+              { key: "Project ID", value: project.id, id: "invoice-validation" },
+              { key: "Project name", value: project.name, id: "invoice-compliance" },
+              { key: "Project description", value: project.description, id: "invoice-compliance" },
+              { key: "Validator", value: data['select_a_validator'], id: "invoice-compliance" }
+              ]%}
+
+              {% for field in projectDetails %}
+              <li class="ds_summary-list__item">
+                <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+                <span class="ds_summary-list__value">
+                  <q class="ds_summary-list__answer">{{ field.value }}</q>
+                </span>
+              </li>
+              {% endfor %}
+            </ol>
+            {% else %}
+              {{ renderField(field, field.value) }}
+            {% endif %}
           {% endfor %}
 
           <div class="button-group">

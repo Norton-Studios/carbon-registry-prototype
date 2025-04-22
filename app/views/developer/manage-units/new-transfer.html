@@ -54,23 +54,23 @@
               </div>
               {% if currentFieldId == 1 %}
               <dl class="ds_page-header__metadata  ds_metadata" style="margin-bottom: 3rem;">
-                  <div class="ds_metadata__item">
-                    <dt class="ds_metadata__key">PIU units available</dt>
-                    <dd class="ds_metadata__value" id="piu-units"></dd>
-                  </div>
-                  <div class="ds_metadata__item">
-                    <dt class="ds_metadata__key">Verified units available</dt>
-                    <dd class="ds_metadata__value" id="verified-units"></dd>
-                  </div>
-                  <div class="ds_metadata__item">
-                    <dt class="ds_metadata__key">PIU units listed</dt>
-                    <dd class="ds_metadata__value" id="pius-listed">{{ project.pius_listed }}</dd>
-                  </div>
-                  <div class="ds_metadata__item">
-                    <dt class="ds_metadata__key">Verified units listed</dt>
-                    <dd class="ds_metadata__value" id="verified-listed"></dd>
-                  </div>
-                </dl>
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key">PIU units available</dt>
+                  <dd class="ds_metadata__value" id="piu-units"></dd>
+                </div>
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key">Verified units available</dt>
+                  <dd class="ds_metadata__value" id="verified-units"></dd>
+                </div>
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key">PIU units listed</dt>
+                  <dd class="ds_metadata__value" id="pius-listed">{{ project.pius_listed }}</dd>
+                </div>
+                <div class="ds_metadata__item">
+                  <dt class="ds_metadata__key">Verified units listed</dt>
+                  <dd class="ds_metadata__value" id="verified-listed"></dd>
+                </div>
+              </dl>
               {% endif %}
               {% set currentGroup = field.formGroup %}
             {% endif %}
