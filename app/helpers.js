@@ -33,16 +33,19 @@ function filterProjects(projects, sessionData) {
 
   return projects.filter(project => {
     let matchesSearch = true;
-    let matchesFilters = true;
     const normalize = (str) => str.toLowerCase().replace(/\s+/g, '');
+    if (data.searchString && sessionData.searchBy) {
+      const projectField = String(project[sessionData.searchBy] || '');
+      matchesSearch = normalize(projectField).includes(normalize(data.searchString));
+    }
 
-    Object.entries(data).forEach(([key, val]) => {
-      if (key === 'searchString' && sessionData.searchBy) {
-        matchesSearch = normalize(String(project[sessionData.searchBy])).includes(normalize(val));
-      } else if (key === 'credits' && Array.isArray(val) && val.length > 0) {
-        matchesFilters = parseNumber(project.pius_listed) > 0 || parseNumber(project.verified_listed) > 0;
+    const matchesFilters = Object.entries(data).every(([key, val]) => {
+      if (key === 'credits' && Array.isArray(val) && val.length > 0) {
+        return parseNumber(project.pius_listed) > 0 || parseNumber(project.verified_listed) > 0;
       } else if (Array.isArray(val) && val.length > 0) {
-        matchesFilters = val.includes(String(project[key] ?? ''))
+        return val.includes(String(project[key] ?? ''))
+      } else {
+        return true; // no filter applied
       }
     });
 
