@@ -55,38 +55,7 @@
 
     {% block mainContent %}
     <div class="ds_layout__content">
-      <h2>Upload your documents</h2>
-      <ul class="ds_task-list">
-        <li class="ds_task-list__task" id="task1">
-          <div class="ds_task-list__task-details">
-            <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/developer/create-project/document-upload">Upload your site map<span class="visually-hidden">(Completed)</span></a>
-            </h3>
-          </div>
-          {% set pdfFile = data.project.responses.pdfFile and 2 or 0 %}
-          {{ getProjectStatus(pdfFile) }}
-        </li>
-        <li class="ds_task-list__task" id="task1">
-          <div class="ds_task-list__task-details">
-            <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/developer/create-project/document-upload">Upload your carbon calculations<span class="visually-hidden">(Completed)</span></a>
-            </h3>
-          </div>
-          {% set csvFile = data.project.responses.csvFile and 2 or 0 %}
-          {{ getProjectStatus(csvFile) }}
-        </li>
-      </ul>
-      <h2>Continue your progress</h2>
-      <ul class="ds_task-list">
-        <li class="ds_task-list__task" id="task1">
-          <div class="ds_task-list__task-details">
-            <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[1] }}">Project timeline<span class="visually-hidden">(Completed)</span></a>
-            </h3>
-          </div>
-        </li>
-      </ul>
-      <h2>Create project submission</h2>
+      <h2>Basic details</h2>
       <ul class="ds_task-list">
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
@@ -99,6 +68,18 @@
             </h3>
           </div>
           {{ getProjectStatus(data.project.status['1']) }}
+        </li>
+      </ul>
+      <h2>Carbon calculations</h2>
+      <ul class="ds_task-list">
+        <li class="ds_task-list__task" id="task1">
+          <div class="ds_task-list__task-details">
+            <h3 class="ds_task-list__task-heading">
+              <a class="ds_task-list__task-link" href="/developer/create-project/document-upload">Upload your carbon calculations<span class="visually-hidden">(Completed)</span></a>
+            </h3>
+          </div>
+          {% set csvFile = data.project.responses.csvFile and 2 or 0 %}
+          {{ getProjectStatus(csvFile) }}
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
@@ -121,13 +102,25 @@
             {% set statusIndex = '5' %}
           {% endif %}
               {% if data.project.status[statusIndex] == 2 %}
-              <a class="ds_task-list__task-link" href="/developer/answer-summary/{{ statusIndex }}">Addtional information<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/developer/answer-summary/{{ statusIndex }}">Carbon calculation details<span class="visually-hidden">(Completed)</span></a>
               {% else %}
-              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[2] }}">Addtional information<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[2] }}">Carbon calculation details<span class="visually-hidden">(Completed)</span></a>
               {% endif %}
             </h3>
           </div>
           {{ getProjectStatus(data.project.status[statusIndex]) }}
+        </li>
+      </ul>
+      <h2>Site details</h2>
+      <ul class="ds_task-list">
+        <li class="ds_task-list__task" id="task1">
+          <div class="ds_task-list__task-details">
+            <h3 class="ds_task-list__task-heading">
+              <a class="ds_task-list__task-link" href="/developer/create-project/document-upload">Upload your site map<span class="visually-hidden">(Completed)</span></a>
+            </h3>
+          </div>
+          {% set pdfFile = data.project.responses.pdfFile and 2 or 0 %}
+          {{ getProjectStatus(pdfFile) }}
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
