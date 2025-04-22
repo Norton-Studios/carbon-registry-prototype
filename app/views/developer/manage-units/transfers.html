@@ -1,14 +1,15 @@
 {% from "components/file.html" import fileDownload %}
 {% from "components/map.html" import renderMap %}
 {% from "components/quick-actions.html" import quickActions %}
+{% from "components/banner-notification.html" import banner %}
 
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Transfers{% endblock %}
 
 {% set quickActionItems = [
-  {title: "New transfer" ,summary: "", href: ""},
-  {title: "Approve transfers" ,summary: "", href: ""},
+  {title: "New transfer" ,summary: "Create a new credit transfer", href: "/developer/manage-units/new-transfer?fieldId=1"},
+  {title: "Pending transfers" ,summary: "Review transfers pending client/regulator confirmation", href: ""},
   {title: "Export all" ,summary: "", href: ""}
 ] %}
 
@@ -23,19 +24,30 @@
       </div>
       {% endblock %}
 
+
       {% include "/developer/manage-units/side-navigation.html" %}
+
 
       {% block mainContent %}
       <div class="ds_layout__list table-overflow">
+
+        {% if data['transferCompleted'] %}
+          {{ banner({
+            status: 'success',
+            title: 'Credit transfer successful',
+            message: 'Transfer of ' ~ data['quantity'] ~ ' units to ' ~ data['recipient_account'] ~ ' is pending confirmations.',
+            assetPath: assetPath
+          }) }}
+        {% endif %}
         <h2 class="ds_section__title">Quick actions</h2>
         {{ quickActions(quickActionItems) }}
         <h2 class="ds_section__title">Transfers summary</h2>
         <table class="ds_table">
           <thead>
             <tr>
-              <th scope="col">PIU's assigned</th>
-              <th scope="col">Verified units assigned</th>
-              <th scope="col">Pending Assignments</th>
+              <th scope="col">PIU's Transfered</th>
+              <th scope="col">Verified Units Transfered</th>
+              <th scope="col">Pending Trasfers</th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +65,7 @@
               <th scope="col" class="govuk-table__header">Credit block</th>
               <th scope="col" class="govuk-table__header">PIU's</th>
               <th scope="col" class="govuk-table__header">Verfied units</th>
-              <th scope="col" class="govuk-table__header">Assigned To</th>
+              <th scope="col" class="govuk-table__header">Transfered To</th>
               <th scope="col" class="govuk-table__header">Date</th>
               <th scope="col" class="govuk-table__header"></th>
             </tr>

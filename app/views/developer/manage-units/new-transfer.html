@@ -1,0 +1,131 @@
+{% from "components/form-fields.html" import renderField %}
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Validate Project{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block breadcrumbs %}
+<div class="ds_wrapper">
+  <a class="ds_back-link" href="javascript:window.history.back()">Back</a>
+</div>
+{% endblock %}
+
+{% set helpTextId2 = project.verified_units and "Current units available: " ~ project.verified_units or "Current units available: " ~ project.piu_units %}
+
+{% set fields = [
+  { id: 1, label: "Project name", fieldType: "dropdown",
+  options: myProjects | customSelectAttr('status', [3, 4]) | mapToOptions('name'),
+  length: "ds_input--fluid-half", readonly: false, formGroupId: 1, formGroup: "Select a credit block" },
+  { id: 2, label: "Quantity", fieldType: "text", helpText: helpTextId2, formGroupId: 1, formGroup: "How many units to transfer?" },
+  { id: 3, label: "Recipient account", fieldType: "dropdown",
+  options: (accounts or []) | mapToOptions('account_name'),
+  length: "ds_input--fluid-half", readonly: false, formGroupId: 1, formGroup: "Select a recipient account" }
+] %}
+
+{% set currentFieldId = data['fieldId'] | int %}
+{% set fields = fields | customSelectAttr("id", currentFieldId) %}
+
+{% if currentFieldId == 3 %}
+  {% set name = "transferCompleted" %}
+  {% set value = true %}
+  {% set buttonText = "Transfer credits" %}
+  {% set nextAction = "/developer/manage-units/transfers"%}
+{% else %}
+  {% set name = "fieldId" %}
+  {% set value = currentFieldId + 1 %}
+  {% set buttonText = "Next steps" %}
+  {% set nextAction = "/developer/manage-units/new-transfer"%}
+{% endif %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content">
+    {% block mainContent %}
+    <div class="ds_layout__content">
+      <fieldset>
+        <form action="{{ nextAction }}" method="post">
+          {% for field in fields %}
+          {% if field.formGroup != currentGroup %}
+              <div class="ds_page-header">
+                <h1 class="ds_page-header__title">
+                  {{ field.formGroup }}
+                </h1>
+              </div>
+              {% if currentFieldId == 1 %}
+              <dl class="ds_page-header__metadata  ds_metadata" style="margin-bottom: 3rem;">
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">PIU units available</dt>
+                    <dd class="ds_metadata__value" id="piu-units"></dd>
+                  </div>
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">Verified units available</dt>
+                    <dd class="ds_metadata__value" id="verified-units"></dd>
+                  </div>
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">PIU units listed</dt>
+                    <dd class="ds_metadata__value" id="pius-listed">{{ project.pius_listed }}</dd>
+                  </div>
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">Verified units listed</dt>
+                    <dd class="ds_metadata__value" id="verified-listed"></dd>
+                  </div>
+                </dl>
+              {% endif %}
+              {% set currentGroup = field.formGroup %}
+            {% endif %}
+            {{ renderField(field, field.value) }}
+          {% endfor %}
+
+          <div class="button-group">
+            <button
+              type="submit"
+              name="{{ name }}"
+              value="{{ value }}"
+              class="ds_button ds_button--has-icon">
+              {{ buttonText }}
+              <svg class="ds_icon" aria-hidden="true" role="img">
+                <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <script>
+          let projectData;
+          const dropdown = document.getElementById('{{ "Project name" | lower | replace(" ", "_") }}');
+
+          function updateProjectMetadata (selected) {
+            const project = projectData?.find(p => String(p.name) === selected);
+            if (!project) return;
+
+            document.project = project;
+            document.getElementById('piu-units').textContent = project.piu_units;
+            document.getElementById('pius-listed').textContent = project.pius_listed;
+            document.getElementById('verified-units').textContent = project.verified_units;
+            document.getElementById('verified-listed').textContent = project.verified_listed;
+            return;
+          }
+
+          async function getData() {
+            projectData = await fetch('/api/developer/manage-units')
+              .then(res => res.json())
+              .then(data => data.myProjects);
+          }
+
+          window.onload = async() => {
+            await getData();
+            if (dropdown?.value) {
+              getData();
+              updateProjectMetadata(dropdown.value)
+            }
+          }
+
+          dropdown?.addEventListener('change', (e) => updateProjectMetadata(e.target?.value));
+        </script>
+      </fieldset>
+    </div>
+    {% endblock %}
+  </main>
+</div>
+{% endblock %}
