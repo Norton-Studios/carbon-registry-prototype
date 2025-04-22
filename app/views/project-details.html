@@ -8,8 +8,8 @@
 
 {% set projectFields = [
   { key: "Category", value: project.category, id: "field-category" },
+  { key: "Standard", value: project.standard, id: "field-standard" },
   { key: "Type", value: project.type, id: "field-type" },
-  { key: "Standard", value: project.standard_name, id: "field-standard" },
   { key: "Status", value: data['statusEnum'][project.status], id: "field-status" },
   { key: "PIUs Listed", value: project.pius_listed, id: "field-pius" },
   { key: "Validator", value: project.validator, id: "field-validator" },
@@ -59,9 +59,8 @@
           <header class="ds_page-header">
             <h1 class="ds_page-header__title">{{ project.name }}</h1>
             <p class="ds_page-header__description">
-              {{ project.category }} - {{ project.type }}
+              {{ project.description }}
             </p>
-            <p>{{ project.description }}</p>
           </header>
           {% if userType == "trader" %}
           <button class="ds_button" type="button" onclick="window.location.href='/trader/inqueries/' + '{{ project.details_url }}' + '?fieldId=1'">Request for information</button>
@@ -85,12 +84,14 @@
       <h2 class="ds_section__title">Project details</h2>
       <ol class="ds_summary-list">
         {% for field in projectFields %}
-          <li class="ds_summary-list__item ds_small">
-            <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
-            <span class="ds_summary-list__value">
-              <q class="ds_summary-list__answer">{{ field.value }}</q>
-            </span>
-          </li>
+          {% if not (field.key == "Type" and project.standard == "UK Peatland Code") %}
+            <li class="ds_summary-list__item ds_small">
+              <span class="ds_summary-list__key" id="{{ field.id }}">{{ field.key }}</span>
+              <span class="ds_summary-list__value">
+                <q class="ds_summary-list__answer">{{ field.value }}</q>
+              </span>
+            </li>
+          {% endif %}
         {% endfor %}
       </ol>
     </div>
