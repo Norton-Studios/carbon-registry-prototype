@@ -15,6 +15,9 @@ function generateFilters(projects, userType = 'guest') {
   if (userType === 'developer') {
     delete filters['Account Name']
   }
+  if (userType === 'trader') {
+    delete filters['Credits']
+  }
   return filters;
 }
 

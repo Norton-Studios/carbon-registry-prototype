@@ -38,6 +38,33 @@ dotenv.config();
 
 router.use(applyUserType);
 
+router.use('/trader/inqueries/:name', getProject, (_, res) => {
+  res.render('/trader/inqueries');
+});
+
+router.use('/trader/submit-bid/:name', getProject, (_, res) => {
+  res.render('/trader/submit-bid');
+});
+
+router.use('/trader', getAccountsByDeveloper, filterDeveloperProjects, (_, res, next) => {
+  res.locals.myAccounts = res.locals.filteredAccounts;
+  res.locals.myProjects = res.locals.defaultProjects;
+  res.locals.projects;
+  res.locals.updatedProject;
+
+  next();
+});
+
+router.get('/trader/dashboard', (req, res) => {
+  const { inquerySubmitted, bidSubmitted } = req.session.data;
+  if (inquerySubmitted || bidSubmitted) {
+    ['bidSubmitted', 'inquerySubmitted'].forEach(key => delete req.session.data[key])
+  }
+  res.locals.bidSubmitted = bidSubmitted;
+  res.locals.inquerySubmitted = inquerySubmitted;
+  res.render('trader/dashboard')
+})
+
 router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (_, res, next) => {
   res.locals.myAccounts = res.locals.filteredAccounts;
   res.locals.myProjects = res.locals.defaultProjects;
@@ -294,6 +321,18 @@ router.get('/', (req, res) => {
             myProjects: res.locals.defaultProjects,
             myAccounts: res.locals.filteredAccounts
           });
+        });
+      });
+      break;
+
+    case 'trader':
+      res.locals.defaultProjects = projects.filter((p) => p.pius_listed !== "0" || p.verified_listed !== "0");
+      applyProjectFilters(req, res, () => {
+        res.render('registry', {
+          accounts,
+          osApiKey: process.env.OS_API_KEY,
+          projects: res.locals.filteredProjects,
+          filters: res.locals.projectFilters
         });
       });
       break;

@@ -1,0 +1,170 @@
+{% from "components/file.html" import fileDownload %}
+{% from "components/map.html" import renderMap %}
+{% from "components/banner-notification.html" import banner %}
+{% from "components/quick-actions.html" import quickActions %}
+{% from "components/side-navigation.html" import sideNavigation %}
+
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Units overview{% endblock %}
+
+{% set navItems = [
+  { href: "/trader/dashboard", label: "Overview" },
+  { href: "/trader/account-summary", label: "Account Summary" }
+] %}
+
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
+      {% block mainHeader %}
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title"></h1>
+        </header>
+      </div>
+      {% endblock %}
+
+
+      <div class="ds_layout__sidebar">
+      {{ sideNavigation(navItems) }}
+      </div>
+
+      {% block mainContent %}
+      <div class="ds_layout__list side_navigation">
+        {% if updatedProject %}
+          {{ banner({
+            status: 'success',
+            title: "Update success",
+            message: "Listed units updated in " ~ updatedProject.name,
+            assetPath: assetPath
+          }) }}
+        {% endif %}
+        <div class="ds_layout__content table-overflow">
+          <h2>Account summary</h2>
+          <table class="ds_table">
+            <thead>
+              <tr>
+                <th scope="col">Standard</th>
+                <th scope="col">Measure</th>
+                <th scope="col">Issuances</th>
+                <th scope="col">Holdings</th>
+                <th scope="col">Listed</th>
+                <th scope="col">Retirements</th>
+                <th scope="col">PIU's</th>
+                <th scope="col">Pending Transfer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ (myProjects | first).standard or 'WCC' }}</td>
+                <td>VER (tCO2e)</td>
+                <td>5,626,013</td>
+                <td>3,249,233</td>
+                <td>2,000,000</td>
+                <td>2,376,780</td>
+                <td>12,100</td>
+                <td>52,450</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2 class="ds_section__title">WCC Holdings</h2>
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Credit block</th>
+                <th scope="col" class="govuk-table__header">PIU's</th>
+                <th scope="col" class="govuk-table__header">Verified units</th>
+                <th scope="col" class="govuk-table__header">Units listed</th>
+                <th scope="col" class="govuk-table__header">Retired units</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
+              {% if not 'Peatland' in project.name %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ project.piu_units }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units }}</td>
+                <td class="govuk-table__cell">
+                  {% if project.piu_units and project.pius_listed !== "0" %}
+                    {{ project.pius_listed }}
+                  {% elseif project.verified_units and project.verified_listed !== "0" %}
+                    {{ project.verified_listed }}
+                  {% else %}
+                    <strong>Not listed</strong>
+                  {% endif %}
+                </td>
+                <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units !== '0' and 'Active' or 'Pending transfer'}}</td>
+                <td class="govuk-table__cell" style="text-align: right;">
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='/projects/{{ project.details_url }}'">
+                    Manage
+                  </button> |
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='projects/{{ project.details_url }}'">
+                    Transfer
+                  </button>
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          <a class="ds_link" href="/developer/manage-units">View all</a>
+          <h2 class="ds_section__title">Peatland Holdings</h2>
+          <table class="govuk_table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Credit block</th>
+                <th scope="col" class="govuk-table__header">PIU's</th>
+                <th scope="col" class="govuk-table__header">Verified units</th>
+                <th scope="col" class="govuk-table__header">Units listed</th>
+                <th scope="col" class="govuk-table__header">Retired units</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
+              {% if 'Peatland' in project.name %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{ project.name }}</td>
+                <td class="govuk-table__cell">{{ project.piu_units }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units }}</td>
+                <td class="govuk-table__cell">
+                  {% if project.piu_units and project.pius_listed !== "0" %}
+                    {{ project.pius_listed }}
+                  {% elseif project.verified_units and project.verified_listed !== "0" %}
+                    {{ project.verified_listed }}
+                  {% else %}
+                    <strong>Not listed</strong>
+                  {% endif %}
+                </td>
+                <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
+                <td class="govuk-table__cell">{{ project.verified_units !== '0' and 'Active' or 'Pending transfer'}}</td>
+                <td class="govuk-table__cell" style="text-align: right;">
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='/projects/{{ project.details_url }}'">
+                    Manage
+                  </button> |
+                  <button type="button" class="ds_link"
+                    onclick="window.location.href='projects/{{ project.details_url }}'">
+                    Transfer
+                  </button>
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          <a class="ds_link" href="/developer/manage-units">View all</a>
+        </div>
+      </div>
+      {% endblock %}
+  </main>
+</div>
+{% endblock %}

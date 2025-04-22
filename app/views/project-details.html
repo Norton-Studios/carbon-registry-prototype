@@ -64,8 +64,8 @@
             <p>{{ project.description }}</p>
           </header>
           {% if userType == "trader" %}
-          <button class="ds_button" type="button">Request for infomation</button>
-          <button class="ds_button ds_button--secondary" type="button">Submit a bid</button>
+          <button class="ds_button" type="button" onclick="window.location.href='/trader/inqueries/' + '{{ project.details_url }}' + '?fieldId=1'">Request for information</button>
+          <button class="ds_button ds_button--secondary" type="button" onclick="window.location.href='/trader/submit-bid/' + '{{ project.details_url }}' + '?fieldId=1'">Submit a bid</button>
           {% endif %}
         {% endif %}
       </div>

@@ -1,4 +1,6 @@
 {% from "components/side-navigation.html" import sideNavigation %}
+{% from "components/quick-actions.html" import quickActions %}
+
 {% extends "/layouts/main.html" %}
 
 {% block pageTitle %}Developer Dashboard{% endblock %}
@@ -15,12 +17,15 @@
       </div>
     {% endblock %}
 
+    {% set quickActionItems = [
+      {title: "View credit summary" ,summary: "Check total credits issued, retired, and available across your project portfolio", href: "/developer/manage-units"},
+      {title: "View recent transfers" ,summary: "Review and manage recent carbon credit transfers between accounts", href: "/developer/manage-units/transfers"},
+      {title: "Download account statements" ,summary: "Download detailed transaction and balance statements for your registry account", href: "/developer/manage-units/account-statements"}
+    ] %}
+
     {% set navItems = [
       { href: "/", label: "Milestones" },
-      { href: "/#tasks", label: "Tasks" },
-      { href: "/developer/manage-units", label: "Credit summary" },
-      { href: "/developer/manage-units/transfers", label: "Transfers" },
-      { href: "/developer/manage-units/account-statements", label: "Account Statements" }
+      { href: "/#tasks", label: "Tasks" }
     ] %}
 
     <div class="ds_layout__sidebar">
@@ -38,12 +43,13 @@
         </div>
         <div class="govuk-notification-banner__content">
           <p class="govuk-notification-banner__heading">
-            {{ (projects | first).name }} has been validated. Check the invoice for payments due.
+            {{ data['validationSubmited'] }} has been validated. Check the invoice for payments due.
             <a class="govuk-notification-banner__link" href="/developer/my-projects/{{ (projects | first).details_url }}/verification">View invoice</a>
           </p>
         </div>
       </div>
       {% endif %}
+      {{ quickActions(quickActionItems) }}
       <h2>Milestones</h2>
       <div class="table-overflow">
           <table class="govuk_table">
@@ -72,14 +78,6 @@
                 <td class="govuk-table__cell"><a class="ds_link" href="">Submit issuances</a></td>
               </tr>
               {% endfor %}
-              {% for project in myProjects | customSelectAttr('status', 4) %}
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">{{ project.name }}</td>
-                <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
-                <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
-                <td class="govuk-table__cell"><a class="ds_link" href="">Submit issuances</a></td>
-              </tr>
-              {% endfor %}
             </tbody>
           </table>
           <a class="ds_link" href="/developer/manage-units">View all</a>
@@ -90,7 +88,7 @@
         <li class="ds_task-list__task" id="task1">
             <div class="ds_task-list__task-details">
                 <h3 class="ds_task-list__task-heading">
-                    <a class="ds_task-list__task-link" href="#">{{ project.name }} <span class="visually-hidden">(Completed)</span></a>
+                    <a class="ds_task-list__task-link" href="/developer/validate-project/{{ project.details_url}}?fieldId=1">{{ project.name }} <span class="visually-hidden">(Completed)</span></a>
                 </h3>
                 <p class="ds_hint-text  ds_task-list__task-summary">
                   {% if project.status == 3 %}

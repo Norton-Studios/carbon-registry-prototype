@@ -12,23 +12,16 @@
 {% endblock %}
 
 {% set fields = [
-  { id: 1, label: "Account name", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: "GreenRoots CIC", formGroupId: 1, formGroup: "Review your project information" },
-  { id: 1, label: "Project id", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: project.id, formGroupId: 1, formGroup: "Review your project information" },
-  { id: 1, label: "Project name", fieldType: "text", length: "ds_input--fluid-half", readonly: true, value: project.name, formGroupId: 1, formGroup: "Review your project information" },
-  { id: 2, label: "Project description", fieldType: "textarea", length: "ds_input--fluid-half", readonly: true, value: project.description, formGroupId: 1, formGroup: "Review your project information" },
-  { id: 3, label: "Select a validator", fieldType: "dropdown",
-    options: validators | mapToOptions('name'),
-    helpText: "Accredited by the UK Accreditation Service according to ISO 14065, ISO 14064-3 and ISO 17029.",
-    readonly: false, formGroupId: 2, formGroup: "Who is your validator(VVB)?" }
+  { id: 1, label: "Message", fieldType: "textarea",length: "ds_input--fluid-half", readonly: false, formGroupId: 1, formGroup: "Request for infomation" }
 ] %}
 
 {% set currentFieldId = data['fieldId'] | int %}
 {% set fields = fields | customSelectAttr("id", currentFieldId) %}
 
-{% if currentFieldId == 3 %}
-  {% set name = "validationSubmited" %}
+{% if currentFieldId == 1 %}
+  {% set name = "inquerySubmitted" %}
   {% set value = project.name %}
-  {% set buttonText = "Submit project for validation" %}
+  {% set buttonText = "Send message" %}
 {% else %}
   {% set name = "fieldId" %}
   {% set value = currentFieldId + 1 %}
@@ -41,7 +34,7 @@
     {% block mainContent %}
     <div class="ds_layout__content">
       <fieldset>
-        <form action="/developer/validate-project/{{ project.details_url }}" method="post">
+        <form action="/trader/dashboard" method="post">
           {% for field in fields %}
           {% if field.formGroup != currentGroup %}
               <div class="ds_page-header">
@@ -49,6 +42,27 @@
                   {{ field.formGroup }}
                 </h1>
               </div>
+              {% if currentFieldId == 1 %}
+              <dl class="ds_page-header__metadata  ds_metadata" style="margin-bottom: 3rem;">
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">From</dt>
+                    <dd class="ds_metadata__value">trader_name@account.com</dd>
+                  </div>
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">Project name</dt>
+                    <dd class="ds_metadata__value">{{ project.name }}</dd>
+                  </div>
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">PIU units available</dt>
+                    <dd class="ds_metadata__value">{{ project.pius_listed }}</dd>
+                  </div>
+                  <div class="ds_metadata__item">
+                    <dt class="ds_metadata__key">Verified units available</dt>
+                    <dd class="ds_metadata__value">{{ project.verified_listed }}</dd>
+                  </div>
+                </dl>
+                <h2>Title: Response to RFI #{{ project.id }}</h2>
+              {% endif %}
               {% set currentGroup = field.formGroup %}
             {% endif %}
             {{ renderField(field, field.value) }}
