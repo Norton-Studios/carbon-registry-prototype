@@ -169,6 +169,11 @@
   { key: "Standard", value: project.standard, id: "field-standard" }
 ] %}
 
+{% if project.standard == "UK Woodland Carbon Code" %}
+  {% set type = { key: "Type", value: project.project_type, id: "field-type" } %}
+  {% set overview = (overview.push(type), overview) %}
+{% endif %}
+
 {% block pageTitle %}{{ project.project_name }}{% endblock %}
 
 {# Back link - in place of breadcrumbs #}
