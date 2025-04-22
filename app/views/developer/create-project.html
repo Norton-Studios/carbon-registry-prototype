@@ -6,9 +6,9 @@
 {% set bodyClasses = "govuk-frontend-supported" %}
 
 {% if data['project']['responses']['standard'] == "UK Peatland Code" %}
-  {% set idQuery = [1, 6, 10, 18] %}
+  {% set idQuery = [2, 7, 10, 18] %}
 {% else %}
-  {% set idQuery = [1, 6, 10, 13] %}
+  {% set idQuery = [2, 7, 10, 13] %}
 {% endif %}
 
 {% block main %}
@@ -81,7 +81,7 @@
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[1] }}">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[1] }}">Project timeline<span class="visually-hidden">(Completed)</span></a>
             </h3>
           </div>
         </li>
@@ -104,9 +104,9 @@
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
               {% if data.project.status['2'] == 2 %}
-                <a class="ds_task-list__task-link" href="/developer/answer-summary/2">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+                <a class="ds_task-list__task-link" href="/developer/answer-summary/2">Project timeline<span class="visually-hidden">(Completed)</span></a>
               {% else %}
-                <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[1] }}">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+                <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[1] }}">Project timeline<span class="visually-hidden">(Completed)</span></a>
               {% endif %}
             </h3>
           </div>
