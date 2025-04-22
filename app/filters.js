@@ -80,4 +80,8 @@ addFilter('urldecode', function(str) {
   .replace(/%25/g, '%')
   .replace(/%28/g, '(')
   .replace(/%29/g, ')');
-})
+});
+
+addFilter('split', function(str, char) {
+  return str.split(char)
+});

@@ -33,6 +33,16 @@
       }) }}
     {% endif %}
 
+
+    {% if data['projectResponseValidated'] %}
+      {{ banner({
+        status: 'success',
+        title: "Project registration form is completed",
+        message: 'Submit your application <a class="ds_default-link" href="/register/success">here</a>.',
+        assetPath: assetPath
+      }) }}
+    {% endif %}
+
     {% macro getProjectStatus(value) %}
       {% if value == 1 %}
         <strong class="ds_tag ds_tag--grey" aria-hidden="true">Incomplete</strong>
@@ -81,7 +91,11 @@
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[0] }}">Project details and description<span class="visually-hidden">(Completed)</span></a>
+              {% if data.project.status['1'] == 2 %}
+                <a class="ds_task-list__task-link" href="/developer/answer-summary/1">Project details and description<span class="visually-hidden">(Completed)</span></a>
+              {% else %}
+                <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[0] }}">Project details and description<span class="visually-hidden">(Completed)</span></a>
+              {% endif %}
             </h3>
           </div>
           {{ getProjectStatus(data.project.status['1']) }}
@@ -89,7 +103,11 @@
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[1] }}">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+              {% if data.project.status['2'] == 2 %}
+                <a class="ds_task-list__task-link" href="/developer/answer-summary/2">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+              {% else %}
+                <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[1] }}">Project activity and type<span class="visually-hidden">(Completed)</span></a>
+              {% endif %}
             </h3>
           </div>
           {{ getProjectStatus(data.project.status['2']) }}
@@ -97,25 +115,44 @@
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
-              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[2] }}">Addtional information<span class="visually-hidden">(Completed)</span></a>
-            </h3>
-          </div>
           {% if data.project.responses.standard == "UK Woodland Carbon Code" %}
             {% set statusIndex = '3' %}
           {% else %}
             {% set statusIndex = '5' %}
           {% endif %}
+              {% if data.project.status[statusIndex] == 2 %}
+              <a class="ds_task-list__task-link" href="/developer/answer-summary/{{ statusIndex }}">Addtional information<span class="visually-hidden">(Completed)</span></a>
+              {% else %}
+              <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[2] }}">Addtional information<span class="visually-hidden">(Completed)</span></a>
+              {% endif %}
+            </h3>
+          </div>
           {{ getProjectStatus(data.project.status[statusIndex]) }}
         </li>
         <li class="ds_task-list__task" id="task1">
           <div class="ds_task-list__task-details">
             <h3 class="ds_task-list__task-heading">
+              {% if data.project.status['4'] == 2 %}
+                <a class="ds_task-list__task-link" href="/developer/answer-summary/4">Project site details<span class="visually-hidden">(Completed)</span></a>
+              {% else %}
               <a class="ds_task-list__task-link" href="/developer/create-project/form?fieldId={{ idQuery[3] }}">Project site details<span class="visually-hidden">(Completed)</span></a>
+              {% endif %}
             </h3>
           </div>
           {{ getProjectStatus(data.project.status['4']) }}
         </li>
       </ul>
+      {% if data['projectResponseValidated'] %}
+        <button
+          onclick="window.location.href = '/register/success'"
+          style="margin-top: 3rem;"
+          class="ds_button ds_button--has-icon">
+          Submit your application
+          <svg class="ds_icon" aria-hidden="true" role="img">
+            <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
+          </svg>
+        </button>
+      {% endif %}
     </div>
     {% endblock %}
   </main>

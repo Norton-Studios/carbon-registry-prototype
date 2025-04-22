@@ -12,13 +12,9 @@
   {% set backAction = "/developer/create-project/form?fieldId=" ~ (currentFieldId - 1) %}
 {% endif %}
 
-{% if data['projectResponseValidated'] %}
-  {% set nextAction = "/register/success" %}
-  {% set buttonText = "Submit your application" %}
-{% else %}
-  {% set nextAction = "/developer/create-project" %}
-  {% set buttonText = "Continue your application" %}
-{% endif %}
+{% set nextAction = "/developer/create-project" %}
+{% set buttonText = "Continue your application" %}
+{% set fieldGroup = formGroupFields or data['formGroupFields'] or [] %}
 
 {% block breadcrumbs %}
 <div class="ds_wrapper">
@@ -54,8 +50,8 @@
       <form action="{{ nextAction }}" method="post" class="ds_!_margin-top--4">
         <ul class="ds_summary-list">
           {% for key in data['projectFields'] %}
-            {% if data['project']['responses'][key] and key != 'paymentSuccess' %}
-            <li class="ds_summary-list__item">
+          {% if data['project']['responses'][key] and key in (fieldGroup | split(',')) and key != 'paymentSuccess' %}
+          <li class="ds_summary-list__item">
               <span class="ds_summary-list__key">{{ key | replace('_', ' ') | capitalize }}</span>
               <span class="ds_summary-list__value">{{ data['project']['responses'][key] }}</span>
               <div class="ds_summary-list__actions">

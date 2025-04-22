@@ -110,6 +110,7 @@
 {% set prevField = detailsFields | customSelectAttr("id", currentFieldId - 1) | first %}
 {% set lastFieldId = (detailsFields | last).id %}
 {% set currentGroup = '' %}
+{% set currentFormGroupId = 0 %}
 
 {% if key or nextField is none or nextField.formGroupId != (fields | first).formGroupId %}
   {% set formAction = "/developer/create-project/form?lastFieldId=" ~ lastFieldId %}
@@ -117,6 +118,8 @@
   {% set formAction = "/developer/create-project/form" %}
 {% endif %}
 
+
+{% set formGroupFields = [] %}
 
 {% if prevField is none or prevField.formGroupId != (fields | first).formGroupId or currentFieldId == 1 %}
   {% set backAction = "/developer/create-project" %}
@@ -144,11 +147,20 @@
                   {{ field.formGroup }}
                 </h1>
               </div>
+              {% set currentFormGroupId = field.formGroupId %}
               {% set currentGroup = field.formGroup %}
             {% endif %}
             {{ renderField(field, data['project']['responses'][field.label | lower | replace(" ", "_")]) }}
+            {% endfor %}
+
+          {% for f in detailsFields %}
+            {% if f.formGroupId == currentFormGroupId %}
+            {% set transformedKey = f.label | lower | replace(" ", "_") %}
+            {% set formGroupFields = formGroupFields | merge([transformedKey]) %}
+            {% endif %}
           {% endfor %}
 
+          <input class="fully-hidden" name="formGroupFields" id="formGroupFields" value="{{ formGroupFields | join(',') }}"/>
           <div class="button-group">
             <button
               type="submit"

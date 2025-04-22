@@ -16,7 +16,6 @@ const upload = multer({ dest: 'app/assets/uploads/' });
 const { lookupCompany, updateRegistrationResponses } = require('./helpers.js');
 const {
   saveAccount,
-  updateAccount,
   loadAccount,
   getAccountsByDeveloper
 } = require('./middlewares/accounts.js');
@@ -30,6 +29,7 @@ const {
   getFormGroupStatus,
   getProjectSiteDetails,
   filterDeveloperProjects,
+  mapFormGroupFields,
   updateUnits
 } = require('./middlewares/projects.js');
 const { applyUserType, ensureAdmin } = require ('./middlewares/users.js')
@@ -113,6 +113,10 @@ router.post('/developer/manage-units/update-units', updateUnits, (req, res) => {
 
 router.post('/developer/upload', upload.single('fileUpload'), getProjectSiteDetails, getFormGroupStatus, async (_, res) => {
   res.redirect('/developer/create-project/answer-summary?bannerState=documentSuccess');
+});
+
+router.get('/developer/answer-summary/:formGroupId', mapFormGroupFields, (_, res) => {
+  res.render('developer/create-project/answer-summary');
 });
 
 router.post('/developer/create-project/form', updateProjectResponses, getFormGroupStatus, projectResponseValidate, (_, res) => {

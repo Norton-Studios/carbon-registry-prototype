@@ -1,7 +1,7 @@
 const path = require('path');
 const projects = require('../assets/data/projects.json');
 const projectDrafts = require('../assets/data/project-drafts.json');
-const formGroups = require('../assets/data/formGroups.json')
+const formGroups = require('../assets/data/formGroups.json');
 const {
   generateFilters,
   filterProjects,
@@ -171,6 +171,7 @@ async function getProjectSiteDetails(req, res, next) {
         return res.redirect('/developer/create-project?bannerState=documentSuccess');
       }
 
+      req.session.data.formGroupFields = Object.keys(siteDetails).join(',');
       responses = { ...responses, ...siteDetails, pdfFile: true };
     } else if (ext.toLowerCase() === '.xlsx' || ext.toLowerCase() === '.csv') {
       if (file.originalname.toLowerCase().includes('peatland')) {
@@ -193,6 +194,7 @@ async function getProjectSiteDetails(req, res, next) {
           "drained_raised_bog_(hagg/gully)": "2.4",
           "modified_raised_bog": "11.0",
           "near_natural_raised_bog": "9.6",
+          "project_duration_(years)": "100",
           "total_predicted_emission_reductions_over_project_lifetime_(tco2e)": "182,000",
           "predicted_claimable_emission_reductions_over_project_lifetime_(tco2e)": "145,600",
           "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "36,400"
@@ -215,6 +217,7 @@ async function getProjectSiteDetails(req, res, next) {
           "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "37,000"
         }
       }
+      req.session.data.formGroupFields = Object.keys(ccFields).join(',');
       responses = { ...responses, ...ccFields, csvFile: true };
     }
 
@@ -288,6 +291,19 @@ function updateUnits(req, res, next) {
   next();
 }
 
+function mapFormGroupFields(req, res, next) {
+  const formGroupFields = formGroups
+    .filter(fg => fg.formGroupId == parseInt(req.params.formGroupId))
+    .map(fg => fg.key)
+    .join(',');
+  const currentFields = req.session.data.formGroupFields;
+  if (currentFields) {
+    delete req.session.data.formGroupFields;
+  }
+  res.locals.formGroupFields = formGroupFields;
+  next();
+}
+
 module.exports = {
   applyProjectFilters,
   resetProjectFields,
@@ -298,5 +314,6 @@ module.exports = {
   getFormGroupStatus,
   getProjectSiteDetails,
   filterDeveloperProjects,
-  updateUnits
+  updateUnits,
+  mapFormGroupFields
 }
