@@ -7,23 +7,23 @@
 
 {% set detailsFields = [
   { id: 2, label: "Project name", fieldType: "text", length: "ds_input--fluid-half", readonly: false, formGroupId: 1, formGroup: "What is the name your project?" },
-  { id: 3, label: "Project description", fieldType: "textarea", readonly: false, formGroupId: 1, formGroup: "What are the details of your project?" },
+  { id: 3, label: "Project description", fieldType: "textarea", readonly: false, formGroupId: 1, formGroup: "Please provide a short description of your project" },
   { id: 4, label: "Standard", fieldType: "radio", options: [
     { label: "UK Woodland Carbon Code", value: "UK Woodland Carbon Code" },
     { label: "UK Peatland Code", value: "UK Peatland Code" }
-  ], formGroupId: 1, formGroup: "What are your project activities?" },
+  ], formGroupId: 1, formGroup: "Which standard will your project use?" },
   { id: 5, label: "Category", fieldType: "radio", options: [
     { label: "Afforestation", value: "Afforestation" },
     { label: "Rewetting", value: "Rewetting" },
     { label: "Restoration", value: "Restoration" }
-  ], formGroupId: 1, formGroup: "What are your project activities?" },
+  ], formGroupId: 1, formGroup: "Which category best fits your project?" },
   { id: 6, label: "Project type", fieldType: "radio", options: [
     { label: "Standard", value: "Standard" },
     { label: "Small", value: "Small" }
-  ], formGroupId: 1, formGroup: "What are your project activities?" },
-  { id: 7, label: "Project implementation date", fieldType: "date", formGroupId: 2, formGroup: "What are your project activities?" },
-  { id: 8, label: "Project start date", fieldType: "date", formGroupId: 2, formGroup: "What are your project activities?" },
-  { id: 9, label: "Project end date", fieldType: "date", formGroupId: 2, formGroup: "What are your project activities?" }
+  ], formGroupId: 1, formGroup: "Which type of carbon calculator should be used for your project?" },
+  { id: 7, label: "Project implementation date", fieldType: "date", formGroupId: 2, formGroup: "When will your project begin implementation?" },
+  { id: 8, label: "Project start date", fieldType: "date", formGroupId: 2, formGroup: "What is the start date for your project?" },
+  { id: 9, label: "Project end date", fieldType: "date", formGroupId: 2, formGroup: "What is the end date for your project?" }
 ] %}
 
 {% set selectedStandard = data['project']['responses']['standard'] or 'UK Woodland Carbon Code' %}
@@ -36,8 +36,8 @@
     { id: 10, label: "Mixed Predominantly Broadleaved (50-80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information: Total area(ha)" },
     { id: 11, label: "Project duration (years)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information" },
     { id: 12, label: "Total predicted carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information" },
-    { id: 12, label: "Predicted claimable carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information" },
-    { id: 12, label: "Predicted contribution to buffer over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information" },
+    { id: 12, label: "Predicted claimable carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "What is the predicted claimable carbon sequestration over project lifetime (tCO2e)" },
+    { id: 12, label: "Predicted contribution to buffer over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "What is the predicted contribution to buffer over project lifetime (tCO2e)?" },
     { id: 13, label: "Country", fieldType: "radio", options: [
       { label: "England", value: "England" },
       { label: "Scotland", value: "Scotland" },
