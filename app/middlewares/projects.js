@@ -179,7 +179,6 @@ async function getProjectSiteDetails(req, res, next) {
     } else if (ext.toLowerCase() === '.xlsx' || ext.toLowerCase() === '.csv') {
       if (file.originalname.toLowerCase().includes('peatland')) {
         ccFields = {
-          "standard": "UK Peatland Code",
           "project_implementation_date": "01/05/2023",
           "project_start_date": "01/06/2023",
           "project_end_date": "01/06/2073",
@@ -202,7 +201,6 @@ async function getProjectSiteDetails(req, res, next) {
         }
       } else {
         ccFields = {
-          "standard": "UK Woodland Carbon Code",
           "project_implementation_date": "15/04/2023",
           "project_start_date": "01/05/2023",
           "project_end_date": "01/05/2123",
