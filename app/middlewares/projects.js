@@ -47,7 +47,7 @@ function getProjectDraft(req, res, next) {
 
 async function resetProjectFields(req, _, next) {
   if (req.body.reset) {
-    req.session.data.project.responses = {}
+    req.session.data.project = {};
     req.session.data.fieldId = '1';
   }
   next();
@@ -86,7 +86,13 @@ function getFormGroupStatus(req, res, next) {
     }
   }
 
-  req.session.data.project.status = groupStatus;
+  req.session.data = {
+    ...req.session.data,
+    project: {
+      ...(req.session.data.project || {}),
+      status: groupStatus
+    }
+  };
   next();
 }
 
@@ -120,7 +126,7 @@ function projectResponseValidate(req, res, next) {
   const { lastFieldId } = req.query;
 
   const project = req.session.data?.project || {};
-  const standardPeatland = project.standard === "UK Peatland Code";
+  const standardPeatland = project.responses?.standard === "UK Peatland Code";
   const excludedKey = standardPeatland ? '3' : '5';
   const projectResponseValidated = Object.keys(project.status)
     .filter(key => key !== excludedKey)
@@ -222,6 +228,7 @@ async function getProjectSiteDetails(req, res, next) {
     }
 
     req.session.data.project = { ...existingProject, responses };
+    console.log(req.session.data.formGroupFields, 'formGroupFields')
     next();
   } catch (err) {
     return res.redirect('/developer/create-project?bannerState=documentSuccess');
@@ -292,6 +299,10 @@ function updateUnits(req, res, next) {
 }
 
 function mapFormGroupFields(req, res, next) {
+  if (!req.params.formGroupId) {
+    console.log('formfields delete from req session')
+    next();
+  }
   const formGroupFields = formGroups
     .filter(fg => fg.formGroupId == parseInt(req.params.formGroupId))
     .map(fg => fg.key)

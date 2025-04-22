@@ -132,7 +132,11 @@ router.get('/developer/create-project/form', (req, res) => {
   res.render('developer/create-project/form');
 });
 
-router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, (_, res) => {
+router.get('/developer/create-project', getFormGroupStatus, projectResponseValidate, (_, res) => {
+  res.render('developer/create-project');
+});
+
+router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, projectResponseValidate, (_, res) => {
   res.render('developer/create-project');
 });
 
