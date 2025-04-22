@@ -3,6 +3,8 @@
 
 {% extends "/layouts/main.html" %}
 
+{% set slug = project.project_name | slugify %}
+
 {% if project.standard == "UK Peatland Code" %}
 
   {% set area = [
@@ -159,13 +161,15 @@
   }
 ] %}
 
+{% set location = project.address + ', ' + project['zip/postal_code'] %}
+
 {% set overview = [
   { key: "Developer", value: project.account_name, id: "field-developer" },
   { key: "Category", value: project.category, id: "field-category" },
   { key: "Standard", value: project.standard, id: "field-standard" }
 ] %}
 
-{% block pageTitle %}{{ project.name }}{% endblock %}
+{% block pageTitle %}{{ project.project_name }}{% endblock %}
 
 {# Back link - in place of breadcrumbs #}
 {% block breadcrumbs %}
@@ -181,7 +185,7 @@
     <div class="ds_layout">
       <div class="ds_layout__header">
         <header class="ds_page-header">
-          <h1 class="ds_page-header__title">Draft: {{ project.project_name }}</h1>
+          <h1 class="ds_page-header__title">Review: {{ project.project_name }}</h1>
     
           {% if data['review-status'] == 'approved' %}
             <div class="ds_notification-panel" role="alert" aria-live="polite">
@@ -214,7 +218,7 @@
               </div>
             </dl>
     
-            <form id="review-form" action="/admin/projects/review/{{ project.details_url }}" method="post">
+            <form id="review-form" action="/admin/projects/review/{{ slug }}" method="post">
               <div id="action-buttons" class="button-group approve-reject">
                 <button
                   type="submit"
@@ -411,6 +415,7 @@
       <p>No previous reviews found for this project.</p>
       {% endif %}
       <h2 class="ds_layout__sidebar-title">Location</h2>
+      {{ location }}
       {{ renderMap(osApiKey, [project]) }}
     </div>
     {% endblock %}

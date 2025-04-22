@@ -407,7 +407,7 @@ router.get('/admin/projects', applyProjectFilters, (req, res) => {
   })
 });
 
-router.get('/admin/projects/review/:name', getProjectDraft, getProjectDraft, (req, res) => {
+router.get('/admin/projects/review/:name', getProjectDraft, (req, res) => {
   res.render('admin/review-draft', {
     project: res.locals.project,
     osApiKey: process.env.OS_API_KEY,
@@ -416,13 +416,14 @@ router.get('/admin/projects/review/:name', getProjectDraft, getProjectDraft, (re
 
 router.post('/admin/projects/review/:name', getProjectDraft, (req, res) => {
   const action = req.body.action;
+  const slug = "reforest-the-highlands"
 
   if (action === 'approve') {
-    return res.redirect(`/admin/projects/review/${res.locals.project.details_url}?review-status=approved`);
+    return res.redirect(`/admin/projects/review/${slug}?review-status=approved`);
   }
 
   if (action === 'reject') {
-    return res.redirect(`/admin/projects/review/${res.locals.project.details_url}?review-status=rejected`);
+    return res.redirect(`/admin/projects/review/${slug}?review-status=rejected`);
   }
 
   res.redirect('/');
