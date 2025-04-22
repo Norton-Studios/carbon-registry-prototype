@@ -153,7 +153,6 @@ router.get('/developer/my-projects', getAccountsByDeveloper, filterDeveloperProj
     myAccounts: res.locals.filteredAccounts,
     myProjects: res.locals.defaultProjects,
     filters: res.locals.projectFilters,
-    projects,
     authenticated: true
   });
 });

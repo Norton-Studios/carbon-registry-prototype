@@ -11,7 +11,7 @@
     {% block mainHeader %}
     <div class="ds_layout__header">
       <header class="ds_page-header">
-        <h1 class="ds_page-header__title">Projects</h1>
+        <h1 class="ds_page-header__title">My projects</h1>
       </header>
     </div>
     {% endblock %}
@@ -48,7 +48,7 @@
                   </tr>
                 </thead>
                 <tbody id="search-results">
-                  {% for project in projects %}
+                  {% for project in myProjects %}
                   <tr class="govuk-table__row"
                     onclick="window.location.href='/projects/{{ project.details_url }}'">
                     <td class="govuk-table__cell">{{ project.name }}</td>
@@ -81,7 +81,7 @@
             {% endblock %}
           </div>
           <div class="ds_tabs__content ds_tabs__content--bordered" id="mapOverview">
-            {{ renderMap(osApiKey, projects) }}
+            {{ renderMap(osApiKey, myProjects) }}
           </div>
         </div>
     </div>
