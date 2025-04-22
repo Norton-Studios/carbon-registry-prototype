@@ -132,10 +132,7 @@ function projectResponseValidate(req, res, next) {
     .filter(key => key !== excludedKey)
     .every(key => project.status[key] == 2);
 
-  Object.assign(req.session.data, {
-    ...(lastFieldId ?? {}),
-    projectResponseValidated
-  });
+  req.session.data.projectResponseValidated = projectResponseValidated
 
   if (lastFieldId) {
     return res.redirect('/developer/create-project/answer-summary');
@@ -182,9 +179,7 @@ async function getProjectSiteDetails(req, res, next) {
     } else if (ext.toLowerCase() === '.xlsx' || ext.toLowerCase() === '.csv') {
       if (file.originalname.toLowerCase().includes('peatland')) {
         ccFields = {
-          "category": "Restoration",
           "standard": "UK Peatland Code",
-          "project_type": "Restoration",
           "project_implementation_date": "01/05/2023",
           "project_start_date": "01/06/2023",
           "project_end_date": "01/06/2073",
@@ -207,9 +202,7 @@ async function getProjectSiteDetails(req, res, next) {
         }
       } else {
         ccFields = {
-          "category": "Afforestation",
           "standard": "UK Woodland Carbon Code",
-          "project_type": "Afforestation",
           "project_implementation_date": "15/04/2023",
           "project_start_date": "01/05/2023",
           "project_end_date": "01/05/2123",

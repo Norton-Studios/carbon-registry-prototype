@@ -1,0 +1,44 @@
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Register{% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
+
+{% block main %}
+
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout  ds_layout--article">
+    {% block mainHeader %}
+    <div class="ds_layout__header">
+        <header class="ds_page-header">
+            <h1 class="ds_page-header__title">Create a new project</h1>
+        </header>
+    </div>
+    {% endblock %}
+
+    {% block mainContent %}
+    <div class="ds_layout__content ">
+      <h2 id="task-list-status" class="ds_task-list-status-heading">What you will need to register a project:</h2>
+      <ul>
+        <li>Your project site map.</li>
+        <li>Your project carbon calculations.</li>
+      </ul>
+      <h2 class="ds_task-list-status-heading">Templates to download:</h2>
+      <ul>
+        <li>
+          <a class="ds_link" href="/public/templates/example_map.pdf" download>Example site map</a>
+        </li>
+        <li>
+          <a class="ds_link" href="/public/templates/carbon_calculations_template.xlsx" download>Carbon calculations template</a>
+        </li>
+
+      </ul>
+      <a href="/developer/create-project/form?fieldId=1" class="ds_button ds_button--has-icon" style="margin-top: 3rem">
+        Begin
+        <svg class="ds_icon" aria-hidden="true" role="img"><use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use></svg>
+      </a>
+    {% endblock %}
+  </main>
+</div>
+
+{% endblock %}

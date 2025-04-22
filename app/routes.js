@@ -132,11 +132,15 @@ router.get('/developer/create-project/form', (req, res) => {
   res.render('developer/create-project/form');
 });
 
-router.get('/developer/create-project', getFormGroupStatus, projectResponseValidate, (_, res) => {
+router.get('/developer/create-project', getFormGroupStatus, projectResponseValidate, (req, res) => {
+  const { project } = req.session.data;
+  if (!project || !project.responses) {
+    return res.redirect('/developer/create-project/start-page');
+  }
   res.render('developer/create-project');
 });
 
-router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, projectResponseValidate, (_, res) => {
+router.post('/developer/create-project', resetProjectFields, getFormGroupStatus, projectResponseValidate, (req, res) => {
   res.render('developer/create-project');
 });
 
