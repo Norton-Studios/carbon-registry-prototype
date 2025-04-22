@@ -63,7 +63,34 @@ router.get('/trader/dashboard', (req, res) => {
   res.locals.bidSubmitted = bidSubmitted;
   res.locals.inquerySubmitted = inquerySubmitted;
   res.render('trader/dashboard')
+});
+
+router.get('/developer/manage-units/transfers',  getAccountsByDeveloper, filterDeveloperProjects, (req, res) => {
+  delete req.session.data.transferCompleted;
+  res.locals.myAccounts = res.locals.filteredAccounts;
+  res.locals.myProjects = res.locals.defaultProjects;
+  res.locals.projects;
+  res.locals.updatedProject;
+  res.render('developer/manage-units/transfers');
 })
+
+router.post('/developer/manage-units/new-transfer', (req, res, next) => {
+  const name = req.body.project_name || '';
+  if (name) {
+    getProject({params: { name: name.replace(/\s+/g, '-') }}, res, () => {
+      return res.render('developer/manage-units/new-transfer');
+    });
+  } else {
+    res.locals.accounts = accounts;
+    res.render('developer/manage-units/new-transfer');
+  }
+});
+
+router.get('/api/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (_, res) => {
+  res.json({
+    myProjects: res.locals.defaultProjects
+  });
+});
 
 router.use('/developer/manage-units', getAccountsByDeveloper, filterDeveloperProjects, (_, res, next) => {
   res.locals.myAccounts = res.locals.filteredAccounts;

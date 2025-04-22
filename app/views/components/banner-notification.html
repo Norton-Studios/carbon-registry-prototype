@@ -7,7 +7,7 @@
     {% set icon = 'cancel' %}
   {% endif %}
 
-  <div class="ds_layout__content">
+  <div>
     <div class="ds_confirmation-message" aria-live="polite" {% if borderColor %}style="border-color:{{ borderColor }}"{% endif %}>
       <svg class="ds_confirmation-message__icon ds_icon ds_icon--24" aria-hidden="true" role="img" {% if borderColor %}style="color:{{ borderColor }}"{% endif %}>
         <use href="{{ banner.assetPath }}/images/icons/icons.stack.svg#{{ icon }}"></use>
