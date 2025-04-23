@@ -257,7 +257,7 @@ function filterDeveloperProjects(req, res, next) {
 };
 
 function updateUnits(req, res, next) {
-  const { pius_listed, verified_listed, id, project_name } = req.body;
+  const { pius_listed, verified_units_listed, id, project_name } = req.body;
 
   let updatedProject, current;
 
@@ -275,7 +275,7 @@ function updateUnits(req, res, next) {
   }
 
   if (current.verified_units && current.verified_units !== "0") {
-    const inc = parseNumber(verified_listed);
+    const inc = parseNumber(verified_units_listed);
     updatedProject.verified_listed = formatNumberWithCommas(inc);
   }
 
