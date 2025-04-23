@@ -48,7 +48,6 @@
                 <th scope="col">Issuances</th>
                 <th scope="col">Holdings</th>
                 <th scope="col">Listed</th>
-                <th scope="col">Retirements</th>
                 <th scope="col">PIU's</th>
                 <th scope="col">Pending Transfer</th>
               </tr>
@@ -61,7 +60,6 @@
                 <td>3,249,233</td>
                 <td>2,000,000</td>
                 <td>2,376,780</td>
-                <td>12,100</td>
                 <td>52,450</td>
               </tr>
             </tbody>
@@ -74,7 +72,6 @@
                 <th scope="col" class="govuk-table__header">PIU's</th>
                 <th scope="col" class="govuk-table__header">Verified units</th>
                 <th scope="col" class="govuk-table__header">Units listed</th>
-                <th scope="col" class="govuk-table__header">Retired units</th>
                 <th scope="col" class="govuk-table__header">Status</th>
                 <th scope="col" class="govuk-table__header"></th>
               </tr>
@@ -95,7 +92,6 @@
                     <strong>Not listed</strong>
                   {% endif %}
                 </td>
-                <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
                 <td class="govuk-table__cell">{{ project.verified_units !== '0' and 'Active' or 'Pending transfer'}}</td>
                 <td class="govuk-table__cell" style="text-align: right;">
                   <button type="button" class="ds_link"
@@ -121,7 +117,6 @@
                 <th scope="col" class="govuk-table__header">PIU's</th>
                 <th scope="col" class="govuk-table__header">Verified units</th>
                 <th scope="col" class="govuk-table__header">Units listed</th>
-                <th scope="col" class="govuk-table__header">Retired units</th>
                 <th scope="col" class="govuk-table__header">Status</th>
                 <th scope="col" class="govuk-table__header"></th>
               </tr>
@@ -142,7 +137,6 @@
                     <strong>Not listed</strong>
                   {% endif %}
                 </td>
-                <td class="govuk-table__cell">{{ loop.index * 123 }}</td>
                 <td class="govuk-table__cell">{{ project.verified_units !== '0' and 'Active' or 'Pending transfer'}}</td>
                 <td class="govuk-table__cell" style="text-align: right;">
                   <button type="button" class="ds_link"
