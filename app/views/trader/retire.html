@@ -1,6 +1,7 @@
 {% from "components/file.html" import fileDownload %}
 {% from "components/map.html" import renderMap %}
 {% from "components/quick-actions.html" import quickActions %}
+{% from "components/side-navigation.html" import sideNavigation %}
 
 {% extends "/layouts/main.html" %}
 
@@ -10,6 +11,12 @@
   {title: "New retirement" ,summary: "", href: ""},
   {title: "Approve retirement" ,summary: "", href: ""},
   {title: "Export all" ,summary: "", href: ""}
+] %}
+
+{% set navItems = [
+  { href: "/trader/dashboard", label: "Overview" },
+  { href: "/trader/account-summary", label: "Account Summary" },
+  { href: "/trader/retire", label: "Retirements"}
 ] %}
 
 {% block main %}
@@ -23,7 +30,9 @@
       </div>
       {% endblock %}
 
-      {% include "/developer/manage-units/side-navigation.html" %}
+      <div class="ds_layout__sidebar">
+        {{ sideNavigation(navItems) }}
+      </div>
 
       {% block mainContent %}
       <div class="ds_layout__list table-overflow">
