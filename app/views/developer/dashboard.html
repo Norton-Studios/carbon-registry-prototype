@@ -50,7 +50,7 @@
       </div>
       {% endif %}
       {{ quickActions(quickActionItems) }}
-      <h2>Milestones</h2>
+      <h2>Upcoming milestones</h2>
       <div class="table-overflow">
           <table class="govuk_table">
             <thead class="govuk-table__head">
@@ -66,7 +66,7 @@
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">{{ project.name }}</td>
                 <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
-                <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
+                <td class="govuk-table__cell">{{ loop.index * 12 }}/{{ loop.index * 3 }}/2025</td>
                 <td class="govuk-table__cell"><a class="ds_link" href="/developer/validate-project/{{ project.details_url}}?fieldId=1">Submit for validation</a></td>
               </tr>
               {% endfor %}
@@ -74,7 +74,7 @@
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">{{ project.name }}</td>
                 <td class="govuk-table__cell">{{ data['statusEnum'][project.status] }}</td>
-                <td class="govuk-table__cell">{{ loop.index * 4 }}/{{ loop.index * 2 }}/2025</td>
+                <td class="govuk-table__cell">{{ loop.index * 13 }}/{{ loop.index * 6 }}/2025</td>
                 <td class="govuk-table__cell"><a class="ds_link" href="">Submit issuances</a></td>
               </tr>
               {% endfor %}
