@@ -35,7 +35,7 @@
   { "key": "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)", "formGroupId": 5 },
 
   { "key": "country", "formGroupId": 4 },
-  { "key": "state/province/county", "formGroupId": 4 },
+  { "key": "county", "formGroupId": 4 },
   { "key": "postcode", "formGroupId": 4 },
   { "key": "latitude", "formGroupId": 4 },
   { "key": "longitude", "formGroupId": 4 },

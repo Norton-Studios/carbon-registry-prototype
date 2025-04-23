@@ -95,7 +95,7 @@ async function getLocationFromGridRef(gridRef) {
       'postal_town': 'nearest_town',
       'postal_code': 'postcode',
       'administrative_area_level_1': 'country',
-      'administrative_area_level_2': 'state/province/county',
+      'administrative_area_level_2': 'county',
     }
     if (data.results && data.results.length > 0) {
       const apiResult = data.results?.[0];
@@ -113,7 +113,7 @@ async function getLocationFromGridRef(gridRef) {
 
       return {
         'country': results['country'] ?? '',
-        'state/province/county': results['state/province/county'] ?? '',
+        'county': results['county'] ?? '',
         'postcode': results['postcode'] ?? '',
         'longitude': lon ?? '',
         'latitude': lat ?? '',

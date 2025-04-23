@@ -20,7 +20,7 @@
     "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)": "16000",
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "2000",
     "country": "Scotland",
-    "state/province/county": "Highland",
+    "county": "Highland",
     "postcode": "IV2 3AE",
     "location": {
       "latitude": 57.4778,
@@ -67,7 +67,7 @@
     "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)": "8700",
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "800",
     "country": "Wales",
-    "state/province/county": "Ceredigion",
+    "county": "Ceredigion",
     "postcode": "SA48 7BB",
     "location": {
       "latitude": 52.2211,
@@ -114,7 +114,7 @@
     "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)": "5400",
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "600",
     "country": "Scotland",
-    "state/province/county": "Glasgow City",
+    "county": "Glasgow City",
     "postcode": "G12 8QQ",
     "location": {
       "latitude": 55.8721,
@@ -161,7 +161,7 @@
     "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)": "19800",
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "2200",
     "country": "England",
-    "state/province/county": "Northumberland",
+    "county": "Northumberland",
     "postcode": "NE48 2TN",
     "location": {
       "latitude": 55.1773,
@@ -208,7 +208,7 @@
     "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)": "12600",
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "1400",
     "country": "Northern Ireland",
-    "state/province/county": "Fermanagh",
+    "county": "Fermanagh",
     "postcode": "BT74 6HL",
     "location": {
       "latitude": 54.3476,
