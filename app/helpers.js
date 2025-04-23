@@ -2,15 +2,17 @@ const fs = require('fs');
 const pdfParse = require('pdf-parse');
 
 function generateFilters(projects, userType = 'guest') {
+  let filteredProjects = projects;
+  if (userType == 'guest' || userType == 'trader') {
+    filteredProjects = projects.filter(p => [2, 3, 4, 5].includes(parseInt(p.status)))
+  }
   const filters = {
-    Country: [...new Set(projects.map(project => project.country).sort((a, b) => a.localeCompare(b)))],
-    Status: [...new Set(projects.map(project => String(project.status))
-      .filter((status) => ['2', '3', '4', '5'].includes(status))
-      .sort((a, b) => a - b))],
-    Type: [...new Set(projects.map(project => project.type).sort((a, b) => a.localeCompare(b)))],
-    Category: [...new Set(projects.map(project => project.category).sort((a, b) => a.localeCompare(b)))],
-    "Account Name": [...new Set(projects.map(project => project.account_name).sort((a, b) => a.localeCompare(b)))],
-    Credits: projects.some(project => project.credits) ? ["Available"] : []
+    Country: [...new Set(filteredProjects.map(project => project.country).sort((a, b) => a.localeCompare(b)))],
+    Status: [...new Set(filteredProjects.map(project => String(project.status)).sort((a, b) => a - b))],
+    Type: [...new Set(filteredProjects.map(project => project.type).sort((a, b) => a.localeCompare(b)))],
+    Category: [...new Set(filteredProjects.map(project => project.category).sort((a, b) => a.localeCompare(b)))],
+    "Account Name": [...new Set(filteredProjects.map(project => project.account_name).sort((a, b) => a.localeCompare(b)))],
+    Credits: filteredProjects.some(project => project.credits) ? ["Available"] : []
   }
   if (userType === 'developer') {
     delete filters['Account Name']

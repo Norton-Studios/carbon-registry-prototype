@@ -152,7 +152,12 @@
             {% endfor %}
 
           {% for f in detailsFields %}
-            {% if f.formGroupId == currentFormGroupId %}
+            {% if f.formGroupId == currentFormGroupId or
+              (key and key | searchString('date') and
+                (f.formGroupId == 3 and selectedStandard == 'UK Woodland Carbon Code') or
+                (f.formGroupId == 5 and selectedStandard == 'UK Peatland Code')) or
+              (key and (currentFormGroupId == 3 or currentFormGroupId == 5) and f.label | searchString('date'))
+            %}
             {% set transformedKey = f.label | lower | replace(" ", "_") %}
             {% set formGroupFields = formGroupFields | merge([transformedKey]) %}
             {% endif %}
