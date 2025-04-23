@@ -26,9 +26,11 @@
 {% if currentFieldId == 2 %}
   {% set name = "id" %}
   {% set value = project.id %}
+  {% set buttonText = "Submit listing" %}
 {% else %}
   {% set name = "fieldId" %}
   {% set value = currentFieldId + 1 %}
+  {% set buttonText = "Next steps" %}
 {% endif %}
 
 {% block main %}
@@ -56,7 +58,7 @@
               name="{{ name }}"
               value="{{ value }}"
               class="ds_button ds_button--has-icon">
-              Update listed units
+              {{ buttonText }}
               <svg class="ds_icon" aria-hidden="true" role="img">
                 <use href="{{ assetPath }}/images/icons/icons.stack.svg#chevron_right"></use>
               </svg>
