@@ -30,6 +30,7 @@
       { label: "Standard", value: "Standard" },
       { label: "Small", value: "Small" }
     ], formGroupId: 3, formGroup: "Which type of carbon calculator should be used for your project?" },
+    { id: 10, label: "Total Area (ha)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
     { id: 10, label: "Conifer (>80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
     { id: 10, label: "Mixed Predominantly Conifer (50-80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
     { id: 10, label: "Broadleaved (>80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
@@ -58,6 +59,7 @@
   ] %}
 {% else %}
   {% set standardFields = [
+    { id: 9, label: "Total Area (ha)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
     { id: 10, label: "Actively Eroding Blanket Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
     { id: 10, label: "Actively Eroding Blanket Bog (flat/bare)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
     { id: 11, label: "Drained Blanket Bog (artificial)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },

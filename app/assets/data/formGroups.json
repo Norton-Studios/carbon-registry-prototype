@@ -8,6 +8,7 @@
   { "key": "project_end_date", "formGroupId": 2 },
 
   { "key": "project_type", "formGroupId": 3 },
+  { "key": "total_area_(ha)", "formGroupId": 3 },
   { "key": "conifer_(>80%)", "formGroupId": 3 },
   { "key": "mixed_predominantly_conifer_(50-80%)", "formGroupId": 3 },
   { "key": "broadleaved_(>80%)", "formGroupId": 3 },
@@ -17,6 +18,7 @@
   { "key": "predicted_claimable_carbon_sequestration_over_project_lifetime_(tco2e)", "formGroupId": 3 },
   { "key": "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)", "formGroupId": 3 },
 
+  { "key": "total_area_(ha)", "formGroupId": 5 },
   { "key": "actively_eroding_blanket_bog_(hagg/gully)", "formGroupId": 5 },
   { "key": "actively_eroding_blanket_bog_(flat/bare)", "formGroupId": 5 },
   { "key": "drained_blanket_bog_(artificial)", "formGroupId": 5 },
