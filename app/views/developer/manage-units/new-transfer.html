@@ -11,7 +11,7 @@
 </div>
 {% endblock %}
 
-{% set helpTextId2 = project.verified_units and "Current units available: " ~ project.verified_units or "Current units available: " ~ project.piu_units %}
+{% set helpTextId2 = (project.verified_units != '0' and "Current units available: " ~ project.verified_units) or "Current units available: " ~ project.piu_units %}
 
 {% set fields = [
   { id: 1, label: "Project name", fieldType: "dropdown",
