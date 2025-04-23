@@ -17,26 +17,26 @@
     { label: "Rewetting", value: "Rewetting" },
     { label: "Restoration", value: "Restoration" }
   ], formGroupId: 1, formGroup: "Which category best fits your project?" },
-  { id: 6, label: "Project type", fieldType: "radio", options: [
-    { label: "Standard", value: "Standard" },
-    { label: "Small", value: "Small" }
-  ], formGroupId: 1, formGroup: "Which type of carbon calculator should be used for your project?" },
-  { id: 7, label: "Project implementation date", fieldType: "date", formGroupId: 2, formGroup: "When will your project begin implementation?" },
-  { id: 8, label: "Project start date", fieldType: "date", formGroupId: 2, formGroup: "What is the start date for your project?" },
-  { id: 9, label: "Project end date", fieldType: "date", formGroupId: 2, formGroup: "What is the end date for your project?" }
+  { id: 6, label: "Project implementation date", fieldType: "date", formGroupId: 2, formGroup: "When will your project begin implementation?" },
+  { id: 7, label: "Project start date", fieldType: "date", formGroupId: 2, formGroup: "What is the start date for your project?" },
+  { id: 8, label: "Project end date", fieldType: "date", formGroupId: 2, formGroup: "What is the end date for your project?" }
 ] %}
 
 {% set selectedStandard = data['project']['responses']['standard'] or 'UK Woodland Carbon Code' %}
 
 {% if selectedStandard == "UK Woodland Carbon Code" %}
   {% set standardFields = [
-    { id: 10, label: "Conifer (>80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information: Total area(ha)" },
-    { id: 10, label: "Mixed Predominantly Conifer (50-80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information: Total area(ha)" },
-    { id: 10, label: "Broadleaved (>80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information: Total area(ha)" },
-    { id: 10, label: "Mixed Predominantly Broadleaved (50-80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information: Total area(ha)" },
+    { id: 9, label: "Project type", fieldType: "radio", options: [
+      { label: "Standard", value: "Standard" },
+      { label: "Small", value: "Small" }
+    ], formGroupId: 3, formGroup: "Which type of carbon calculator should be used for your project?" },
+    { id: 10, label: "Conifer (>80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
+    { id: 10, label: "Mixed Predominantly Conifer (50-80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
+    { id: 10, label: "Broadleaved (>80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
+    { id: 10, label: "Mixed Predominantly Broadleaved (50-80%)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Carbon calculation details" },
     { id: 11, label: "Project duration (years)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information" },
     { id: 12, label: "Total predicted carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "Additional information" },
-    { id: 12, label: "Predicted claimable carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "What is the predicted claimable carbon sequestration over project lifetime (tCO2e)" },
+    { id: 12, label: "Predicted claimable carbon sequestration over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "What is the predicted claimable carbon sequestration over project lifetime (tCO2e)?" },
     { id: 12, label: "Predicted contribution to buffer over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 3, formGroup: "What is the predicted contribution to buffer over project lifetime (tCO2e)?" },
     { id: 13, label: "Country", fieldType: "radio", options: [
       { label: "England", value: "England" },
@@ -58,18 +58,18 @@
   ] %}
 {% else %}
   {% set standardFields = [
-    { id: 10, label: "Actively Eroding Blanket Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 10, label: "Actively Eroding Blanket Bog (flat/bare)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 11, label: "Drained Blanket Bog (artificial)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 11, label: "Drained Blanket Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 12, label: "Modified Blanket Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 12, label: "Near Natural Blanket Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 13, label: "Actively Eroding Raised Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 13, label: "Actively Eroding Raised Bog (flat/bare)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 14, label: "Drained Raised Bog (artificial)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 14, label: "Drained Raised Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 15, label: "Modified Raised Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
-    { id: 15, label: "Near Natural Raised Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information: Total area(ha)" },
+    { id: 10, label: "Actively Eroding Blanket Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 10, label: "Actively Eroding Blanket Bog (flat/bare)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 11, label: "Drained Blanket Bog (artificial)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 11, label: "Drained Blanket Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 12, label: "Modified Blanket Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 12, label: "Near Natural Blanket Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 13, label: "Actively Eroding Raised Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 13, label: "Actively Eroding Raised Bog (flat/bare)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 14, label: "Drained Raised Bog (artificial)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 14, label: "Drained Raised Bog (hagg/gully)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 15, label: "Modified Raised Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
+    { id: 15, label: "Near Natural Raised Bog", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Carbon calculation details" },
     { id: 16, label: "Project duration (years)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information" },
     { id: 17, label: "Total predicted emission reductions over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information" },
     { id: 17, label: "Predicted claimable emission reductions over project lifetime (tCO2e)", fieldType: "text", readonly: false, formGroupId: 5, formGroup: "Additional information" },
@@ -107,7 +107,6 @@
 {% set nextField = detailsFields | customSelectAttr("id", currentFieldId + 1) | first %}
 {% set prevField = detailsFields | customSelectAttr("id", currentFieldId - 1) | first %}
 {% set lastFieldId = (detailsFields | last).id %}
-{% set currentGroup = '' %}
 {% set currentFormGroupId = 0 %}
 
 {% if key or nextField is none or nextField.formGroupId != (fields | first).formGroupId %}
@@ -139,14 +138,13 @@
       <fieldset>
         <form action="{{ formAction }}" method="post">
           {% for field in fields %}
-            {% if field.formGroup != currentGroup %}
+            {% if field.formGroupId != currentFormGroupId %}
               <div class="ds_page-header">
                 <h1 class="ds_page-header__title">
                   {{ field.formGroup }}
                 </h1>
               </div>
               {% set currentFormGroupId = field.formGroupId %}
-              {% set currentGroup = field.formGroup %}
             {% endif %}
             {{ renderField(field, data['project']['responses'][field.label | lower | replace(" ", "_")]) }}
             {% endfor %}

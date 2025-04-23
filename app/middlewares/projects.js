@@ -201,6 +201,7 @@ async function getProjectSiteDetails(req, res, next) {
         }
       } else {
         ccFields = {
+          "project_type": "Standard",
           "project_implementation_date": "15/04/2023",
           "project_start_date": "01/05/2023",
           "project_end_date": "01/05/2123",
