@@ -1,0 +1,81 @@
+{% from "components/file.html" import fileDownload %}
+{% from "components/map.html" import renderMap %}
+{% from "components/quick-actions.html" import quickActions %}
+
+{% extends "/layouts/main.html" %}
+
+{% block pageTitle %}Retirements{% endblock %}
+
+{% set quickActionItems = [
+  {title: "Retire credits" ,summary: "Create a new retirement from your verified units", href: ""},
+  {title: "Export statement" ,summary: "Download an itemised receipt of your retirement history", href: ""}
+] %}
+
+{% block main %}
+<div class="ds_wrapper">
+  <main id="main-content" class="ds_layout ds_layout--search-results--filters">
+      {% block mainHeader %}
+      <div class="ds_layout__header">
+        <header class="ds_page-header">
+          <h1 class="ds_page-header__title"></h1>
+        </header>
+      </div>
+      {% endblock %}
+
+      {% include "/developer/manage-units/side-navigation.html" %}
+
+      {% block mainContent %}
+      <div class="ds_layout__list table-overflow">
+        <h2 class="ds_section__title">Quick actions</h2>
+        {{ quickActions(quickActionItems) }}
+        <h2 class="ds_section__title">Retirements summary</h2>
+        <table class="ds_table">
+          <thead>
+            <tr>
+              <th scope="col">Woodland Carbon Code</th>
+              <th scope="col">Peatland Code</th>
+              <th scope="col">Total retired units</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>500</td>
+              <td>125</td>
+              <td>625</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 class="ds_section__title">Retirements history</h2>
+        <table class="govuk_table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Credit block</th>
+              <th scope="col" class="govuk-table__header">Retired units</th>
+              <th scope="col" class="govuk-table__header">Assigned To</th>
+              <th scope="col" class="govuk-table__header">Measure</th>
+              <th scope="col" class="govuk-table__header">Vintage</th>
+              <th scope="col" class="govuk-table__header"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ project.name }}</td>
+              <td class="govuk-table__cell">{{ project.retired_units }}</td>
+              <td class="govuk-table__cell">{{ myProjects[myProjects.length - loop.index].name }}</td>
+              <td class="govuk-table__cell">WCU</td>
+              <td class="govuk-table__cell">{{ 2025 - loop.index }}</td>
+              <td class="govuk-table__cell" style="text-align: right;">
+                <a class="ds_link" href='/public/account-statements/{{ "January 2025" | urlencode }}.pdf' target="_blank">View certificate</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        {% include "components/pagination" %}
+      </div>
+      {% endblock %}
+  </main>
+</div>
+{% endblock %}

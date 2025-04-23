@@ -3,11 +3,11 @@
   { "key": "project_description", "formGroupId": 1 },
   { "key": "standard", "formGroupId": 1 },
   { "key": "category", "formGroupId": 1 },
-  { "key": "project_type", "formGroupId": 1 },
   { "key": "project_implementation_date", "formGroupId": 2 },
   { "key": "project_start_date", "formGroupId": 2 },
   { "key": "project_end_date", "formGroupId": 2 },
 
+  { "key": "project_type", "formGroupId": 3 },
   { "key": "conifer_(>80%)", "formGroupId": 3 },
   { "key": "mixed_predominantly_conifer_(50-80%)", "formGroupId": 3 },
   { "key": "broadleaved_(>80%)", "formGroupId": 3 },
