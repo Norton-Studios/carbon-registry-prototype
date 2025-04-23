@@ -8,9 +8,8 @@
 {% block pageTitle %}Retirements{% endblock %}
 
 {% set quickActionItems = [
-  {title: "New retirement" ,summary: "", href: ""},
-  {title: "Approve retirement" ,summary: "", href: ""},
-  {title: "Export all" ,summary: "", href: ""}
+  {title: "Retire credits" ,summary: "Create a new retirement from your verified units", href: ""},
+  {title: "Export statement" ,summary: "Download an itemised receipt of your retirement history", href: ""}
 ] %}
 
 {% set navItems = [
@@ -42,16 +41,16 @@
         <table class="ds_table">
           <thead>
             <tr>
-              <th scope="col">PIU's assigned</th>
-              <th scope="col">Verified units assigned</th>
-              <th scope="col">Pending Retirements</th>
+              <th scope="col">Woodland Carbon Code</th>
+              <th scope="col">Peatland Code</th>
+              <th scope="col">Total retired units</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>2,376,780</td>
-              <td>12,100</td>
-              <td>52,450</td>
+              <td>500</td>
+              <td>125</td>
+              <td>625</td>
             </tr>
           </tbody>
         </table>
@@ -60,10 +59,10 @@
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">Credit block</th>
-              <th scope="col" class="govuk-table__header">PIU's</th>
-              <th scope="col" class="govuk-table__header">Verfied units</th>
+              <th scope="col" class="govuk-table__header">Retired units</th>
               <th scope="col" class="govuk-table__header">Assigned To</th>
-              <th scope="col" class="govuk-table__header">Date</th>
+              <th scope="col" class="govuk-table__header">Measure</th>
+              <th scope="col" class="govuk-table__header">Vintage</th>
               <th scope="col" class="govuk-table__header"></th>
             </tr>
           </thead>
@@ -71,12 +70,12 @@
             {% for project in myProjects  | customSelectAttr('status', [3, 4]) %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">{{ project.name }}</td>
-              <td class="govuk-table__cell">{{ project.piu_units }}</td>
-              <td class="govuk-table__cell">{{ project.verified_units }}</td>
+              <td class="govuk-table__cell">{{ project.retired_units }}</td>
               <td class="govuk-table__cell">{{ myProjects[myProjects.length - loop.index].name }}</td>
-              <td class="govuk-table__cell">{{ loop.index + 2 }}/{{ loop.index + 3 % 12 }}/2025</td>
+              <td class="govuk-table__cell">WCU</td>
+              <td class="govuk-table__cell">{{ 2025 - loop.index }}</td>
               <td class="govuk-table__cell" style="text-align: right;">
-                <a class="ds_link" href='/public/account-statements/{{ "January 2025" | urlencode }}.pdf' target="_blank">View receipt</a>
+                <a class="ds_link" href='/public/account-statements/{{ "January 2025" | urlencode }}.pdf' target="_blank">View certificate</a>
               </td>
             </tr>
             {% endfor %}
