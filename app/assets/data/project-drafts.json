@@ -21,7 +21,7 @@
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "2000",
     "country": "Scotland",
     "state/province/county": "Highland",
-    "zip/postal_code": "IV2 3AE",
+    "postcode": "IV2 3AE",
     "location": {
       "latitude": 57.4778,
       "longitude": -4.2247
@@ -68,7 +68,7 @@
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "800",
     "country": "Wales",
     "state/province/county": "Ceredigion",
-    "zip/postal_code": "SA48 7BB",
+    "postcode": "SA48 7BB",
     "location": {
       "latitude": 52.2211,
       "longitude": -4.0055
@@ -115,7 +115,7 @@
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "600",
     "country": "Scotland",
     "state/province/county": "Glasgow City",
-    "zip/postal_code": "G12 8QQ",
+    "postcode": "G12 8QQ",
     "location": {
       "latitude": 55.8721,
       "longitude": -4.2894
@@ -162,7 +162,7 @@
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "2200",
     "country": "England",
     "state/province/county": "Northumberland",
-    "zip/postal_code": "NE48 2TN",
+    "postcode": "NE48 2TN",
     "location": {
       "latitude": 55.1773,
       "longitude": -2.4532
@@ -209,7 +209,7 @@
     "predicted_contribution_to_buffer_over_project_lifetime_(tco2e)": "1400",
     "country": "Northern Ireland",
     "state/province/county": "Fermanagh",
-    "zip/postal_code": "BT74 6HL",
+    "postcode": "BT74 6HL",
     "location": {
       "latitude": 54.3476,
       "longitude": -7.6417

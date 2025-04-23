@@ -93,7 +93,7 @@ async function getLocationFromGridRef(gridRef) {
     const data = await response.json();
     const addressComponents = {
       'postal_town': 'nearest_town',
-      'postal_code': 'zip/postal_code',
+      'postal_code': 'postcode',
       'administrative_area_level_1': 'country',
       'administrative_area_level_2': 'state/province/county',
     }
@@ -114,7 +114,7 @@ async function getLocationFromGridRef(gridRef) {
       return {
         'country': results['country'] ?? '',
         'state/province/county': results['state/province/county'] ?? '',
-        'zip/postal_code': results['zip/postal_code'] ?? '',
+        'postcode': results['postcode'] ?? '',
         'longitude': lon ?? '',
         'latitude': lat ?? '',
         'address': apiResult?.formatted_address ?? '',

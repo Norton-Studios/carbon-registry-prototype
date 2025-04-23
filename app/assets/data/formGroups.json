@@ -36,7 +36,7 @@
 
   { "key": "country", "formGroupId": 4 },
   { "key": "state/province/county", "formGroupId": 4 },
-  { "key": "zip/postal_code", "formGroupId": 4 },
+  { "key": "postcode", "formGroupId": 4 },
   { "key": "latitude", "formGroupId": 4 },
   { "key": "longitude", "formGroupId": 4 },
   { "key": "address", "formGroupId": 4 },

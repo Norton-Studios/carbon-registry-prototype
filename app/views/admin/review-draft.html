@@ -161,7 +161,7 @@
   }
 ] %}
 
-{% set location = project.address + ', ' + project['zip/postal_code'] %}
+{% set location = project.address + ', ' + project['postcode'] %}
 
 {% set overview = [
   { key: "Developer", value: project.account_name, id: "field-developer" },
