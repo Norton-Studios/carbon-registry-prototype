@@ -16,8 +16,8 @@
     options: myProjects | customSelectAttr('status', [3, 4]) | mapToOptions('name'), value: data['manage-units']['listing']['name'],
     formGroupId: 2, formGroup: "Select a credit block to list"
   },
-  { id: 2, label: "PIUs listed", fieldType: "text", value: project.pius_listed, helpText: "Current units available: " ~ project.piu_units, formGroupId: 1, formGroup: "Update your units to be listed" },
-  { id: 2, label: "Verified listed", fieldType: "text", value: project.verified_listed, readonly: false, helpText: "Current units available: " ~ project.verified_units, formGroupId: 1, formGroup: "Update your units to be listed" }
+  { id: 2, label: "PIUs listed", fieldType: "text", value: project.pius_listed, helpText: "Current units available: " ~ project.piu_units, formGroupId: 1, formGroup: "How many units should be listed?" },
+  { id: 2, label: "Verified units listed", fieldType: "text", value: project.verified_listed, readonly: false, helpText: "Current units available: " ~ project.verified_units, formGroupId: 1, formGroup: "How many units should be listed?" }
 ] %}
 
 {% set currentFieldId = data['fieldId'] | int %}

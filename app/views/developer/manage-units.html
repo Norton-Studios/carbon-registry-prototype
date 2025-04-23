@@ -8,9 +8,8 @@
 {% block pageTitle %}Units overview{% endblock %}
 
 {% set quickActionItems = [
-  {title: "Add new RFI listing" ,summary: "Add a new listing on the RFI marketplace", href: "/developer/manage-units/update-units?fieldId=1"},
-  {title: "View pending requests" ,summary: "View/approve pending RFI requests from interested buyers", href: ""},
-  {title: "Transfer to internal account" ,summary: "", href: ""}
+  {title: "Add new listing" ,summary: "List units for sale on the marketplace", href: "/developer/manage-units/update-units?fieldId=1"},
+  {title: "View pending requests" ,summary: "View/approve pending RFI requests from interested buyers", href: ""}
 ] %}
 
 {% block main %}
@@ -44,10 +43,8 @@
             <thead>
               <tr>
                 <th scope="col">Standard</th>
-                <th scope="col">Measure</th>
-                <th scope="col">Issuances</th>
-                <th scope="col">Holdings</th>
                 <th scope="col">Listed</th>
+                <th scope="col">Retirements</th>
                 <th scope="col">PIU's</th>
                 <th scope="col">Pending Transfer</th>
               </tr>
@@ -55,12 +52,17 @@
             <tbody>
               <tr>
                 <td>{{ (myProjects | first).standard or 'WCC' }}</td>
-                <td>VER (tCO2e)</td>
-                <td>5,626,013</td>
-                <td>3,249,233</td>
-                <td>2,000,000</td>
-                <td>2,376,780</td>
-                <td>52,450</td>
+                <td>534,000</td>
+                <td>618</td>
+                <td>423,000</td>
+                <td>300,000</td>
+              </tr>
+              <tr>
+                <td>UK Peatland Code</td>
+                <td>123,000</td>
+                <td>123</td>
+                <td>0</td>
+                <td>0</td>
               </tr>
             </tbody>
           </table>
