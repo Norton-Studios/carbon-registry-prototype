@@ -8,6 +8,7 @@ proj4.defs("EPSG:27700", "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=4
 
 // Load the API key from the .env file
 const apiKey = process.env.OS_API_KEY;
+const gmapAPIKey = process.env.GOOGLE_MAPS_API_KEY;
 
 // Function to fetch coordinates from the OS Places API
 async function getCoordinatesFromAddress(address) {
@@ -77,36 +78,47 @@ function osgrToEN(osgr) {
 
 // Get location from grid refernce
 async function getLocationFromGridRef(gridRef) {
-  // const { easting, northing } = osgrToEN(gridRef.replace(/\s+/g, ''));
-  // const endpoint = `https://api.os.uk/search/places/v1/nearest?key=${apiKey}&point=${easting},${northing}&radius=1000`;
-  const endpoint = `https://api.os.uk/search/places/v1/find?key=${apiKey}&query=${gridRef}`;
+  const { easting, northing } = osgrToEN(gridRef.replace(/\s+/g, ''));
+  const [lon, lat] = proj4(
+    "EPSG:27700", // OSGB36
+    "EPSG:4326", // WGS84
+  [easting, northing]);
+  const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${gmapAPIKey}`
+  // const endpoint = `https://api.os.uk/search/places/v1/nearest?key=${apiKey}&point=${lat},${lon}&radius=5000`;
+  // const endpoint = `https://api.postcodes.io/postcodes?lon=${lon}&lat=${lat}`
+  // const endpoint = `https://api.os.uk/search/places/v1/find?key=${apiKey}&query=${gridRef}`;
 
-  const countryCode = {
-    'E': 'England',
-    'W': 'Wales',
-    'S': 'Scotland',
-    'N': 'Northern Ireland',
-  }
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-
+    const addressComponents = {
+      'postal_town': 'nearest_town',
+      'postal_code': 'zip/postal_code',
+      'administrative_area_level_1': 'country',
+      'administrative_area_level_2': 'state/province/county',
+    }
     if (data.results && data.results.length > 0) {
-      const result = data.results[0];
-      const [longitude, latitude] = proj4(
-        "EPSG:27700", // OSGB36
-        "EPSG:4326", // WGS84
-        [result.DPA.X_COORDINATE, result.DPA.Y_COORDINATE]
-      );
+      const apiResult = data.results?.[0];
+
+      const components = apiResult?.address_components || [];
+
+      const results = components.reduce((acc, comp) => {
+        for (const [key, label] of Object.entries(addressComponents)) {
+          if (comp.types.includes(key)) {
+            acc[label] = comp.long_name;
+          }
+        }
+        return acc;
+      }, {});
 
       return {
-        'country': countryCode[result.DPA.COUNTRY_CODE] ?? '',
-        'state/province/county': result.DPA.POST_TOWN ?? '',
-        'zip/postal_code': result.DPA.POSTCODE ?? '',
-        'longitude': longitude ?? '',
-        'latitude': latitude ?? '',
-        'address': result.DPA.ADDRESS ?? '',
-        'nearest_town': result.DPA.POST_TOWN ?? '',
+        'country': results['country'] ?? '',
+        'state/province/county': results['state/province/county'] ?? '',
+        'zip/postal_code': results['zip/postal_code'] ?? '',
+        'longitude': lon ?? '',
+        'latitude': lat ?? '',
+        'address': apiResult?.formatted_address ?? '',
+        'nearest_town': results['nearest_town'] ?? '',
         'grid_reference': gridRef,
       };
     } else {
